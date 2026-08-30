@@ -1,6 +1,12 @@
 """No Free Collapse: exact and approximate interaction-order utilities."""
 
 from .born import born_score, normalized_born_probability, polynomial_state, preparation_order
+from .completion import (
+    completion_dual_value,
+    completion_matrix,
+    completion_primal_trace,
+    offdiag_cube_max,
+)
 from .conditioning import (
     centered_relative_variation,
     condition_number,
@@ -38,6 +44,7 @@ from .paired import matched_pair_asymptotic_rate, matched_pair_capacity, matched
 
 __all__ = [
     "born_score", "normalized_born_probability", "polynomial_state", "preparation_order",
+    "completion_dual_value", "completion_matrix", "completion_primal_trace", "offdiag_cube_max",
     "centered_relative_variation", "condition_number", "delta_from_condition_number",
     "required_condition_number_for_coefficient", "spectral_coefficient_bound",
     "spectral_tail_energy_bound", "truncation_bound", "parity_state_coefficients",
