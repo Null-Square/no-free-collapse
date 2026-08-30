@@ -6,7 +6,9 @@ from no_free_collapse.completion import (
     completion_dual_value,
     completion_matrix,
     completion_primal_trace,
+    offdiag_cube_extrema,
     offdiag_cube_max,
+    six_variable_range_hafnian_bound,
 )
 from no_free_collapse.hafnian_bounds import (
     disjoint_pair_quadratic,
@@ -47,6 +49,14 @@ def test_pair_point_has_exact_minimum_completion_trace_one_half():
     assert math.isclose(primal, 0.5, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(dual, primal, rel_tol=0.0, abs_tol=1e-12)
 
+    minimum, maximum = offdiag_cube_extrema(C)
+    assert math.isclose(minimum, -0.5, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(maximum, 0.5, rel_tol=0.0, abs_tol=1e-12)
+    range_bound = six_variable_range_hafnian_bound(C)
+    value = abs(hafnian(C))
+    assert math.isclose(range_bound, 1.0 / 192.0, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(value / range_bound, 8.0 / 9.0, rel_tol=0.0, abs_tol=1e-12)
+
 
 def test_rank_one_point_has_exact_minimum_completion_trace_one_sixth():
     C = np.full((6, 6), 1.0 / 18.0, dtype=np.float64)
@@ -59,6 +69,14 @@ def test_rank_one_point_has_exact_minimum_completion_trace_one_sixth():
     assert math.isclose(primal, 1.0 / 6.0, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(dual, primal, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(offdiag_cube_max(C), 5.0 / 6.0, rel_tol=0.0, abs_tol=1e-12)
+
+    minimum, maximum = offdiag_cube_extrema(C)
+    assert math.isclose(minimum, -1.0 / 6.0, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(maximum, 5.0 / 6.0, rel_tol=0.0, abs_tol=1e-12)
+    range_bound = six_variable_range_hafnian_bound(C)
+    value = abs(hafnian(C))
+    assert math.isclose(range_bound, 5.0 / 1728.0, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(value / range_bound, 8.0 / 9.0, rel_tol=0.0, abs_tol=1e-12)
 
 
 def test_non_psd_one_over_200_witness_needs_larger_trace_completion():
@@ -82,12 +100,20 @@ def test_non_psd_one_over_200_witness_needs_larger_trace_completion():
     relaxed = completion_matrix(C, np.full(6, 1.0 / 12.0))
     assert float(np.linalg.eigvalsh(relaxed)[0]) < -1e-3
 
-    s = offdiag_cube_max(C)
+    minimum, s = offdiag_cube_extrema(C)
     value = abs(hafnian(C))
+    assert math.isclose(minimum, -0.5, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(s, 0.5, rel_tol=0.0, abs_tol=1e-12)
     assert math.isclose(value, 1.0 / 200.0, rel_tol=0.0, abs_tol=1e-12)
+    range_bound = six_variable_range_hafnian_bound(C)
+    assert math.isclose(range_bound, 1.0 / 192.0, rel_tol=0.0, abs_tol=1e-12)
+    assert math.isclose(value / range_bound, 24.0 / 25.0, rel_tol=0.0, abs_tol=1e-12)
 
     # Once the exact PSD completion cost tau(C) is inserted, the witness is
     # comfortably below the proposed six-variable inequality.
     ratio = 54.0 * value / (primal * s * (primal + s))
     assert ratio < 0.69
+
+    # The generic range-only theorem is already sufficient once the exact
+    # completion penalty is included.
+    assert 54.0 * range_bound < primal * s * (primal + s)
