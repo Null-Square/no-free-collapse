@@ -46,7 +46,9 @@ from .paired import matched_pair_asymptotic_rate, matched_pair_capacity, matched
 from .projection_gradient import (
     SIX_VARIABLE_EDGES,
     complementary_four_hafnians,
+    rank_three_projection_gradient_defect,
     rank_three_projection_involution,
+    rank_three_projection_stability_terms,
     six_variable_edge_vector,
     six_variable_gradient_energies,
     six_variable_perfect_matching_operator,
@@ -70,6 +72,7 @@ __all__ = [
     "interaction_degree", "walsh_coefficient", "walsh_coefficients",
     "matched_pair_asymptotic_rate", "matched_pair_capacity", "matched_pair_gram",
     "SIX_VARIABLE_EDGES", "complementary_four_hafnians",
-    "rank_three_projection_involution", "six_variable_edge_vector",
+    "rank_three_projection_gradient_defect", "rank_three_projection_involution",
+    "rank_three_projection_stability_terms", "six_variable_edge_vector",
     "six_variable_gradient_energies", "six_variable_perfect_matching_operator",
 ]
