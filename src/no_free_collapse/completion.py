@@ -18,16 +18,50 @@ def _validate_offdiag_coefficients(C: np.ndarray) -> np.ndarray:
     return C
 
 
-def offdiag_cube_max(C: np.ndarray) -> float:
-    """Return ``max_x sum_{i<j} C_ij x_i x_j`` exactly on a small cube."""
+def offdiag_cube_extrema(C: np.ndarray) -> tuple[float, float]:
+    """Return the exact min and max of the off-diagonal quadratic on a cube."""
     C = _validate_offdiag_coefficients(C)
     n = C.shape[0]
+    worst = np.inf
     best = -np.inf
     for x_tuple in itertools.product((-1.0, 1.0), repeat=n):
         x = np.asarray(x_tuple, dtype=np.float64)
         value = 0.5 * float(x @ C @ x)
+        worst = min(worst, value)
         best = max(best, value)
-    return float(best)
+    return float(worst), float(best)
+
+
+def offdiag_cube_max(C: np.ndarray) -> float:
+    """Return ``max_x sum_{i<j} C_ij x_i x_j`` exactly on a small cube."""
+    return offdiag_cube_extrema(C)[1]
+
+
+def six_variable_range_hafnian_bound(C: np.ndarray) -> float:
+    """Sharp moment-method range bound for a six-variable edge quadratic.
+
+    Let
+
+        r_C(x) = sum_{i<j} C_ij x_i x_j,
+        a = -min_x r_C(x),
+        s =  max_x r_C(x).
+
+    Then, without any PSD assumption,
+
+        |haf(C)| <= a*s*(a+s)/48.
+
+    The proof quotients the global-sign symmetry to five Boolean variables.
+    The two parity classes have equal first and second moments, and the sharp
+    third-moment interval for a zero-mean variable in [-a,s] gives the factor
+    1/48.
+    """
+    C = _validate_offdiag_coefficients(C)
+    if C.shape != (6, 6):
+        raise ValueError("the range hafnian bound is specific to size 6")
+    minimum, maximum = offdiag_cube_extrema(C)
+    a = max(0.0, -minimum)
+    s = max(0.0, maximum)
+    return a * s * (a + s) / 48.0
 
 
 def completion_matrix(C: np.ndarray, diagonal: np.ndarray) -> np.ndarray:
