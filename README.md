@@ -41,6 +41,11 @@ The working principle is **no free collapse**: measurement can expose interferen
 
    the directional derivative of `haf(2 offdiag(B))` is non-positive. This uses both the active Boolean cube constraints and PSD tangent feasibility on the nullspace of `B_star`; it is not restricted to matched-pair perturbations.
 11. For `n=6`, the first-order theorem has a strict second-order strengthening. Every nonzero zero-slope tangent has strictly negative second variation along any twice-differentiable feasible path. Moreover, every zero-slope straight feasible segment is globally non-improving and reduces to a three-weight AM-GM inequality.
+12. The candidate global six-variable inequality
+
+   `54 |haf(C)| <= t s (t+s)`
+
+   is proved on the entire rank-one PSD stratum `B=uu^T`, where `C=2 offdiag(B)`, `t=Tr(B)`, and `s=max_x sum_{i<j} C_ij x_i x_j`. The proof combines the exact rank-one hafnian formula with Maclaurin and Cauchy inequalities; nondegenerate equality occurs exactly when all six `|u_i|` are equal.
 
 The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, and real polarization inequalities are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
@@ -75,9 +80,10 @@ We now have:
 - a separate universal hafnian bound for the low-conditioning quadratic term;
 - an exact global solution of that hafnian extremal problem at four variables;
 - a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point;
-- a strict second-order six-variable certificate at every nonzero critical tangent.
+- a strict second-order six-variable certificate at every nonzero critical tangent;
+- a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix.
 
-The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The new local results rule out improving first-order directions, zero-slope second-order escapes, and zero-slope straight segments. A global proof must therefore control finite-displacement configurations whose segment from the pair point initially decreases and later rebounds, or find such a counterexample.
+The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The new local results rule out improving first-order directions, zero-slope second-order escapes, and zero-slope straight segments, while the candidate inequality is now exact on the full rank-one boundary. A global proof must control the remaining higher-rank finite-displacement geometry, or find a counterexample there.
 
 ## Notes
 
@@ -90,3 +96,4 @@ The next sharp case is six variables. The disjoint-pair PSD construction gives `
 - [`docs/hafnian_bound.md`](docs/hafnian_bound.md): perfect-matching coefficient identity, universal hafnian bound, and exact four-variable theorem.
 - [`docs/pair_local_optimality.md`](docs/pair_local_optimality.md): unrestricted first-order local-optimality theorem for the disjoint-pair hafnian construction.
 - [`docs/six_variable_second_order.md`](docs/six_variable_second_order.md): strict second-order six-variable certificate and exact zero-slope segment corollary.
+- [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md): exact proof of the candidate six-variable inequality on the full rank-one PSD stratum.
