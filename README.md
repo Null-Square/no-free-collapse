@@ -71,6 +71,11 @@ The working principle is **no free collapse**: measurement can expose interferen
 
    Therefore any counterexample must lie in a thin shell with `tau-a < a/8`, and usually substantially less. At `tau=a`, a minimum PSD completion has a Boolean null vector; after a sign switch its Gram vectors sum to zero.
 15. The six-variable **hafnian-gradient problem** has an exact 15-dimensional perfect-matching-operator form. If `a` is the vector of off-diagonal entries and `h` the vector of complementary `4 x 4` hafnians, then `T(A)a=2h`. For rank-one orthogonal projections the sharp gradient contraction `sum h^2 <= (1/4) sum a^2` is proved exactly by Maclaurin and Cauchy, with equality only at equal squared coordinates; rank five follows by projection complementation. The projection problem therefore reduces to ranks two and three. For rank three, `K=2P-I` gives the exact involution form `K^2=I`, `Tr(K)=0`, and the target becomes `q2(K)<=q1(K)`.
+16. The critical **equal-diagonal rank-three projection stratum is solved globally and sharply**. If `P` has rank three and `P_ii=1/2`, then `K=2P-I` is a symmetric orthogonal zero-diagonal involution and
+
+   `q2(K) = sum_{i<j} K_ij^4`.
+
+   Since each row has squared off-diagonal sum one, this gives `q2(K)<=q1(K)=3`, hence `q2(P)<=q1(P)/4`. Equality forces the squared support to be a perfect matching, so—up to coordinate permutation and sign switches—the unique equality geometry is the three disjoint-pair projection.
 
 The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, zeon algebras, generalized subhafnian inequalities, and generic SDP duality are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
@@ -109,7 +114,8 @@ We now have:
 - a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix;
 - an exact elimination of the six diagonal variables via the minimum-trace completion `tau(C)` and its elliptope dual;
 - a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell;
-- an exact perfect-matching-operator formulation of the hafnian gradient, plus a sharp proof for projection ranks one and five and a rank-three involution reduction.
+- an exact perfect-matching-operator formulation of the hafnian gradient, a sharp proof for projection ranks one and five, and a rank-three involution reduction;
+- a complete sharp theorem on the equal-diagonal rank-three stratum containing the disjoint-pair equality point.
 
 The next sharp case is six variables. The remaining global theorem can be stated purely in the 15 off-diagonal variables as
 
@@ -121,7 +127,7 @@ The generic range theorem already proves this unless
 
 Hence only configurations with PSD completion cost very close to the Boolean lower bound `a=-min r_C` remain. The boundary `tau=a` is especially structured: after switching a minimizing Boolean vertex to `1`, the minimum PSD completion satisfies `B 1=0`, so its six Gram vectors sum to zero.
 
-The current proof program is intentionally narrow. First finish the sharp projection-gradient inequality in ranks two and three. The rank-three case is the critical one because it contains the disjoint-pair equality geometry; after `K=2P-I` it becomes a symmetric-orthogonal involution problem. Only after the projection cases are closed should we test whether the contraction extends to general PSD contractions or whether the zero-sum boundary needs an additional stability inequality. The stronger operator-norm inequality for `T(A)` remains conjectural and is not used as a theorem.
+The current proof program remains narrow. For rank three the exact equality stratum `diag(P)=1/2` is now closed, so the unresolved part is **diagonal imbalance away from 1/2**. In the coordinates `y_i=P_ii-1/2` and `x_ij=P_ij^2`, the remaining defect is controlled by two manifestly nonnegative quantities: wedge spreading of the edge-square graph and the commutator energy `sum x_ij(y_i-y_j)^2`. The next goal is a stability inequality showing that these terms dominate the diagonal-imbalance defect. Rank two remains a secondary projection case. The stronger operator-norm inequality for `T(A)` remains conjectural and is not used as a theorem.
 
 ## Notes
 
@@ -138,3 +144,4 @@ The current proof program is intentionally narrow. First finish the sharp projec
 - [`docs/diagonal_completion.md`](docs/diagonal_completion.md): exact minimum-trace completion reduction, elliptope dual, and closed-form PSD cost of the `1/200` relaxed witness.
 - [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md): sharp asymmetric range-only theorem and reduction to the thin `tau≈a` shell.
 - [`docs/projection_gradient.md`](docs/projection_gradient.md): perfect-matching operator, zeon reformulation, sharp rank-one/rank-five projection theorem, and rank-three involution reduction.
+- [`docs/rank_three_equal_diagonal.md`](docs/rank_three_equal_diagonal.md): exact fourth-power identity and unique disjoint-pair equality theorem on the equal-diagonal rank-three stratum.
