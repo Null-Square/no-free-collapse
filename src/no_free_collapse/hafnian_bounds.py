@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import math
-from typing import Sequence
 
 import numpy as np
 
@@ -87,6 +86,66 @@ def disjoint_pair_quadratic(size: int) -> np.ndarray:
         B[i, i + 1] = block
         B[i + 1, i] = block
     return B
+
+
+def disjoint_pair_tangent_invariants(H: np.ndarray) -> tuple[float, float, float]:
+    """Return the three first-order quantities in the pair local-optimum proof.
+
+    For pair vectors ``f_j=e_{2j}+e_{2j+1}`` and
+    ``g_j=e_{2j}-e_{2j+1}``, this returns
+
+    ``(sum_j f_j^T H f_j, sum_j g_j^T H g_j,
+       sum_j H[2j,2j+1])``.
+
+    They satisfy the exact identity
+
+        4 * matched_edge_sum = active_cube_average - nullspace_trace.
+
+    Along every differentiable feasible path through the disjoint-pair point,
+    the first quantity is non-positive and the second is non-negative.
+    """
+    H = np.asarray(H, dtype=np.float64)
+    if H.ndim != 2 or H.shape[0] != H.shape[1]:
+        raise ValueError("H must be square")
+    n = H.shape[0]
+    if n < 2 or n % 2:
+        raise ValueError("H must have positive even dimension")
+    if not np.allclose(H, H.T, atol=1e-12, rtol=1e-12):
+        raise ValueError("H must be symmetric")
+
+    active_cube_average = 0.0
+    nullspace_trace = 0.0
+    matched_edge_sum = 0.0
+    for p in range(n // 2):
+        i = 2 * p
+        active_cube_average += H[i, i] + H[i + 1, i + 1] + 2.0 * H[i, i + 1]
+        nullspace_trace += H[i, i] + H[i + 1, i + 1] - 2.0 * H[i, i + 1]
+        matched_edge_sum += H[i, i + 1]
+    return active_cube_average, nullspace_trace, matched_edge_sum
+
+
+def disjoint_pair_hafnian_directional_derivative(H: np.ndarray) -> float:
+    """Directional derivative of the scaled-offdiagonal hafnian at B_star.
+
+    For ``n=2L`` and
+
+        B_star = (1/(2n)) * diag(J_2, ..., J_2),
+        Phi(B) = haf(2*offdiag(B)),
+
+    the derivative in a symmetric direction H is
+
+        D Phi(B_star)[H] = 2 n^(1-L) sum_j H[2j,2j+1].
+
+    Hence any feasible tangent direction has non-positive derivative by the
+    active-cube and PSD-nullspace inequalities encoded in
+    :func:`disjoint_pair_tangent_invariants`.
+    """
+    H = np.asarray(H, dtype=np.float64)
+    n = H.shape[0] if H.ndim == 2 else 0
+    active, nullspace, matched = disjoint_pair_tangent_invariants(H)
+    del active, nullspace
+    L = n // 2
+    return 2.0 * (n ** (1 - L)) * matched
 
 
 def full_parity_power_coefficient(B: np.ndarray) -> float:
