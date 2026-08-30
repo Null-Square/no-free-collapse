@@ -40,6 +40,7 @@ The working principle is **no free collapse**: measurement can expose interferen
    `B_star=(1/(2n)) diag(J_2,...,J_2)`,
 
    the directional derivative of `haf(2 offdiag(B))` is non-positive. This uses both the active Boolean cube constraints and PSD tangent feasibility on the nullspace of `B_star`; it is not restricted to matched-pair perturbations.
+11. For `n=6`, the first-order theorem has a strict second-order strengthening. Every nonzero zero-slope tangent has strictly negative second variation along any twice-differentiable feasible path. Moreover, every zero-slope straight feasible segment is globally non-improving and reduces to a three-weight AM-GM inequality.
 
 The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, and real polarization inequalities are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
@@ -73,9 +74,10 @@ We now have:
 - an exact, stronger symmetry-breaking optimum for the matched pair-block class;
 - a separate universal hafnian bound for the low-conditioning quadratic term;
 - an exact global solution of that hafnian extremal problem at four variables;
-- a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point.
+- a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point;
+- a strict second-order six-variable certificate at every nonzero critical tangent.
 
-The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The first-order theorem rules out a simple improving tangent direction at the pair point, but it does not yet prove second-order or global optimality.
+The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The new local results rule out improving first-order directions, zero-slope second-order escapes, and zero-slope straight segments. A global proof must therefore control finite-displacement configurations whose segment from the pair point initially decreases and later rebounds, or find such a counterexample.
 
 ## Notes
 
@@ -87,3 +89,4 @@ The next sharp case is six variables. The disjoint-pair PSD construction gives `
 - [`docs/paired.md`](docs/paired.md): exact symmetry-breaking matched-pair theorem and counterexample.
 - [`docs/hafnian_bound.md`](docs/hafnian_bound.md): perfect-matching coefficient identity, universal hafnian bound, and exact four-variable theorem.
 - [`docs/pair_local_optimality.md`](docs/pair_local_optimality.md): unrestricted first-order local-optimality theorem for the disjoint-pair hafnian construction.
+- [`docs/six_variable_second_order.md`](docs/six_variable_second_order.md): strict second-order six-variable certificate and exact zero-slope segment corollary.
