@@ -7,7 +7,7 @@ from .born import (
     preparation_order,
 )
 from .constructions import parity_state_coefficients
-from .interactions import interaction_degree, walsh_coefficients
+from .interactions import interaction_degree, walsh_coefficient, walsh_coefficients
 
 __all__ = [
     "born_score",
@@ -16,5 +16,6 @@ __all__ = [
     "preparation_order",
     "parity_state_coefficients",
     "interaction_degree",
+    "walsh_coefficient",
     "walsh_coefficients",
 ]

@@ -16,3 +16,17 @@ def normalization_loophole_probability(x: Sequence[int]) -> Fraction:
         raise ValueError("x must contain exactly three +/-1 values")
     a = 2 + sum(x)
     return Fraction(a * a, a * a + 1)
+
+
+def normalization_explosion_probability(x: Sequence[int]) -> Fraction:
+    """Order-1 amplitudes whose normalization yields full-order interaction.
+
+    For n=len(x), choose c=2n+1 and psi_tilde=(c+sum_i x_i, 1).
+    The normalized |0><0| probability has a nonzero n-way Walsh coefficient.
+    """
+    n = len(x)
+    if n < 1 or any(xi not in (-1, 1) for xi in x):
+        raise ValueError("x must be a non-empty sequence of +/-1 values")
+    c = 2 * n + 1
+    a = c + sum(x)
+    return Fraction(a * a, a * a + 1)

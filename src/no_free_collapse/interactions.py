@@ -28,6 +28,20 @@ def evaluate_on_hypercube(n: int, fn: Callable[[tuple[int, ...]], Scalar]) -> Di
     return {x: fn(x) for x in hypercube(n)}
 
 
+def walsh_coefficient(values: Mapping[tuple[int, ...], Scalar], n: int, mask: int):
+    """Return one Walsh coefficient in O(2^n) time."""
+    expected = 1 << n
+    if len(values) != expected:
+        raise ValueError(f"expected {expected} hypercube values, got {len(values)}")
+    if mask < 0 or mask >= expected:
+        raise ValueError("mask is outside the n-variable hypercube")
+    total = None
+    for x, value in values.items():
+        term = value * monomial(x, mask)
+        total = term if total is None else total + term
+    return total / expected
+
+
 def walsh_coefficients(values: Mapping[tuple[int, ...], Scalar], n: int) -> Dict[int, Scalar]:
     """Return exact Walsh coefficients when the scalar type supports exact arithmetic.
 
