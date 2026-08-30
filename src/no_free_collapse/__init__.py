@@ -20,6 +20,14 @@ from .gram import (
     optimal_linear_readout_for_fixed_Q,
     realize_gram_pair,
 )
+from .hafnian_bounds import (
+    bounded_quadratic_hafnian_bound,
+    disjoint_pair_hafnian_value,
+    disjoint_pair_quadratic,
+    full_parity_power_coefficient,
+    hafnian,
+    twice_offdiag,
+)
 from .interactions import interaction_degree, walsh_coefficient, walsh_coefficients
 from .paired import matched_pair_asymptotic_rate, matched_pair_capacity, matched_pair_gram
 
@@ -30,6 +38,8 @@ __all__ = [
     "spectral_tail_energy_bound", "truncation_bound", "parity_state_coefficients",
     "effect_gram", "feature_vector", "gram_probability", "monomial_masks",
     "optimal_absolute_linear_readout_for_fixed_Q", "optimal_linear_readout_for_fixed_Q",
-    "realize_gram_pair", "interaction_degree", "walsh_coefficient", "walsh_coefficients",
+    "realize_gram_pair", "bounded_quadratic_hafnian_bound", "disjoint_pair_hafnian_value",
+    "disjoint_pair_quadratic", "full_parity_power_coefficient", "hafnian", "twice_offdiag",
+    "interaction_degree", "walsh_coefficient", "walsh_coefficients",
     "matched_pair_asymptotic_rate", "matched_pair_capacity", "matched_pair_gram",
 ]
