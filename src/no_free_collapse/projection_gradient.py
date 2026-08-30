@@ -113,3 +113,82 @@ def rank_three_projection_involution(projection: np.ndarray, *, atol: float = 1e
     if not np.allclose(K @ K, np.eye(6), atol=10 * atol, rtol=10 * atol):
         raise ValueError("internal involution check failed")
     return K
+
+
+def rank_three_projection_stability_terms(
+    projection: np.ndarray,
+    *,
+    atol: float = 1e-10,
+) -> tuple[float, float, float, float]:
+    """Return the exact stability variables ``(W,L,S2,S4)`` for rank three.
+
+    Let ``P`` be a rank-three orthogonal projection and write
+
+        y_i = P_ii - 1/2,
+        x_ij = P_ij^2  (i != j).
+
+    The returned quantities are
+
+        W  = sum_i sum_{j<k, j,k != i} x_ij x_ik,
+        L  = sum_{i<j} x_ij (y_i-y_j)^2,
+        S2 = sum_i y_i^2,
+        S4 = sum_i y_i^4.
+
+    Here W is the nonnegative wedge-spreading energy and
+
+        L = (1/2) ||[diag(y),P]||_F^2
+
+    is the nonnegative diagonal-imbalance commutator energy.
+    """
+    P = _validate_six_symmetric(projection)
+    if not np.allclose(P @ P, P, atol=atol, rtol=atol):
+        raise ValueError("projection must satisfy P^2=P")
+    if not np.isclose(np.trace(P), 3.0, atol=atol, rtol=0.0):
+        raise ValueError("projection must have rank/trace three")
+
+    y = np.diag(P) - 0.5
+    x = P * P
+    np.fill_diagonal(x, 0.0)
+
+    W = 0.0
+    for i in range(6):
+        row = np.asarray([x[i, j] for j in range(6) if j != i])
+        W += 0.5 * (float(np.sum(row)) ** 2 - float(row @ row))
+
+    L = 0.0
+    for i, j in SIX_VARIABLE_EDGES:
+        L += float(x[i, j] * (y[i] - y[j]) ** 2)
+
+    S2 = float(y @ y)
+    S4 = float(np.sum(y**4))
+    return float(W), float(L), S2, S4
+
+
+def rank_three_projection_gradient_defect(
+    projection: np.ndarray,
+    *,
+    atol: float = 1e-10,
+) -> float:
+    """Return the exact rank-three gradient defect ``q1/4-q2``.
+
+    For every rank-three projection P the following identity holds:
+
+        q1(P)/4 - q2(P)
+          = W + L/2 - (S2 + S2^2 - 10 S4)/8,
+
+    where ``(W,L,S2,S4)`` are returned by
+    :func:`rank_three_projection_stability_terms`.
+
+    Consequently the remaining rank-three gradient contraction
+
+        q2(P) <= q1(P)/4
+
+    is equivalent to the single stability inequality
+
+        8 W + 4 L + 10 S4 >= S2 + S2^2.
+
+    This function evaluates the proved identity; it does not assert the final
+    stability inequality globally.
+    """
+    W, L, S2, S4 = rank_three_projection_stability_terms(projection, atol=atol)
+    return W + 0.5 * L - 0.125 * (S2 + S2 * S2 - 10.0 * S4)
