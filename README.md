@@ -46,8 +46,32 @@ The working principle is **no free collapse**: measurement can expose interferen
    `54 |haf(C)| <= t s (t+s)`
 
    is proved on the entire rank-one PSD stratum `B=uu^T`, where `C=2 offdiag(B)`, `t=Tr(B)`, and `s=max_x sum_{i<j} C_ij x_i x_j`. The proof combines the exact rank-one hafnian formula with Maclaurin and Cauchy inequalities; nondegenerate equality occurs exactly when all six `|u_i|` are equal.
+13. The six-variable PSD problem has an exact **minimum-trace diagonal-completion reduction**. For fixed zero-diagonal `C`, define
 
-The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, and real polarization inequalities are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
+   `tau(C)=min Tr(B)` over PSD matrices with `2 offdiag(B)=C`.
+
+   Then the global candidate is equivalent to
+
+   `54 |haf(C)| <= tau(C) s(C) (tau(C)+s(C))`.
+
+   The completion cost has the elliptope dual
+
+   `tau(C)=max -sum_{i<j} C_ij Y_ij` over `Y>=0` with unit diagonal. For the known non-PSD `1/200` witness, the exact completion cost is `tau=3 sqrt(5)/10`, not `1/2`; a closed-form primal/dual certificate proves this.
+14. There is a sharper **range-only** six-variable theorem requiring no PSD assumption. If
+
+   `a(C)=-min_x sum_{i<j} C_ij x_i x_j`
+
+   and `s(C)` is the corresponding maximum, then
+
+   `|haf(C)| <= a(C) s(C) (a(C)+s(C)) / 48`.
+
+   The proof quotients global sign to a five-variable degree-two function. Its two parity classes have identical first and second moments; a sharp third-moment interval on `[-a,s]` gives the factor `1/48`. Combined with the completion theorem, the PSD conjecture is automatic whenever
+
+   `tau(C)(tau(C)+s) >= (9/8) a(C)(a(C)+s)`.
+
+   Therefore any counterexample must lie in a thin shell with `tau-a < a/8`, and usually substantially less. At `tau=a`, a minimum PSD completion has a Boolean null vector; after a sign switch its Gram vectors sum to zero.
+
+The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, and generic SDP duality are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
 ## Run
 
@@ -81,9 +105,21 @@ We now have:
 - an exact global solution of that hafnian extremal problem at four variables;
 - a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point;
 - a strict second-order six-variable certificate at every nonzero critical tangent;
-- a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix.
+- a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix;
+- an exact elimination of the six diagonal variables via the minimum-trace completion `tau(C)` and its elliptope dual;
+- a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell.
 
-The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The new local results rule out improving first-order directions, zero-slope second-order escapes, and zero-slope straight segments, while the candidate inequality is now exact on the full rank-one boundary. A global proof must control the remaining higher-rank finite-displacement geometry, or find a counterexample there.
+The next sharp case is six variables. The remaining global theorem can be stated purely in the 15 off-diagonal variables as
+
+`54 |haf(C)| <= tau(C) s(C) (tau(C)+s(C))`.
+
+The generic range theorem already proves this unless
+
+`tau(C)(tau(C)+s) < (9/8) a(C)(a(C)+s)`.
+
+Hence only configurations with PSD completion cost very close to the Boolean lower bound `a=-min r_C` remain. The boundary `tau=a` is especially structured: after switching a minimizing Boolean vertex to `1`, the minimum PSD completion satisfies `B 1=0`, so its six Gram vectors sum to zero. Both known equality geometries lie on this boundary, and at both the actual hafnian is exactly `8/9` of the range-only upper bound.
+
+The strongest next target is therefore the missing `8/9` improvement for zero-sum Gram configurations (`tau=a`), followed by a stability argument for the thin shell `tau-a>0`. Complementary slackness with the elliptope dual provides the natural control parameter for that stability step.
 
 ## Notes
 
@@ -97,3 +133,5 @@ The next sharp case is six variables. The disjoint-pair PSD construction gives `
 - [`docs/pair_local_optimality.md`](docs/pair_local_optimality.md): unrestricted first-order local-optimality theorem for the disjoint-pair hafnian construction.
 - [`docs/six_variable_second_order.md`](docs/six_variable_second_order.md): strict second-order six-variable certificate and exact zero-slope segment corollary.
 - [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md): exact proof of the candidate six-variable inequality on the full rank-one PSD stratum.
+- [`docs/diagonal_completion.md`](docs/diagonal_completion.md): exact minimum-trace completion reduction, elliptope dual, and closed-form PSD cost of the `1/200` relaxed witness.
+- [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md): sharp asymmetric range-only theorem and reduction to the thin `tau≈a` shell.
