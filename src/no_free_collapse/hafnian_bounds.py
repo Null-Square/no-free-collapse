@@ -88,6 +88,35 @@ def disjoint_pair_quadratic(size: int) -> np.ndarray:
     return B
 
 
+def disjoint_pair_basis_blocks(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Represent a symmetric matrix in orthonormal pair-sum/difference coordinates.
+
+    The returned blocks are ``(FF, FG, GG)``, where the columns of F are
+    ``(e_{2j}+e_{2j+1})/sqrt(2)`` and the columns of G are
+    ``(e_{2j}-e_{2j+1})/sqrt(2)``.
+    """
+    matrix = np.asarray(matrix, dtype=np.float64)
+    if matrix.ndim != 2 or matrix.shape[0] != matrix.shape[1]:
+        raise ValueError("matrix must be square")
+    n = matrix.shape[0]
+    if n < 2 or n % 2:
+        raise ValueError("matrix must have positive even dimension")
+    if not np.allclose(matrix, matrix.T, atol=1e-12, rtol=1e-12):
+        raise ValueError("matrix must be symmetric")
+
+    L = n // 2
+    F = np.zeros((n, L), dtype=np.float64)
+    G = np.zeros((n, L), dtype=np.float64)
+    scale = 1.0 / math.sqrt(2.0)
+    for p in range(L):
+        i = 2 * p
+        F[i, p] = scale
+        F[i + 1, p] = scale
+        G[i, p] = scale
+        G[i + 1, p] = -scale
+    return F.T @ matrix @ F, F.T @ matrix @ G, G.T @ matrix @ G
+
+
 def disjoint_pair_tangent_invariants(H: np.ndarray) -> tuple[float, float, float]:
     """Return the three first-order quantities in the pair local-optimum proof.
 
@@ -146,6 +175,55 @@ def disjoint_pair_hafnian_directional_derivative(H: np.ndarray) -> float:
     del active, nullspace
     L = n // 2
     return 2.0 * (n ** (1 - L)) * matched
+
+
+def six_variable_critical_hafnian_quadratic_coefficient(H: np.ndarray) -> float:
+    """Exact epsilon^2 coefficient for a critical n=6 pair perturbation.
+
+    A first-order critical tangent has, in pair-sum/difference coordinates,
+
+        H = [[D, X], [X^T, 0]],
+
+    where D is diagonal and trace(D)=0.  For
+
+        Phi(B)=haf(2*offdiag(B)),
+        B(epsilon)=B_star+epsilon*H,
+
+    this returns the exact coefficient of ``epsilon**2`` in Phi:
+
+        -||diag(D)||_2^2/12 - ||offdiag(X)||_F^2/3.
+    """
+    H = np.asarray(H, dtype=np.float64)
+    if H.shape != (6, 6):
+        raise ValueError("H must have shape (6, 6)")
+    FF, FG, GG = disjoint_pair_basis_blocks(H)
+    offdiag_FF = FF - np.diag(np.diag(FF))
+    if np.max(np.abs(GG)) > 1e-9:
+        raise ValueError("critical H must have zero GG block")
+    if np.max(np.abs(offdiag_FF)) > 1e-9 or abs(float(np.trace(FF))) > 1e-9:
+        raise ValueError("critical H must have diagonal trace-zero FF block")
+
+    d = np.diag(FF)
+    offdiag_X = FG - np.diag(np.diag(FG))
+    return -float(d @ d) / 12.0 - float(np.sum(offdiag_X**2)) / 3.0
+
+
+def six_variable_critical_path_second_order_bound(H: np.ndarray) -> float:
+    """Upper bound on the full epsilon^2 coefficient of any feasible C^2 path.
+
+    For a twice-differentiable feasible path
+
+        B(epsilon)=B_star+epsilon*H+(epsilon^2/2)K+o(epsilon^2)
+
+    with a first-order critical nonzero H, PSD curvature forces
+    ``K_GG >= 12 X^T X`` while active cube constraints give
+    ``trace(K_FF)<=0``.  Consequently the K contribution is at most
+    ``-||X||_F^2/6``.  Adding the exact pure-H coefficient gives this bound,
+    which is strictly negative for every nonzero critical H.
+    """
+    pure = six_variable_critical_hafnian_quadratic_coefficient(H)
+    _, X, _ = disjoint_pair_basis_blocks(H)
+    return pure - float(np.sum(X**2)) / 6.0
 
 
 def full_parity_power_coefficient(B: np.ndarray) -> float:
