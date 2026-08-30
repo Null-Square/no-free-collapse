@@ -35,6 +35,11 @@ The working principle is **no free collapse**: measurement can expose interferen
    `|haf(2 offdiag(B))| <= 2^(1-2L)/L!`.
 
    This follows by identifying `L! haf(...)` with the full-parity coefficient of `(x^T B x)^L` and subtracting the minimax degree-`L-1` approximation to `t^L` on `[0,1]`. For `m=4` the bound is exactly `1/16` and is attained by two disjoint rank-one pairs, so the four-variable extremal problem is solved globally.
+10. The equal disjoint-pair hafnian construction is a first-order local optimum in the **unrestricted PSD problem**. For every differentiable feasible path through
+
+   `B_star=(1/(2n)) diag(J_2,...,J_2)`,
+
+   the directional derivative of `haf(2 offdiag(B))` is non-positive. This uses both the active Boolean cube constraints and PSD tangent feasibility on the nullspace of `B_star`; it is not restricted to matched-pair perturbations.
 
 The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, and real polarization inequalities are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
@@ -67,9 +72,10 @@ We now have:
 - an exact optimum for the permutation/global-sign symmetric class;
 - an exact, stronger symmetry-breaking optimum for the matched pair-block class;
 - a separate universal hafnian bound for the low-conditioning quadratic term;
-- an exact global solution of that hafnian extremal problem at four variables.
+- an exact global solution of that hafnian extremal problem at four variables;
+- a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point.
 
-The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the new universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. Closing that gap is the next theorem target before making any all-dimensions optimality claim.
+The next sharp case is six variables. The disjoint-pair PSD construction gives `1/216`, while the universal quadratic-range bound gives `1/192`. A larger non-PSD degree-two relaxation can reach `1/200`, so the remaining gap is specifically a **PSD geometry / diagonal-completion** problem. The first-order theorem rules out a simple improving tangent direction at the pair point, but it does not yet prove second-order or global optimality.
 
 ## Notes
 
@@ -80,3 +86,4 @@ The next sharp case is six variables. The disjoint-pair PSD construction gives `
 - [`docs/symmetric_optimality.md`](docs/symmetric_optimality.md): exact theorem inside the full permutation/global-sign symmetric class.
 - [`docs/paired.md`](docs/paired.md): exact symmetry-breaking matched-pair theorem and counterexample.
 - [`docs/hafnian_bound.md`](docs/hafnian_bound.md): perfect-matching coefficient identity, universal hafnian bound, and exact four-variable theorem.
+- [`docs/pair_local_optimality.md`](docs/pair_local_optimality.md): unrestricted first-order local-optimality theorem for the disjoint-pair hafnian construction.
