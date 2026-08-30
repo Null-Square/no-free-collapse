@@ -70,8 +70,9 @@ The working principle is **no free collapse**: measurement can expose interferen
    `tau(C)(tau(C)+s) >= (9/8) a(C)(a(C)+s)`.
 
    Therefore any counterexample must lie in a thin shell with `tau-a < a/8`, and usually substantially less. At `tau=a`, a minimum PSD completion has a Boolean null vector; after a sign switch its Gram vectors sum to zero.
+15. The six-variable **hafnian-gradient problem** has an exact 15-dimensional perfect-matching-operator form. If `a` is the vector of off-diagonal entries and `h` the vector of complementary `4 x 4` hafnians, then `T(A)a=2h`. For rank-one orthogonal projections the sharp gradient contraction `sum h^2 <= (1/4) sum a^2` is proved exactly by Maclaurin and Cauchy, with equality only at equal squared coordinates; rank five follows by projection complementation. The projection problem therefore reduces to ranks two and three. For rank three, `K=2P-I` gives the exact involution form `K^2=I`, `Tr(K)=0`, and the target becomes `q2(K)<=q1(K)`.
 
-The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, and generic SDP duality are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
+The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, zeon algebras, generalized subhafnian inequalities, and generic SDP duality are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
 ## Run
 
@@ -107,7 +108,8 @@ We now have:
 - a strict second-order six-variable certificate at every nonzero critical tangent;
 - a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix;
 - an exact elimination of the six diagonal variables via the minimum-trace completion `tau(C)` and its elliptope dual;
-- a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell.
+- a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell;
+- an exact perfect-matching-operator formulation of the hafnian gradient, plus a sharp proof for projection ranks one and five and a rank-three involution reduction.
 
 The next sharp case is six variables. The remaining global theorem can be stated purely in the 15 off-diagonal variables as
 
@@ -117,9 +119,9 @@ The generic range theorem already proves this unless
 
 `tau(C)(tau(C)+s) < (9/8) a(C)(a(C)+s)`.
 
-Hence only configurations with PSD completion cost very close to the Boolean lower bound `a=-min r_C` remain. The boundary `tau=a` is especially structured: after switching a minimizing Boolean vertex to `1`, the minimum PSD completion satisfies `B 1=0`, so its six Gram vectors sum to zero. Both known equality geometries lie on this boundary, and at both the actual hafnian is exactly `8/9` of the range-only upper bound.
+Hence only configurations with PSD completion cost very close to the Boolean lower bound `a=-min r_C` remain. The boundary `tau=a` is especially structured: after switching a minimizing Boolean vertex to `1`, the minimum PSD completion satisfies `B 1=0`, so its six Gram vectors sum to zero.
 
-The strongest next target is therefore the missing `8/9` improvement for zero-sum Gram configurations (`tau=a`), followed by a stability argument for the thin shell `tau-a>0`. Complementary slackness with the elliptope dual provides the natural control parameter for that stability step.
+The current proof program is intentionally narrow. First finish the sharp projection-gradient inequality in ranks two and three. The rank-three case is the critical one because it contains the disjoint-pair equality geometry; after `K=2P-I` it becomes a symmetric-orthogonal involution problem. Only after the projection cases are closed should we test whether the contraction extends to general PSD contractions or whether the zero-sum boundary needs an additional stability inequality. The stronger operator-norm inequality for `T(A)` remains conjectural and is not used as a theorem.
 
 ## Notes
 
@@ -135,3 +137,4 @@ The strongest next target is therefore the missing `8/9` improvement for zero-su
 - [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md): exact proof of the candidate six-variable inequality on the full rank-one PSD stratum.
 - [`docs/diagonal_completion.md`](docs/diagonal_completion.md): exact minimum-trace completion reduction, elliptope dual, and closed-form PSD cost of the `1/200` relaxed witness.
 - [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md): sharp asymmetric range-only theorem and reduction to the thin `tau≈a` shell.
+- [`docs/projection_gradient.md`](docs/projection_gradient.md): perfect-matching operator, zeon reformulation, sharp rank-one/rank-five projection theorem, and rank-three involution reduction.
