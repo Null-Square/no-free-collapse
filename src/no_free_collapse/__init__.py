@@ -53,6 +53,11 @@ from .projection_gradient import (
     six_variable_gradient_energies,
     six_variable_perfect_matching_operator,
 )
+from .rank_two_dual import (
+    evaluate_degree_four_bernstein,
+    rank_two_high_pair_bernstein_coefficients,
+    rank_two_quadratic_dual_certificate,
+)
 from .rank_two_projection import (
     rank_two_harmonic_gradient_defect,
     rank_two_harmonic_invariants,
@@ -87,6 +92,8 @@ __all__ = [
     "rank_three_projection_gradient_defect", "rank_three_projection_involution",
     "rank_three_projection_stability_terms", "six_variable_edge_vector",
     "six_variable_gradient_energies", "six_variable_perfect_matching_operator",
+    "evaluate_degree_four_bernstein", "rank_two_high_pair_bernstein_coefficients",
+    "rank_two_quadratic_dual_certificate",
     "rank_two_harmonic_gradient_defect", "rank_two_harmonic_invariants",
     "rank_two_heavy_bernstein_coefficients", "rank_two_heavy_coordinate_decomposition",
     "rank_two_heavy_coordinate_projection", "rank_two_plucker_weights",
