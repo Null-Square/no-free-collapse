@@ -56,11 +56,13 @@ from .projection_gradient import (
 from .rank_two_projection import (
     rank_two_harmonic_gradient_defect,
     rank_two_harmonic_invariants,
+    rank_two_heavy_bernstein_coefficients,
     rank_two_heavy_coordinate_decomposition,
     rank_two_heavy_coordinate_projection,
     rank_two_plucker_weights,
     rank_two_projection_direct_defect,
     rank_two_projection_gradient_defect,
+    rank_two_stability_decomposition,
     rank_two_tensor_q2_formula,
 )
 
@@ -86,7 +88,8 @@ __all__ = [
     "rank_three_projection_stability_terms", "six_variable_edge_vector",
     "six_variable_gradient_energies", "six_variable_perfect_matching_operator",
     "rank_two_harmonic_gradient_defect", "rank_two_harmonic_invariants",
-    "rank_two_heavy_coordinate_decomposition", "rank_two_heavy_coordinate_projection",
-    "rank_two_plucker_weights", "rank_two_projection_direct_defect",
-    "rank_two_projection_gradient_defect", "rank_two_tensor_q2_formula",
+    "rank_two_heavy_bernstein_coefficients", "rank_two_heavy_coordinate_decomposition",
+    "rank_two_heavy_coordinate_projection", "rank_two_plucker_weights",
+    "rank_two_projection_direct_defect", "rank_two_projection_gradient_defect",
+    "rank_two_stability_decomposition", "rank_two_tensor_q2_formula",
 ]
