@@ -1,8 +1,8 @@
 # First interior Bernstein coefficient in the rank-two heavy interpolation
 
-This note proves one of the three remaining interior Bernstein inequalities in the final high-leverage rank-two projection problem.
+This note proves a global positivity statement for the first interior Bernstein coefficient in the canonical high-leverage rank-two interpolation.
 
-Let `p,q in R^5` be orthonormal and define the heavy-coordinate path
+Let `p,q in R^5` be orthonormal and define
 
 \[
 P(\varepsilon)=
@@ -26,14 +26,14 @@ Write the degree-four Bernstein expansion
 \Delta(x)=\sum_{k=0}^4 b_k\binom4k x^k(1-x)^{4-k}.
 \]
 
-The endpoint coefficients `b0,b4` are nonnegative by the already-proved endpoint theorems.  This note proves
+The `x=0` coefficient `b0` is nonnegative because that endpoint is a coordinate projection plus a five-coordinate rank-one projection, hence belongs to the solved two-direction class. This note proves
 
 \[
 \boxed{b_1\ge0.}
 \tag{1}
 \]
 
-Numerically the sharp value appears to be `1/32`; the proof below deliberately uses a looser positivity certificate and does **not** claim the sharp constant globally.
+The fixed-path coefficient `b4` is **not** assumed known: at `eps=1/2`, the other diagonal entries are `p_j^2/2+q_j^2`, which need not be at most one half. Numerically the sharp value of `b1` appears to be `1/32`; the proof below deliberately uses a looser positivity certificate and does not claim that sharp constant globally.
 
 ## 1. Exact five-frame moments
 
@@ -93,11 +93,11 @@ where
 h(t)=(6B_2-13)t+36t^2-36t^3.
 \]
 
-Since the `a_i` form a probability vector, (4) is at most its largest coordinate choice.  Thus it is enough to prove the following purely scalar statement.
+Since the `a_i` form a probability vector, (4) is at most its largest coordinate choice. Thus it is enough to prove the following purely scalar statement.
 
 ## 2. Quartic simplex lemma
 
-Let `b_1,...,b_5>=0` with `sum b_i=1`.  For every distinguished coordinate `x=b_i`, let the other four coordinates be `y_1,...,y_4` and write
+Let `b_1,...,b_5>=0` with `sum b_i=1`. For every distinguished coordinate `x=b_i`, let the other four coordinates be `y_1,...,y_4` and write
 
 \[
 R_k=\sum_{j=1}^4y_j^k,\qquad \sum_jy_j=1-x.
@@ -113,7 +113,7 @@ H_x(y)
 \tag{5}
 \]
 
-For fixed `x`, `H_x` is a symmetric quartic polynomial in four nonnegative variables on a simplex.  We use the established nonnegative half-degree principle for symmetric optimization (Timofte; Riener): after fixing the first power sum, it is enough to inspect every possible support size with at most two distinct **positive** coordinate values.  The boundary support cannot be discarded.  Up to permutation the required patterns are therefore
+For fixed `x`, `H_x` is a symmetric quartic polynomial in four nonnegative variables on a simplex. We use the established nonnegative half-degree principle for symmetric optimization (Timofte; Riener): after fixing the first power sum, it is enough to inspect every possible support size with at most two distinct positive coordinate values. Up to permutation the required patterns are
 
 \[
 1,\qquad 1+1,\qquad 1+2,\qquad 1+3,\qquad 2+2.
@@ -142,16 +142,12 @@ The two intervals have largest degree-four Bernstein coefficients
 | `[0,1/2]` | `-7/8` |
 | `[1/2,1]` | `-5/2` |
 
-so this support is strictly negative.
-
 ### Pattern `1+1`
 
 Write
 
 \[
-(y_1,y_2,y_3,y_4)=
-(1-x)(t,1-t,0,0),
-\qquad 0\le x,t\le1.
+(y_1,y_2,y_3,y_4)=(1-x)(t,1-t,0,0).
 \]
 
 Three cells suffice:
@@ -167,8 +163,7 @@ Three cells suffice:
 Write
 
 \[
-(y_1,y_2,y_3,y_4)=
-(1-x)\left(1-t,\frac t2,\frac t2,0\right).
+(y_1,y_2,y_3,y_4)=(1-x)\left(1-t,\frac t2,\frac t2,0\right).
 \]
 
 Again three cells suffice:
@@ -184,14 +179,12 @@ Again three cells suffice:
 Write
 
 \[
-(y_1,y_2,y_3,y_4)
-=\frac{1-x}{2}(t,t,1-t,1-t),
-\qquad 0\le x,t\le1.
+(y_1,y_2,y_3,y_4)=\frac{1-x}{2}(t,t,1-t,1-t).
 \]
 
-An exact rational Bernstein certificate needs only the two cells
+The two cells have largest degree-`(4,4)` Bernstein coefficients
 
-| `x` interval | `t` interval | largest degree-`(4,4)` Bernstein coefficient |
+| `x` interval | `t` interval | largest coefficient |
 |---|---|---:|
 | `[0,1/2]` | `[0,1]` | `-1/4` |
 | `[1/2,1]` | `[0,1]` | `-17/12` |
@@ -201,24 +194,22 @@ An exact rational Bernstein certificate needs only the two cells
 Write
 
 \[
-(y_1,y_2,y_3,y_4)
-=(1-x)\left(1-t,\frac t3,\frac t3,\frac t3\right),
-\qquad 0\le x,t\le1.
+(y_1,y_2,y_3,y_4)=(1-x)\left(1-t,\frac t3,\frac t3,\frac t3\right).
 \]
 
-The exact rational Bernstein certificate uses three cells:
+The three cells have largest Bernstein coefficients
 
-| `x` interval | `t` interval | largest Bernstein coefficient |
+| `x` interval | `t` interval | largest coefficient |
 |---|---|---:|
 | `[1/2,1]` | `[0,1]` | `-7/6` |
 | `[0,1/2]` | `[1/2,1]` | `-7/8` |
 | `[0,1/2]` | `[0,1/2]` | `0` |
 
-All support patterns are therefore nonpositive.  Equations (2)--(5) imply `b1>=0`, proving (1).
+All support patterns are therefore nonpositive. Equations (2)--(5) imply `b1>=0`, proving (1).
 
 ## 3. Exact high-leverage stability split
 
-The same rank-two algebra gives a second useful identity.  Let
+Let
 
 \[
 d_i=P_{ii},\qquad D_k=\sum_i d_i^k,
@@ -236,7 +227,7 @@ Let `D=diag(d)` and let
 m_{ij}=d_i d_j-P_{ij}^2
 \]
 
-be the squared Pluecker coordinates.  Then
+be the squared Pluecker coordinates. Then
 
 \[
 \boxed{
@@ -248,54 +239,18 @@ be the squared Pluecker coordinates.  Then
 \tag{6}
 \]
 
-Both correction terms are manifestly nonnegative.  To derive (6), write
-
-\[
-C=\sum_{i<j}d_i d_jm_{ij},\qquad
-J=\sum_{i<j}m_{ij}P_{ij}^2.
-\]
-
-Since `d_i d_j=m_ij+P_ij^2`,
-
-\[
-24C-8\sum m_{ij}^2=16C+8J.
-\]
-
-If `U` is a Parseval frame with `P=UU^T`, then
-
-\[
-C=\det(U^TDU)
-\]
-
-and
-
-\[
-C-\frac{D_2^2-D_3}{2}
-=\frac12\|(I-P)DP\|_F^2.
-\]
-
-Substitution into the exact Pluecker defect yields (6).
-
-The balanced-diagonal theorem is precisely the region where the scalar term `F(d)` is already nonnegative.  In the remaining high-leverage region, (6) identifies the only two geometric resources that must compensate a potentially negative `F`: failure of the leverage diagonal to commute with the projection, and genuine angle mixing between Pluecker and Gram weights.
+Both correction terms are manifestly nonnegative. The balanced-diagonal theorem is precisely the region where `F(d)>=0`; in the remaining high-leverage region, (6) identifies the two geometric terms that must compensate a possibly negative scalar defect.
 
 ## 4. Remaining target
 
-The heavy-path Bernstein program is now
+The coefficientwise heavy-path program currently has
 
-- `b0>=0`: proved at the coordinate-plus-rank-one endpoint;
+- `b0>=0`: proved at `eps=0` by the two-direction theorem;
 - `b1>=0`: proved here;
-- `b2,b3`: open;
-- `b4>=0`: proved by the balanced-diagonal theorem.
+- `b2,b3,b4`: not globally proved for a fixed arbitrary pair `p,q`.
 
-So only the two middle coefficients remain.  Their numerical minima are still
-
-\[
-b_2\approx\frac{25}{768},\qquad
-b_3\approx\frac7{256},
-\]
-
-attained by the same two-direction degeneration, but those constants remain conjectural until an analytic or exact computer certificate is obtained.
+The earlier statement that `b4` followed from the balanced-diagonal theorem was incorrect: `P(1/2)` need not have all diagonal entries at most `1/2`. For the global rank-two theorem, a stronger direct route is now preferable: apply the exact Pluecker defect together with the sharp interval bounds on each `m_ij`, yielding a finite linear relaxation that numerically remains nonnegative even after decomposability is dropped. An analytic dual certificate for that relaxation would close rank two without proving `b2,b3,b4` separately.
 
 ### Prior-art note
 
-The half-degree principle used in the finite quartic reduction is due to Timofte and subsequent refinements/elementary proofs by Riener; see V. Timofte, *On the positivity of symmetric polynomial functions, Part I* (2003), and C. Riener, *On the degree and half-degree principle for symmetric polynomials* (2012).  The project contribution here is the reduction of the rank-two hafnian-gradient coefficient to this quartic certificate, not the general symmetric-polynomial principle itself.
+The half-degree principle used in the finite quartic reduction is due to Timofte and subsequent refinements/elementary proofs by Riener; see V. Timofte, *On the positivity of symmetric polynomial functions, Part I* (2003), and C. Riener, *On the degree and half-degree principle for symmetric polynomials* (2012). The project contribution here is the reduction of the rank-two hafnian-gradient coefficient to this quartic certificate, not the general symmetric-polynomial principle itself.
