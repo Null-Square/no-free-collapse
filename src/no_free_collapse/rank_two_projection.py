@@ -34,31 +34,14 @@ def rank_two_plucker_weights(
     *,
     atol: float = 1e-10,
 ) -> np.ndarray:
-    """Return squared Pluecker coordinates of a rank-two projection.
-
-    If ``P=UU^T`` with ``U`` a ``6 x 2`` Parseval frame and row vectors
-    ``u_i``, then
-
-        m_ij = det(u_i,u_j)^2
-             = P_ii P_jj - P_ij^2.
-
-    The returned symmetric matrix has zero diagonal and satisfies the exact
-    marginal identities
-
-        sum_{j != i} m_ij = P_ii,
-        sum_{i<j} m_ij = 1.
-
-    Thus the squared Pluecker coordinates form a probability distribution on
-    the 15 edges of K_6 whose vertex marginals are the diagonal of P.
-    """
+    """Return squared Pluecker coordinates of a rank-two projection."""
     P = _validate_rank_two_projection(projection, atol=atol)
     d = np.diag(P)
     m = np.outer(d, d) - P * P
     np.fill_diagonal(m, 0.0)
     if float(np.min(m)) < -20.0 * atol:
         raise ValueError("rank-two principal minors must be nonnegative")
-    m = np.maximum(m, 0.0)
-    return m
+    return np.maximum(m, 0.0)
 
 
 def rank_two_tensor_q2_formula(
@@ -66,20 +49,7 @@ def rank_two_tensor_q2_formula(
     *,
     atol: float = 1e-10,
 ) -> float:
-    """Evaluate the exact tensor-Parseval formula for ``q2`` at rank two.
-
-    Write ``d_i=P_ii``, ``D_k=sum_i d_i^k`` and
-
-        S = sum_{i<j} (d_i d_j + 2 P_ij^2)^2.
-
-    For every rank-two orthogonal projection on R^6,
-
-        q2 = 1 - (5/2) D2 + 3 D3 - (9/8) D4 + S/4.
-
-    The identity follows by applying Parseval to the fourth Gaussian moment
-    tensor of the underlying two-dimensional Parseval frame and partitioning
-    ordered four-tuples by collision pattern.
-    """
+    """Evaluate the exact tensor-Parseval formula for ``q2`` at rank two."""
     P = _validate_rank_two_projection(projection, atol=atol)
     d = np.diag(P)
     D2 = float(np.sum(d**2))
@@ -96,22 +66,7 @@ def rank_two_projection_gradient_defect(
     *,
     atol: float = 1e-10,
 ) -> float:
-    """Evaluate the exact rank-two gradient defect ``q1/4-q2``.
-
-    Let ``m_ij`` be the squared Pluecker coordinates and set
-
-        Dk = sum_i d_i^k,
-        C  = sum_{i<j} d_i d_j m_ij,
-        M2 = sum_{i<j} m_ij^2.
-
-    Then
-
-        8 (q1/4-q2)
-          = -6 + 19 D2 - 24 D3 + 18 D4 - 9 D2^2
-            + 24 C - 8 M2.
-
-    This is an identity, not a claim that the defect is globally nonnegative.
-    """
+    """Evaluate the exact rank-two gradient defect ``q1/4-q2``."""
     P = _validate_rank_two_projection(projection, atol=atol)
     d = np.diag(P)
     m = rank_two_plucker_weights(P, atol=atol)
@@ -134,27 +89,50 @@ def rank_two_projection_gradient_defect(
     ) / 8.0
 
 
+def rank_two_stability_decomposition(
+    projection: np.ndarray,
+    *,
+    atol: float = 1e-10,
+) -> tuple[float, float, float]:
+    """Return ``(F, commutator_energy, angle_mixing)`` in the exact defect split.
+
+    For every rank-two projection, with ``D=diag(diag(P))`` and squared
+    Pluecker weights ``m_ij``, the exact identity is
+
+        8 (q1/4-q2) = F + 8 E_comm + 8 J,
+
+    where
+
+        F = -6 + 19 D2 - 32 D3 + 18 D4 - D2^2,
+        E_comm = ||(I-P) D P||_F^2,
+        J = sum_{i<j} m_ij P_ij^2.
+
+    Both energies are nonnegative.  The balanced-diagonal theorem proves
+    ``F>=0`` when every diagonal entry is at most one half; outside that
+    region the two energies quantify exactly how geometry repairs a possibly
+    negative scalar term.
+    """
+    P = _validate_rank_two_projection(projection, atol=atol)
+    d = np.diag(P)
+    D = np.diag(d)
+    D2 = float(np.sum(d**2))
+    D3 = float(np.sum(d**3))
+    D4 = float(np.sum(d**4))
+    F = -6.0 + 19.0 * D2 - 32.0 * D3 + 18.0 * D4 - D2 * D2
+    E_comm = float(np.linalg.norm((np.eye(6) - P) @ D @ P, ord="fro") ** 2)
+    m = rank_two_plucker_weights(P, atol=atol)
+    J = 0.0
+    for i, j in SIX_VARIABLE_EDGES:
+        J += float(m[i, j] * P[i, j] ** 2)
+    return F, E_comm, J
+
+
 def rank_two_harmonic_invariants(
     projection: np.ndarray,
     *,
     atol: float = 1e-10,
 ) -> tuple[float, float, float, complex, complex, complex]:
-    """Return the exact planar Fourier invariants ``(D2,D3,D4,A,B,S)``.
-
-    Choose any Parseval frame ``P=UU^T`` and write its nonzero row vectors as
-
-        u_i = sqrt(d_i) (cos(theta_i), sin(theta_i)),
-        z_i = exp(2 i theta_i).
-
-    Parseval isotropy is exactly ``sum_i d_i z_i = 0``.  Define
-
-        A = sum_i d_i^2 z_i,
-        B = sum_i d_i^2 z_i^2,
-        S = (1/2) sum_i d_i z_i^2.
-
-    A latent-plane rotation changes only the phases of ``A,B,S``; their
-    magnitudes and the harmonic defect formula are basis independent.
-    """
+    """Return the exact planar Fourier invariants ``(D2,D3,D4,A,B,S)``."""
     P = _validate_rank_two_projection(projection, atol=atol)
     U = _rank_two_parseval_frame(P)
     d = np.diag(P)
@@ -181,18 +159,7 @@ def rank_two_harmonic_gradient_defect(
     *,
     atol: float = 1e-10,
 ) -> float:
-    """Evaluate the exact harmonic formula for ``q1/4-q2`` at rank two.
-
-    With ``(D2,D3,D4,A,B,S)`` from :func:`rank_two_harmonic_invariants`,
-
-        8 (q1/4-q2)
-          = -6 + 19 D2 - 24 D3 + 18 D4
-            - (9/2) D2^2 - 4 |A|^2 - (1/2) |B|^2.
-
-    The auxiliary second harmonic ``S`` does not enter this identity directly;
-    it is useful because ``|S|=1`` characterizes the exact two-direction
-    endpoint of the planar moment problem.
-    """
+    """Evaluate the exact harmonic formula for ``q1/4-q2`` at rank two."""
     D2, D3, D4, A, B, _ = rank_two_harmonic_invariants(projection, atol=atol)
     return (
         -6.0
@@ -211,20 +178,7 @@ def rank_two_heavy_coordinate_decomposition(
     index: int | None = None,
     atol: float = 1e-10,
 ) -> tuple[float, np.ndarray, np.ndarray, int]:
-    """Return the canonical heavy-coordinate interpolation ``(eps,p,q,index)``.
-
-    If ``t=P[index,index]`` lies strictly between zero and one, set
-    ``eps=1-t``.  After choosing the latent basis so the selected row is on the
-    first latent axis, every rank-two projection has the exact block form
-
-        P = [[1-eps, sqrt(eps(1-eps)) p^T],
-             [sqrt(eps(1-eps)) p, eps p p^T + q q^T]],
-
-    where ``p,q`` are orthonormal vectors in ``R^5``.  If ``index`` is omitted,
-    the largest diagonal entry is used.  The intended high-leverage regime is
-    ``P[index,index] > 1/2``; the identity itself holds for any nondegenerate
-    selected coordinate.
-    """
+    """Return the canonical heavy-coordinate interpolation ``(eps,p,q,index)``."""
     P = _validate_rank_two_projection(projection, atol=atol)
     d = np.diag(P)
     if index is None:
@@ -262,11 +216,7 @@ def rank_two_heavy_coordinate_projection(
     *,
     atol: float = 1e-10,
 ) -> np.ndarray:
-    """Construct the canonical rank-two projection from ``eps,p,q``.
-
-    ``p`` and ``q`` must be orthonormal vectors in ``R^5`` and ``0<=eps<=1``.
-    The first coordinate has leverage ``1-eps``.
-    """
+    """Construct the canonical rank-two projection from ``eps,p,q``."""
     eps = float(eps)
     p = np.asarray(p, dtype=np.float64)
     q = np.asarray(q, dtype=np.float64)
@@ -289,6 +239,53 @@ def rank_two_heavy_coordinate_projection(
     P[1:, 0] = star
     P[1:, 1:] = eps * np.outer(p, p) + np.outer(q, q)
     return P
+
+
+def rank_two_heavy_bernstein_coefficients(
+    p: np.ndarray,
+    q: np.ndarray,
+    *,
+    atol: float = 1e-10,
+) -> np.ndarray:
+    """Return the degree-four Bernstein coefficients of the heavy-path defect.
+
+    Let ``x=2 eps`` and ``Delta(x)=q1(P(x/2))/4-q2(P(x/2))``.  Then
+
+        Delta(x) = sum_{k=0}^4 b_k C(4,k) x^k (1-x)^(4-k).
+
+    This helper returns ``(b0,...,b4)``.  The first interior coefficient
+    ``b1`` is proved nonnegative for every orthonormal ``p,q``; the global
+    positivity of ``b2,b3`` remains the final interpolation target.
+    """
+    p = np.asarray(p, dtype=np.float64)
+    q = np.asarray(q, dtype=np.float64)
+    if p.shape != (5,) or q.shape != (5,):
+        raise ValueError("p and q must have shape (5,)")
+    if not np.isclose(p @ p, 1.0, atol=atol, rtol=atol):
+        raise ValueError("p must be a unit vector")
+    if not np.isclose(q @ q, 1.0, atol=atol, rtol=atol):
+        raise ValueError("q must be a unit vector")
+    if abs(float(p @ q)) > atol:
+        raise ValueError("p and q must be orthogonal")
+
+    xs = np.asarray([0.0, 0.25, 0.5, 0.75, 1.0], dtype=np.float64)
+    values = np.asarray(
+        [
+            rank_two_projection_direct_defect(
+                rank_two_heavy_coordinate_projection(0.5 * x, p, q, atol=atol)
+            )
+            for x in xs
+        ],
+        dtype=np.float64,
+    )
+    power = np.linalg.solve(np.vander(xs, 5, increasing=True), values)
+    bernstein = np.zeros(5, dtype=np.float64)
+    for k in range(5):
+        for j in range(k + 1):
+            bernstein[k] += (
+                power[j] * math.comb(k, j) / math.comb(4, j)
+            )
+    return bernstein
 
 
 def rank_two_projection_direct_defect(projection: np.ndarray) -> float:
