@@ -70,14 +70,16 @@ The working principle is **no free collapse**: measurement can expose interferen
    `tau(C)(tau(C)+s) >= (9/8) a(C)(a(C)+s)`.
 
    Therefore any counterexample must lie in a thin shell with `tau-a < a/8`, and usually substantially less. At `tau=a`, a minimum PSD completion has a Boolean null vector; after a sign switch its Gram vectors sum to zero.
-15. The six-variable **hafnian-gradient problem** has an exact 15-dimensional perfect-matching-operator form. If `a` is the vector of off-diagonal entries and `h` the vector of complementary `4 x 4` hafnians, then `T(A)a=2h`. For rank-one orthogonal projections the sharp gradient contraction `sum h^2 <= (1/4) sum a^2` is proved exactly by Maclaurin and Cauchy, with equality only at equal squared coordinates; rank five follows by projection complementation. The projection problem therefore reduces to ranks two and three. For rank three, `K=2P-I` gives the exact involution form `K^2=I`, `Tr(K)=0`, and the target becomes `q2(K)<=q1(K)`.
-16. The critical **equal-diagonal rank-three projection stratum is solved globally and sharply**. If `P` has rank three and `P_ii=1/2`, then `K=2P-I` is a symmetric orthogonal zero-diagonal involution and
+15. The six-variable **hafnian-gradient problem** has an exact 15-dimensional perfect-matching-operator form. If `a` is the vector of off-diagonal entries and `h` the vector of complementary `4 x 4` hafnians, then `T(A)a=2h`. For rank-one orthogonal projections the sharp gradient contraction `sum h^2 <= (1/4) sum a^2` is proved exactly by Maclaurin and Cauchy, with equality only at equal squared coordinates; rank five follows by projection complementation.
+16. The full rank-three projection problem is solved globally. The equal-diagonal stratum admits the exact fourth-power identity `q2(K)=sum K_ij^4` for `K=2P-I`, with equality only on the disjoint-pair geometry. Away from equal diagonal, an exact defect identity plus a capacity/dual argument proves `q2(P)<=q1(P)/4` for every rank-three orthogonal projection.
+17. The full rank-two projection problem is solved globally. The balanced-diagonal region follows from the exact Pluecker defect and moment bounds. A diagonal-only quadratic-dual certificate proves the high-pair region `d_(1)+d_(2)>=3/2`. The remaining middle strip is closed by a universal low-edge correction bound and one exact seven-edge threshold-graph reduction. Rank four follows by complementation.
+18. Consequently the six-variable hafnian-gradient contraction is proved on the **entire orthogonal-projection locus**:
 
-   `q2(K) = sum_{i<j} K_ij^4`.
+   `q2(P) <= q1(P)/4`
 
-   Since each row has squared off-diagonal sum one, this gives `q2(K)<=q1(K)=3`, hence `q2(P)<=q1(P)/4`. Equality forces the squared support to be a perfect matching, so—up to coordinate permutation and sign switches—the unique equality geometry is the three disjoint-pair projection.
+   for every real `6 x 6` orthogonal projection `P` of rank `0,...,6`.
 
-The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, zeon algebras, generalized subhafnian inequalities, and generic SDP duality are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
+The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, zeon algebras, generalized subhafnian inequalities, generic SDP duality, Schur-Horn projection-diagonal theory, and symmetric-polynomial half-degree principles are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
 
 ## Run
 
@@ -109,25 +111,30 @@ We now have:
 - an exact, stronger symmetry-breaking optimum for the matched pair-block class;
 - a separate universal hafnian bound for the low-conditioning quadratic term;
 - an exact global solution of that hafnian extremal problem at four variables;
-- a first-order unrestricted PSD local-optimality certificate for the disjoint-pair hafnian point;
-- a strict second-order six-variable certificate at every nonzero critical tangent;
+- unrestricted first- and strict second-order local-optimality certificates for the six-variable disjoint-pair hafnian point;
 - a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix;
 - an exact elimination of the six diagonal variables via the minimum-trace completion `tau(C)` and its elliptope dual;
 - a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell;
-- an exact perfect-matching-operator formulation of the hafnian gradient, a sharp proof for projection ranks one and five, and a rank-three involution reduction;
-- a complete sharp theorem on the equal-diagonal rank-three stratum containing the disjoint-pair equality point.
+- an exact perfect-matching-operator formulation of the hafnian gradient;
+- a complete proof of the gradient contraction on every orthogonal projection rank `0,...,6`.
 
-The next sharp case is six variables. The remaining global theorem can be stated purely in the 15 off-diagonal variables as
+The next narrow question is no longer a projection-rank case. It is the extension from projections to arbitrary PSD contractions:
 
-`54 |haf(C)| <= tau(C) s(C) (tau(C)+s(C))`.
+\[
+0\preceq A\preceq I,
+\qquad
+q_2(A)\stackrel{?}{\le}\frac14q_1(A).
+\]
 
-The generic range theorem already proves this unless
+If this contraction theorem holds, scaling gives
 
-`tau(C)(tau(C)+s) < (9/8) a(C)(a(C)+s)`.
+\[
+q_2(A)\le \frac{\lambda_{\max}(A)^2}{4}q_1(A),
+\]
 
-Hence only configurations with PSD completion cost very close to the Boolean lower bound `a=-min r_C` remain. The boundary `tau=a` is especially structured: after switching a minimizing Boolean vertex to `1`, the minimum PSD completion satisfies `B 1=0`, so its six Gram vectors sum to zero.
+which in turn yields the prospective spectral hafnian-energy inequality by Euler plus Cauchy. That would feed directly back into the sharp six-variable PSD hafnian problem.
 
-The current proof program remains narrow. For rank three the exact equality stratum `diag(P)=1/2` is now closed, so the unresolved part is **diagonal imbalance away from 1/2**. In the coordinates `y_i=P_ii-1/2` and `x_ij=P_ij^2`, the remaining defect is controlled by two manifestly nonnegative quantities: wedge spreading of the edge-square graph and the commutator energy `sum x_ij(y_i-y_j)^2`. The next goal is a stability inequality showing that these terms dominate the diagonal-imbalance defect. Rank two remains a secondary projection case. The stronger operator-norm inequality for `T(A)` remains conjectural and is not used as a theorem.
+The projection theorem is therefore a completed intermediate milestone, not the end of the six-variable program. The next work should test whether arbitrary contractions reduce to projections through spectral interpolation, extreme-point geometry, or a new convexity principle; no such extension is currently claimed.
 
 ## Notes
 
@@ -143,5 +150,8 @@ The current proof program remains narrow. For rank three the exact equality stra
 - [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md): exact proof of the candidate six-variable inequality on the full rank-one PSD stratum.
 - [`docs/diagonal_completion.md`](docs/diagonal_completion.md): exact minimum-trace completion reduction, elliptope dual, and closed-form PSD cost of the `1/200` relaxed witness.
 - [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md): sharp asymmetric range-only theorem and reduction to the thin `tau≈a` shell.
-- [`docs/projection_gradient.md`](docs/projection_gradient.md): perfect-matching operator, zeon reformulation, sharp rank-one/rank-five projection theorem, and rank-three involution reduction.
-- [`docs/rank_three_equal_diagonal.md`](docs/rank_three_equal_diagonal.md): exact fourth-power identity and unique disjoint-pair equality theorem on the equal-diagonal rank-three stratum.
+- [`docs/projection_gradient.md`](docs/projection_gradient.md): perfect-matching operator and projection-gradient framework.
+- [`docs/rank_three_global_gradient.md`](docs/rank_three_global_gradient.md): global rank-three projection theorem.
+- [`docs/rank_two_balanced_diagonal.md`](docs/rank_two_balanced_diagonal.md): balanced-diagonal rank-two theorem.
+- [`docs/rank_two_dual_high_pair.md`](docs/rank_two_dual_high_pair.md): diagonal quadratic-dual high-pair theorem.
+- [`docs/rank_two_global_projection.md`](docs/rank_two_global_projection.md): final middle-strip proof and global rank-two/rank-four theorem.
