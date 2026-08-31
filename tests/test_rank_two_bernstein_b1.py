@@ -58,11 +58,44 @@ def test_first_heavy_bernstein_coefficient_coordinate_equality_family():
         assert np.isclose(coeffs[1], 1.0 / 32.0, atol=2e-12, rtol=2e-12)
 
 
-# Exact rational certificate for the final quartic simplex lemma in the b1
-# proof.  After the Timofte--Riener half-degree reduction, the four remaining
-# probability coordinates have multiplicities 2+2 or 1+3.  With x in [0,1]
-# and a normalized split parameter t in [0,1], the two quartics below are the
-# exact upper-bound polynomials that must be <=0.
+# Exact rational certificates for the final quartic simplex lemma in the b1
+# proof.  The nonnegative half-degree principle requires checking every support
+# size 1,2,3,4, with at most two distinct positive coordinate values.  Up to
+# permutation these are the patterns 1, 1+1, 1+2, 1+3, and 2+2.
+P1 = {
+    (4, 0): Fraction(-48),
+    (3, 0): Fraction(72),
+    (2, 0): Fraction(-32),
+    (1, 0): Fraction(1),
+    (0, 0): Fraction(-1),
+}
+
+P11 = {
+    (4, 4): Fraction(-48), (4, 3): Fraction(96), (4, 2): Fraction(-144),
+    (4, 1): Fraction(96), (4, 0): Fraction(-48),
+    (3, 4): Fraction(192), (3, 3): Fraction(-384), (3, 2): Fraction(456),
+    (3, 1): Fraction(-264), (3, 0): Fraction(72),
+    (2, 4): Fraction(-288), (2, 3): Fraction(576), (2, 2): Fraction(-536),
+    (2, 1): Fraction(248), (2, 0): Fraction(-32),
+    (1, 4): Fraction(192), (1, 3): Fraction(-384), (1, 2): Fraction(280),
+    (1, 1): Fraction(-88), (1, 0): Fraction(1),
+    (0, 4): Fraction(-48), (0, 3): Fraction(96), (0, 2): Fraction(-56),
+    (0, 1): Fraction(8), (0, 0): Fraction(-1),
+}
+
+P12 = {
+    (4, 4): Fraction(-27), (4, 3): Fraction(144), (4, 2): Fraction(-192),
+    (4, 1): Fraction(96), (4, 0): Fraction(-48),
+    (3, 4): Fraction(108), (3, 3): Fraction(-495), (3, 2): Fraction(597),
+    (3, 1): Fraction(-264), (3, 0): Fraction(72),
+    (2, 4): Fraction(-162), (2, 3): Fraction(621), (2, 2): Fraction(-663),
+    (2, 1): Fraction(248), (2, 0): Fraction(-32),
+    (1, 4): Fraction(108), (1, 3): Fraction(-333), (1, 2): Fraction(303),
+    (1, 1): Fraction(-88), (1, 0): Fraction(1),
+    (0, 4): Fraction(-27), (0, 3): Fraction(63), (0, 2): Fraction(-45),
+    (0, 1): Fraction(8), (0, 0): Fraction(-1),
+}
+
 P22 = {
     (4, 4): Fraction(6), (3, 4): Fraction(-24), (2, 4): Fraction(36),
     (1, 4): Fraction(-24), (0, 4): Fraction(6),
@@ -122,9 +155,42 @@ def _bernstein_coefficients(poly, nx=4, nt=4):
     return values
 
 
-def _cell_max_bernstein(poly, xr, tr):
+def _cell_max_bernstein(poly, xr, tr, *, nt=4):
     pulled = _affine_pullback(poly, *xr, *tr)
-    return max(_bernstein_coefficients(pulled))
+    return max(_bernstein_coefficients(pulled, nx=4, nt=nt))
+
+
+def test_exact_bernstein_certificate_for_single_support_pattern():
+    assert _cell_max_bernstein(
+        P1, (Fraction(0), Fraction(1, 2)), (Fraction(0), Fraction(1)), nt=0
+    ) == Fraction(-7, 8)
+    assert _cell_max_bernstein(
+        P1, (Fraction(1, 2), Fraction(1)), (Fraction(0), Fraction(1)), nt=0
+    ) == Fraction(-5, 2)
+
+
+def test_exact_bernstein_certificate_for_one_plus_one_pattern():
+    assert _cell_max_bernstein(
+        P11, (Fraction(0), Fraction(1, 2)), (Fraction(0), Fraction(1, 2))
+    ) == Fraction(0)
+    assert _cell_max_bernstein(
+        P11, (Fraction(0), Fraction(1, 2)), (Fraction(1, 2), Fraction(1))
+    ) == Fraction(0)
+    assert _cell_max_bernstein(
+        P11, (Fraction(1, 2), Fraction(1)), (Fraction(0), Fraction(1))
+    ) == Fraction(-77, 36)
+
+
+def test_exact_bernstein_certificate_for_one_plus_two_pattern():
+    assert _cell_max_bernstein(
+        P12, (Fraction(1, 2), Fraction(1)), (Fraction(0), Fraction(1))
+    ) == Fraction(-59, 32)
+    assert _cell_max_bernstein(
+        P12, (Fraction(0), Fraction(1, 2)), (Fraction(0), Fraction(1, 2))
+    ) == Fraction(0)
+    assert _cell_max_bernstein(
+        P12, (Fraction(0), Fraction(1, 2)), (Fraction(1, 2), Fraction(1))
+    ) == Fraction(-15, 8)
 
 
 def test_exact_bernstein_certificate_for_two_plus_two_pattern():
