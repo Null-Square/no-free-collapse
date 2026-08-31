@@ -70,6 +70,13 @@ from .rank_two_projection import (
     rank_two_stability_decomposition,
     rank_two_tensor_q2_formula,
 )
+from .spectral_polarization import (
+    FOUR_SUBSETS,
+    nested_projection_polarized_defect,
+    normalized_spectral_chain,
+    spectral_chain_polarized_average,
+    zeon_degree_four_product,
+)
 
 __all__ = [
     "born_score", "normalized_born_probability", "polynomial_state", "preparation_order",
@@ -99,4 +106,7 @@ __all__ = [
     "rank_two_heavy_coordinate_projection", "rank_two_plucker_weights",
     "rank_two_projection_direct_defect", "rank_two_projection_gradient_defect",
     "rank_two_stability_decomposition", "rank_two_tensor_q2_formula",
+    "FOUR_SUBSETS", "nested_projection_polarized_defect",
+    "normalized_spectral_chain", "spectral_chain_polarized_average",
+    "zeon_degree_four_product",
 ]
