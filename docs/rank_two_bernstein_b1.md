@@ -113,9 +113,71 @@ H_x(y)
 \tag{5}
 \]
 
-For fixed `x`, `H_x` is a symmetric quartic polynomial in four nonnegative variables on a simplex.  We use the established half-degree principle for symmetric optimization (Timofte; Riener): a quartic symmetric polynomial on such a fixed-first-power-sum slice need only be checked on points with at most two distinct components.  This is prior art and is not a novelty claim of the project.
+For fixed `x`, `H_x` is a symmetric quartic polynomial in four nonnegative variables on a simplex.  We use the established nonnegative half-degree principle for symmetric optimization (Timofte; Riener): after fixing the first power sum, it is enough to inspect every possible support size with at most two distinct **positive** coordinate values.  The boundary support cannot be discarded.  Up to permutation the required patterns are therefore
 
-Therefore only two multiplicity patterns remain.
+\[
+1,\qquad 1+1,\qquad 1+2,\qquad 1+3,\qquad 2+2.
+\]
+
+The test suite reconstructs every certificate below exactly with Python `Fraction`; no floating-point optimization enters the proof.
+
+### Support `1`
+
+Put
+
+\[
+(y_1,y_2,y_3,y_4)=(1-x,0,0,0).
+\]
+
+Then
+
+\[
+H_x=-48x^4+72x^3-32x^2+x-1.
+\]
+
+The two intervals have largest degree-four Bernstein coefficients
+
+| `x` interval | largest coefficient |
+|---|---:|
+| `[0,1/2]` | `-7/8` |
+| `[1/2,1]` | `-5/2` |
+
+so this support is strictly negative.
+
+### Pattern `1+1`
+
+Write
+
+\[
+(y_1,y_2,y_3,y_4)=
+(1-x)(t,1-t,0,0),
+\qquad 0\le x,t\le1.
+\]
+
+Three cells suffice:
+
+| `x` interval | `t` interval | largest Bernstein coefficient |
+|---|---|---:|
+| `[0,1/2]` | `[0,1/2]` | `0` |
+| `[0,1/2]` | `[1/2,1]` | `0` |
+| `[1/2,1]` | `[0,1]` | `-77/36` |
+
+### Pattern `1+2`
+
+Write
+
+\[
+(y_1,y_2,y_3,y_4)=
+(1-x)\left(1-t,\frac t2,\frac t2,0\right).
+\]
+
+Again three cells suffice:
+
+| `x` interval | `t` interval | largest Bernstein coefficient |
+|---|---|---:|
+| `[1/2,1]` | `[0,1]` | `-59/32` |
+| `[0,1/2]` | `[0,1/2]` | `0` |
+| `[0,1/2]` | `[1/2,1]` | `-15/8` |
 
 ### Pattern `2+2`
 
@@ -127,14 +189,12 @@ Write
 \qquad 0\le x,t\le1.
 \]
 
-After substitution, (5) becomes the bivariate quartic `P22(x,t)<=0`.  An exact rational Bernstein certificate needs only the two cells
+An exact rational Bernstein certificate needs only the two cells
 
 | `x` interval | `t` interval | largest degree-`(4,4)` Bernstein coefficient |
 |---|---|---:|
 | `[0,1/2]` | `[0,1]` | `-1/4` |
 | `[1/2,1]` | `[0,1]` | `-17/12` |
-
-Hence `P22<=0` everywhere.
 
 ### Pattern `1+3`
 
@@ -154,9 +214,7 @@ The exact rational Bernstein certificate uses three cells:
 | `[0,1/2]` | `[1/2,1]` | `-7/8` |
 | `[0,1/2]` | `[0,1/2]` | `0` |
 
-Thus `P13<=0` everywhere as well.  The test suite reconstructs these coefficients exactly with Python `Fraction`, so no floating-point optimization enters the certificate.
-
-Equations (2)--(5) therefore imply `b1>=0`, proving (1).
+All support patterns are therefore nonpositive.  Equations (2)--(5) imply `b1>=0`, proving (1).
 
 ## 3. Exact high-leverage stability split
 
