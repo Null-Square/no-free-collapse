@@ -1,6 +1,6 @@
 # Rank-two harmonic and heavy-coordinate reductions
 
-This note records two exact reformulations of the remaining rank-two projection-gradient problem.  They are reductions, not a proof of the last high-leverage case.
+This note records two exact reformulations of the remaining rank-two projection-gradient problem. They are reductions, not a proof of the last high-leverage case.
 
 Let `P` be a real `6 x 6` rank-two orthogonal projection and write
 
@@ -12,7 +12,7 @@ q_2(P)=\sum_{i<j}\operatorname{haf}(P_{\widehat i,\widehat j})^2,
 \Delta(P)=\frac14q_1(P)-q_2(P).
 \]
 
-The balanced-diagonal theorem already proves `Delta>=0` when every `P_ii<=1/2`.  Thus the unresolved region has at least one leverage score strictly above one half.
+The balanced-diagonal theorem already proves `Delta>=0` when every `P_ii<=1/2`. Thus the unresolved region has at least one leverage score strictly above one half.
 
 ## 1. Planar harmonic form
 
@@ -95,14 +95,14 @@ Equation (4) is exact and has been checked in tests against direct complementary
 
 ### Bessel coupling
 
-Put probability mass `d_i/2` on `z_i` and let the random variable `D` take value `d_i` at the same atom.  Equation (1) is `E Z=0`.  The functions
+Put probability mass `d_i/2` on `z_i` and let the random variable `D` take value `d_i` at the same atom. Equation (1) is `E Z=0`. The functions
 
 \[
 1,\qquad \overline Z,\qquad
 \frac{\overline Z^2-\overline S}{\sqrt{1-|S|^2}}
 \]
 
-are orthonormal whenever `|S|<1`.  Bessel therefore yields the exact useful constraint
+are orthonormal whenever `|S|<1`. Bessel therefore yields
 
 \[
 \boxed{
@@ -113,7 +113,7 @@ are orthonormal whenever `|S|<1`.  Bessel therefore yields the exact useful cons
 \tag{5}
 \]
 
-The endpoint `|S|=1` is geometrically meaningful: equality in the triangle inequality forces all `z_i^2` with positive weight to have the same phase, so the frame uses two orthogonal latent directions.  That entire class is already solved sharply, with maximum `q2/q1=33/160`.
+The endpoint `|S|=1` is geometrically meaningful: equality in the triangle inequality forces all `z_i^2` with positive weight to have the same phase, so the frame uses two orthogonal latent directions. That entire class is already solved sharply, with maximum `q2/q1=33/160`.
 
 Thus `1-|S|^2` is a quantitative angular-mixing parameter connecting the known two-direction theorem to the genuinely multidirectional problem.
 
@@ -127,7 +127,7 @@ t=P_{00}>\frac12,
 \varepsilon=1-t\in(0,1/2).
 \]
 
-Rotate the latent plane so the corresponding row lies on the first latent axis.  Projection idempotence then gives the exact representation
+Rotate the latent plane so the corresponding row lies on the first latent axis. Projection idempotence then gives the exact representation
 
 \[
 \boxed{
@@ -143,12 +143,15 @@ P(\varepsilon)=
 
 where `p,q in R^5` are orthonormal.
 
-The endpoints are both solved:
+The `eps=0` endpoint is solved: it is a coordinate projection plus a five-coordinate rank-one projection, equivalently a two-direction frame. The fixed-`(p,q)` endpoint `eps=1/2` is **not** automatically balanced-diagonal. Its remaining leverage scores are
 
-- `eps=0` is a coordinate projection plus a five-coordinate rank-one projection;
-- `eps=1/2` lies on the balanced-diagonal boundary already covered by the rank-two balanced theorem.
+\[
+P_{jj}=\frac12p_j^2+q_j^2,
+\]
 
-The squared Pluecker coordinates simplify especially strongly.  If
+which can exceed `1/2` and can even equal `1`. Therefore no endpoint theorem for `eps=1/2` is assumed here.
+
+The squared Pluecker coordinates simplify especially strongly. If
 
 \[
 n_{jk}=\det((p_j,q_j),(p_k,q_k))^2,
@@ -169,7 +172,7 @@ So the high-leverage interpolation is driven by a five-coordinate rank-two Pluec
 
 ## 3. Bernstein diagnostic
 
-For fixed orthonormal `p,q`, `Delta(P(eps))` is a degree-four polynomial in `eps`.  Put
+For fixed orthonormal `p,q`, `Delta(P(eps))` is a degree-four polynomial in `eps`. Put
 
 \[
 x=2\varepsilon\in[0,1]
@@ -182,19 +185,8 @@ and write it in the degree-four Bernstein basis
 =\sum_{k=0}^4 b_k\binom4k x^k(1-x)^{4-k}.
 \]
 
-The endpoint coefficients `b0` and `b4` are nonnegative by the two already-proved endpoint theorems.
+The coefficient `b0` is nonnegative by the solved `eps=0` two-direction endpoint. The first interior coefficient `b1` has a separate global proof. The coefficients `b2,b3,b4` remain open in this fixed-path formulation.
 
-Extensive random scans and constrained Stiefel optimization have so far found
+Extensive random scans and constrained Stiefel optimization have suggested positive lower bounds for the interior coefficients, but these numerical values are diagnostics only and are not used as theorems. In particular, positivity of `b4` cannot be imported from the balanced-diagonal theorem because `P(1/2)` need not be balanced.
 
-\[
-b_1\ge\frac1{32},
-\qquad
-b_2\ge\frac{25}{768},
-\qquad
-b_3\ge\frac7{256},
-\tag{8}
-\]
-
-with the apparent minima attained by two-direction degenerations.  **Equation (8) is conjectural and is not used as a theorem.**  If these three coefficient bounds are proved, the remaining high-leverage rank-two region closes immediately because every Bernstein basis function is nonnegative on `[0,1]`.
-
-The next proof target is therefore finite and concrete: establish positivity of the three interior Bernstein coefficients, preferably after rewriting them in the five-coordinate Pluecker variables from (7), or replace (8) with an equally strong harmonic stability estimate using (5).
+The next proof target is therefore to control the remaining coefficients or replace coefficientwise positivity with a direct positivity proof for the quartic path on the interval actually needed by a heavy-coordinate projection.
