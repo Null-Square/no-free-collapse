@@ -53,6 +53,16 @@ from .projection_gradient import (
     six_variable_gradient_energies,
     six_variable_perfect_matching_operator,
 )
+from .rank_two_projection import (
+    rank_two_harmonic_gradient_defect,
+    rank_two_harmonic_invariants,
+    rank_two_heavy_coordinate_decomposition,
+    rank_two_heavy_coordinate_projection,
+    rank_two_plucker_weights,
+    rank_two_projection_direct_defect,
+    rank_two_projection_gradient_defect,
+    rank_two_tensor_q2_formula,
+)
 
 __all__ = [
     "born_score", "normalized_born_probability", "polynomial_state", "preparation_order",
@@ -75,4 +85,8 @@ __all__ = [
     "rank_three_projection_gradient_defect", "rank_three_projection_involution",
     "rank_three_projection_stability_terms", "six_variable_edge_vector",
     "six_variable_gradient_energies", "six_variable_perfect_matching_operator",
+    "rank_two_harmonic_gradient_defect", "rank_two_harmonic_invariants",
+    "rank_two_heavy_coordinate_decomposition", "rank_two_heavy_coordinate_projection",
+    "rank_two_plucker_weights", "rank_two_projection_direct_defect",
+    "rank_two_projection_gradient_defect", "rank_two_tensor_q2_formula",
 ]
