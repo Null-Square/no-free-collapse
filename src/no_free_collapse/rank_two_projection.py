@@ -249,13 +249,15 @@ def rank_two_heavy_bernstein_coefficients(
 ) -> np.ndarray:
     """Return the degree-four Bernstein coefficients of the heavy-path defect.
 
-    Let ``x=2 eps`` and ``Delta(x)=q1(P(x/2))/4-q2(P(x/2))``.  Then
+    Let ``x=2 eps`` and ``Delta(x)=q1(P(x/2))/4-q2(P(x/2))``. Then
 
         Delta(x) = sum_{k=0}^4 b_k C(4,k) x^k (1-x)^(4-k).
 
-    This helper returns ``(b0,...,b4)``.  The first interior coefficient
-    ``b1`` is proved nonnegative for every orthonormal ``p,q``; the global
-    positivity of ``b2,b3`` remains the final interpolation target.
+    This helper returns ``(b0,...,b4)``. The coefficient ``b0`` is covered by
+    the solved ``eps=0`` two-direction endpoint and ``b1`` is proved
+    nonnegative for every orthonormal ``p,q``. No global theorem is asserted
+    here for ``b2,b3,b4``; in particular ``eps=1/2`` need not be in the
+    balanced-diagonal regime.
     """
     p = np.asarray(p, dtype=np.float64)
     q = np.asarray(q, dtype=np.float64)
@@ -282,9 +284,7 @@ def rank_two_heavy_bernstein_coefficients(
     bernstein = np.zeros(5, dtype=np.float64)
     for k in range(5):
         for j in range(k + 1):
-            bernstein[k] += (
-                power[j] * math.comb(k, j) / math.comb(4, j)
-            )
+            bernstein[k] += power[j] * math.comb(k, j) / math.comb(4, j)
     return bernstein
 
 
