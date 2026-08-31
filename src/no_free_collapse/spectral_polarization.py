@@ -210,12 +210,15 @@ def spectral_chain_polarized_average(
 
     total = 0.0
     active = [i for i, weight in enumerate(delta) if weight > atol]
+    cache: dict[tuple[int, int, int, int], float] = {}
     for i in active:
         for j in active:
             for k in active:
                 for l in active:
-                    indices = sorted((i, j, k, l))
+                    indices = tuple(sorted((i, j, k, l)))
+                    if indices not in cache:
+                        Ps = [projections[index] for index in indices]
+                        cache[indices] = nested_projection_polarized_defect(Ps, atol=atol)
                     weight = float(delta[i] * delta[j] * delta[k] * delta[l])
-                    Ps = [projections[index] for index in indices]
-                    total += weight * nested_projection_polarized_defect(Ps, atol=atol)
+                    total += weight * cache[indices]
     return float(direct), float(total)
