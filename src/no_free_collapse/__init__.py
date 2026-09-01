@@ -42,6 +42,7 @@ from .hafnian_bounds import (
     twice_offdiag,
 )
 from .interactions import interaction_degree, walsh_coefficient, walsh_coefficients
+from .mixed_nested import rank_one_rank_five_mixed_formula, rank_one_rank_five_phi
 from .paired import matched_pair_asymptotic_rate, matched_pair_capacity, matched_pair_gram
 from .projection_gradient import (
     SIX_VARIABLE_EDGES,
@@ -94,6 +95,7 @@ __all__ = [
     "six_variable_critical_hafnian_quadratic_coefficient",
     "six_variable_critical_path_second_order_bound", "twice_offdiag",
     "interaction_degree", "walsh_coefficient", "walsh_coefficients",
+    "rank_one_rank_five_mixed_formula", "rank_one_rank_five_phi",
     "matched_pair_asymptotic_rate", "matched_pair_capacity", "matched_pair_gram",
     "SIX_VARIABLE_EDGES", "complementary_four_hafnians",
     "rank_three_projection_gradient_defect", "rank_three_projection_involution",
