@@ -1,9 +1,13 @@
-"""Spectral-chain polarization for the six-variable hafnian-gradient defect.
+"""Spectral-chain homogenization for the six-variable hafnian-gradient defect.
 
 This module records an exact reduction from a normalized PSD contraction to a
-four-linear defect evaluated on nested spectral projections.  The mixed
-nested-projection inequality itself remains conjectural; the identities here
-are exact and CPU-verifiable.
+symmetric four-slot defect kernel evaluated on nested spectral projections.
+Because the original defect contains both quadratic and quartic terms, the
+quadratic part is homogenized using spectral weights that sum to one.  The
+resulting kernel is symmetric in its four slots but is not literally
+four-linear in the projection matrices themselves.  The mixed nested-
+projection inequality remains conjectural; the identities here are exact and
+CPU-verifiable.
 """
 
 from __future__ import annotations
@@ -81,7 +85,7 @@ def nested_projection_polarized_defect(
     atol: float = 1e-10,
     check_nested: bool = True,
 ) -> float:
-    """Evaluate the symmetric four-linear mixed projection defect.
+    """Evaluate the symmetric homogenized four-slot projection defect.
 
     For four projections ``P1,...,P4`` define
 
@@ -91,6 +95,11 @@ def nested_projection_polarized_defect(
                 <Omega_Pa Omega_Pb, Omega_Pc Omega_Pd>.
 
     Setting all four arguments equal gives exactly ``q1(P)/4-q2(P)``.
+    The first term is pairwise linear, not four-linear, in the matrices.  The
+    degree-four reconstruction for a contraction is exact because the spectral
+    barycentric weights satisfy ``sum delta_k=1`` and homogenize the quadratic
+    term.  Consequently this kernel must not be expanded under rank-one
+    decompositions as though it were matrix-multilinear.
 
     When ``check_nested=True`` this routine also verifies
 
@@ -190,7 +199,7 @@ def spectral_chain_polarized_average(
 
     For nonzero ``A`` this routine first normalizes ``B=A/lambda_max`` and
     writes ``B=sum delta_k P_k`` using :func:`normalized_spectral_chain`.
-    The exact polarization identity is
+    The exact homogenized identity is
 
         q1(B)/4-q2(B)
           = sum_{i,j,k,l} delta_i delta_j delta_k delta_l
