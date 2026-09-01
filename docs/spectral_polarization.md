@@ -24,9 +24,9 @@ The projection theorem now proves `Delta(P)>=0` for every orthogonal projection 
 \tag{1}
 \]
 
-A naive extreme-point argument does not work: for a fixed eigenbasis, varying one eigenvalue can give a strict interior maximum of `q2-q1/4`.  Thus separate convexity / endpoint maximization is not available.
+A naive extreme-point argument does not work: for a fixed eigenbasis, varying one eigenvalue can give a strict interior maximum of `q2-q1/4`. Thus separate convexity / endpoint maximization is not available.
 
-The correct exact reduction is instead four-linear and uses the nested spectral projections of `A`.
+The correct exact reduction instead uses a symmetric four-slot kernel on the nested spectral projections of `A`.  A terminology point is important: because `Delta` contains both a quadratic and a quartic part, this kernel is obtained by homogenizing the quadratic part with the spectral barycentric identity `sum delta_k=1`.  It is therefore not literally four-linear in the projection matrices themselves.
 
 ## 1. Square-free product polarization
 
@@ -48,7 +48,7 @@ is bilinear in `(A,B)`.  When `A=B`,
 \|\Omega_A^2\|^2=4q_2(A).
 \]
 
-For four projections `P_1,...,P_4`, define the symmetric polarized defect
+For four projections `P_1,...,P_4`, define the symmetric homogenized defect kernel
 
 \[
 \boxed{
@@ -66,7 +66,7 @@ For four projections `P_1,...,P_4`, define the symmetric polarized defect
 \tag{2}
 \]
 
-The first sum runs over the six pairs among the four arguments.  The second sum runs over the three pairings
+The first sum runs over the six pairs among the four arguments. The second sum runs over the three pairings
 
 \[
 (12)(34),\qquad(13)(24),\qquad(14)(23).
@@ -79,7 +79,7 @@ Setting all four arguments equal gives exactly
 \tag{3}
 \]
 
-Thus the completed projection theorem is the diagonal part of the four-linear form `D`.
+Thus the completed projection theorem is the diagonal specialization of `D`.  Equation (2) is symmetric in its four slots, but the first term is only pairwise linear in the projection matrices; the degree-four structure appears after homogenization in the spectral weights below.  In particular, one must not expand `D` termwise under a decomposition of a projection into rank-one summands as though `D` were matrix-multilinear.
 
 ## 2. Spectral chain
 
@@ -100,13 +100,13 @@ q_2(A)=\lambda^4q_2(B)
 =\frac14q_1(A).
 \]
 
-So normalize `lambda_max(B)=1`.  Order the eigenvalues
+So normalize `lambda_max(B)=1`. Order the eigenvalues
 
 \[
 1=\mu_1\ge\mu_2\ge\cdots\ge\mu_6\ge0,
 \]
 
-and let `P_k` be the projection onto the first `k` eigenvectors.  Define
+and let `P_k` be the projection onto the first `k` eigenvectors. Define
 
 \[
 \delta_k=\mu_k-\mu_{k+1},
@@ -142,7 +142,7 @@ P_t=1_{B\ge t}.
 
 The spectral decomposition/layer-cake representation is standard functional calculus and is not a novelty claim.
 
-## 3. Exact four-linear reconstruction
+## 3. Exact degree-four reconstruction
 
 Because the first part of `Delta` is quadratic and the second part quartic, homogenize the quadratic term with
 
@@ -185,17 +185,17 @@ P_1\le P_2\le P_3\le P_4
 \tag{N}
 \]
 
-Equation (N) is **not yet proved**.  It is the next sharp theorem target.
+Equation (N) is **not yet proved**. It is the next sharp theorem target.
 
 ## 4. Finite coefficient form
 
-For a fixed eigenbasis, (5) is a homogeneous degree-four polynomial in the six nonnegative spectral increments `delta_k`.  There are
+For a fixed eigenbasis, (5) is a homogeneous degree-four polynomial in the six nonnegative spectral increments `delta_k`. There are
 
 \[
 \binom{6+4-1}{4}=126
 \]
 
-multinomial coefficients.  Each normalized coefficient is exactly `D` evaluated on one nondecreasing rank quadruple
+multinomial coefficients. Each normalized coefficient is exactly `D` evaluated on one nondecreasing rank quadruple
 
 \[
 1\le r_1\le r_2\le r_3\le r_4\le6.
@@ -213,11 +213,11 @@ The genuinely new content is therefore only the mixed nested ranks.
 
 ## 5. Numerical diagnostic
 
-Deterministic random tests currently find all mixed nested coefficients nonnegative to floating-point precision.  In a direct scan of 200 random orthogonal eigenbases, all 126 coefficients were nonnegative; the worst values were on the order of `5e-17`, consistent with exact zeros from trivial identity-containing patterns.
+Deterministic random tests currently find all mixed nested coefficients nonnegative to floating-point precision. In a direct scan of 200 random orthogonal eigenbases, all 126 coefficients were nonnegative; the worst values were on the order of `5e-17`, consistent with exact zeros from trivial identity-containing patterns.
 
-This is evidence only.  The repository does not promote (N) or the PSD-contraction theorem to a theorem until an analytic or exact finite certificate is obtained.
+This is evidence only. The repository does not promote (N) or the PSD-contraction theorem to a theorem until an analytic or exact finite certificate is obtained.
 
-A separate tempting route has already been rejected: the defect is not separately convex in the eigenvalues, and an interior eigenvalue can give a larger value of `q2-q1/4` than both endpoints.  The nested four-linear inequality is therefore the preferred next direction.
+A separate tempting route has already been rejected: the defect is not separately convex in the eigenvalues, and an interior eigenvalue can give a larger value of `q2-q1/4` than both endpoints. The nested homogenized kernel inequality is therefore the preferred next direction.
 
 ## 6. Consequence if (N) is proved
 
