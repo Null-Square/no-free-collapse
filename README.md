@@ -1,124 +1,80 @@
 # No Free Collapse
 
+[![CI](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml/badge.svg)](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 **Interaction-order limits of quantum-inspired reasoning.**
 
-This repository develops exact, CPU-verifiable mathematics for a narrow question:
+This repository contains the theorem statements, proof notes, CPU-verifiable tests, and reproducibility scripts for the **No Free Collapse** research program.
 
-> If many reasoning fragments are encoded into a quantum-like latent state and an answer is produced by Born-style collapse, which higher-order reasoning interactions must already have been created before measurement?
+The central question is:
 
-The working principle is **no free collapse**: measurement can expose interference already present in the prepared state, while nonlinear state preparation and normalization must be counted explicitly as computational resources.
+> If many reasoning fragments are encoded into a quantum-like latent state and an answer is produced by Born-style collapse, which higher-order interactions must already have been created before measurement?
 
-## Verified results
+The working principle is **no free collapse**: measurement can expose interference already present in the prepared state, while nonlinear preparation and input-dependent normalization must be counted as computational resources.
 
-1. Fixed-norm order-`r` polynomial preparations have Born interaction degree at most `2r`.
-2. Input-dependent normalization is a genuine nonlinear resource and can create nonzero interactions of arbitrarily high exact order from order-1 amplitudes.
-3. If the squared norm has condition number `kappa`, high-order interaction strength is exponentially controlled. With `m=floor((k-1)/(2r))` and `rho=(sqrt(kappa)-1)/(sqrt(kappa)+1)`, every order-`k` Walsh coefficient obeys
+## Status at a glance
 
-   `|p_hat(S)| <= rho^m/(1+rho^(2m))`
+The repository deliberately separates proved results from open conjectures.
 
-   even after choosing the optimal two-outcome Born measurement.
-4. Every order-`r` model has an exact Gram form `p=z*Az/(z*Qz)` with `0<=A<=Q`; the minimum latent dimension for fixed `Q` is `rank(Q)`, and the optimal final collapse for any linear objective is obtained exactly by eigendecomposition.
-5. A fixed-norm 2D construction computes `k`-way parity with preparation order `ceil(k/2)`, attaining the factor-of-two degree bound.
-6. For even `n>=4`, the full real order-1 class invariant under coordinate permutations and global sign reversal is solved exactly. Its optimum is the symmetric mean-field normalizer
+| Result | Status | Main proof / index |
+| --- | --- | --- |
+| Fixed-norm order-`r` preparation has Born interaction degree at most `2r` | **Proved** | [`docs/math.md`](docs/math.md) |
+| The factor-of-two degree ceiling is tight | **Proved** | [`docs/math.md`](docs/math.md) |
+| Input-dependent normalization can generate arbitrarily high exact interaction order | **Proved** | [`docs/math.md`](docs/math.md) |
+| Conditioning controls high-order Walsh leakage exponentially | **Proved** | [`docs/conditioning.md`](docs/conditioning.md), [`docs/chebyshev.md`](docs/chebyshev.md) |
+| Exact Gram representation and minimal latent dimension | **Proved** | [`docs/gram.md`](docs/gram.md) |
+| Permutation/global-sign symmetric order-1 class | **Solved exactly** | [`docs/symmetric_optimality.md`](docs/symmetric_optimality.md) |
+| Matched-pair symmetry-breaking class | **Solved exactly** | [`docs/paired.md`](docs/paired.md) |
+| Universal low-conditioning hafnian bound; `m=4` sharp optimum | **Proved** | [`docs/hafnian_bound.md`](docs/hafnian_bound.md) |
+| Six-variable rank-one, completion, and range reductions | **Proved** | [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md), [`docs/diagonal_completion.md`](docs/diagonal_completion.md), [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md) |
+| Six-variable gradient contraction on every orthogonal projection rank `0,...,6` | **Proved** | [`docs/projection_gradient.md`](docs/projection_gradient.md), [`docs/rank_three_global_gradient.md`](docs/rank_three_global_gradient.md), [`docs/rank_two_global_projection.md`](docs/rank_two_global_projection.md) |
+| Exact spectral-chain reduction from PSD contractions to nested projection kernels | **Proved reduction** | [`docs/spectral_polarization.md`](docs/spectral_polarization.md) |
+| Mixed nested rank patterns `(1,5,5,5)` and `(1,1,1,5)` | **Proved** | [`docs/mixed_rank_1555.md`](docs/mixed_rank_1555.md) |
+| Full PSD-contraction gradient inequality | **Open** | [`docs/RESULTS.md`](docs/RESULTS.md) |
+| General even-`m` sharp hafnian optimum | **Open** | [`docs/RESULTS.md`](docs/RESULTS.md) |
 
-   `q(x)=1+(kappa-1)(sum_i x_i)^2/n^2`.
-7. That symmetric optimum is **not globally optimal**. An exact symmetry-breaking matched-pair construction beats it, e.g. at `n=4,kappa=2`:
+For the complete theorem ledger, including proof and test locations, see **[`docs/RESULTS.md`](docs/RESULTS.md)**.
 
-   `C_pair=1/8 > C_sym=3/40`.
-8. The entire matched pair-block class is solved exactly. For `n=2L`, its optimum uses one isotropic readout pair and `L-1` equal rank-one normalizer pairs, has rank `L+1`, and achieves
+## Research map
 
-   `C_pair = 2^(-L) Gamma(1+alpha) Gamma(L) / Gamma(L+alpha)`,
-
-   where `alpha=(L-1)/(kappa-1)`.
-9. The first full-order term generated by a bounded PSD quadratic normalizer obeys an independent hafnian bound. If `m=2L`, `B>=0`, and `max_x x^T B x<=1`, then
-
-   `|haf(2 offdiag(B))| <= 2^(1-2L)/L!`.
-
-   This follows by identifying `L! haf(...)` with the full-parity coefficient of `(x^T B x)^L` and subtracting the minimax degree-`L-1` approximation to `t^L` on `[0,1]`. For `m=4` the bound is exactly `1/16` and is attained by two disjoint rank-one pairs, so the four-variable extremal problem is solved globally.
-10. The equal disjoint-pair hafnian construction is a first-order local optimum in the **unrestricted PSD problem**. For every differentiable feasible path through
-
-   `B_star=(1/(2n)) diag(J_2,...,J_2)`,
-
-   the directional derivative of `haf(2 offdiag(B))` is non-positive. This uses both the active Boolean cube constraints and PSD tangent feasibility on the nullspace of `B_star`; it is not restricted to matched-pair perturbations.
-11. For `n=6`, the first-order theorem has a strict second-order strengthening. Every nonzero zero-slope tangent has strictly negative second variation along any twice-differentiable feasible path. Moreover, every zero-slope straight feasible segment is globally non-improving and reduces to a three-weight AM-GM inequality.
-12. The candidate global six-variable inequality
-
-   `54 |haf(C)| <= t s (t+s)`
-
-   is proved on the entire rank-one PSD stratum `B=uu^T`, where `C=2 offdiag(B)`, `t=Tr(B)`, and `s=max_x sum_{i<j} C_ij x_i x_j`. The proof combines the exact rank-one hafnian formula with Maclaurin and Cauchy inequalities; nondegenerate equality occurs exactly when all six `|u_i|` are equal.
-13. The six-variable PSD problem has an exact **minimum-trace diagonal-completion reduction**. For fixed zero-diagonal `C`, define
-
-   `tau(C)=min Tr(B)` over PSD matrices with `2 offdiag(B)=C`.
-
-   Then the global candidate is equivalent to
-
-   `54 |haf(C)| <= tau(C) s(C) (tau(C)+s(C))`.
-
-   The completion cost has the elliptope dual
-
-   `tau(C)=max -sum_{i<j} C_ij Y_ij` over `Y>=0` with unit diagonal. For the known non-PSD `1/200` witness, the exact completion cost is `tau=3 sqrt(5)/10`, not `1/2`; a closed-form primal/dual certificate proves this.
-14. There is a sharper **range-only** six-variable theorem requiring no PSD assumption. If
-
-   `a(C)=-min_x sum_{i<j} C_ij x_i x_j`
-
-   and `s(C)` is the corresponding maximum, then
-
-   `|haf(C)| <= a(C) s(C) (a(C)+s(C)) / 48`.
-
-   The proof quotients global sign to a five-variable degree-two function. Its two parity classes have identical first and second moments; a sharp third-moment interval on `[-a,s]` gives the factor `1/48`. Combined with the completion theorem, the PSD conjecture is automatic whenever
-
-   `tau(C)(tau(C)+s) >= (9/8) a(C)(a(C)+s)`.
-
-   Therefore any counterexample must lie in a thin shell with `tau-a < a/8`, and usually substantially less. At `tau=a`, a minimum PSD completion has a Boolean null vector; after a sign switch its Gram vectors sum to zero.
-15. The six-variable **hafnian-gradient problem** has an exact 15-dimensional perfect-matching-operator form. If `a` is the vector of off-diagonal entries and `h` the vector of complementary `4 x 4` hafnians, then `T(A)a=2h`. For rank-one orthogonal projections the sharp gradient contraction `sum h^2 <= (1/4) sum a^2` is proved exactly by Maclaurin and Cauchy, with equality only at equal squared coordinates; rank five follows by projection complementation.
-16. The full rank-three projection problem is solved globally. The equal-diagonal stratum admits the exact fourth-power identity `q2(K)=sum K_ij^4` for `K=2P-I`, with equality only on the disjoint-pair geometry. Away from equal diagonal, an exact defect identity plus a capacity/dual argument proves `q2(P)<=q1(P)/4` for every rank-three orthogonal projection.
-17. The full rank-two projection problem is solved globally. The balanced-diagonal region follows from the exact Pluecker defect and moment bounds. A diagonal-only quadratic-dual certificate proves the high-pair region `d_(1)+d_(2)>=3/2`. The remaining middle strip is closed by a universal low-edge correction bound and one exact seven-edge threshold-graph reduction. Rank four follows by complementation.
-18. Consequently the six-variable hafnian-gradient contraction is proved on the **entire orthogonal-projection locus**:
-
-   `q2(P) <= q1(P)/4`
-
-   for every real `6 x 6` orthogonal projection `P` of rank `0,...,6`.
-
-The rational/postselection connection, Chebyshev approximation, Boolean Fourier analysis, Helstrom discrimination, hafnians, real polarization inequalities, moment problems, zeon algebras, generalized subhafnian inequalities, generic SDP duality, Schur-Horn projection-diagonal theory, and symmetric-polynomial half-degree principles are established prior art and are not claimed separately as new. The research contribution sought here is a resource theory and extremal capacity analysis for collapse-based reasoning.
-
-## Run
-
-```bash
-python -m pip install -e '.[dev]'
-pytest
-python experiments/e7_chebyshev_vs_mean_field.py
-python experiments/e8_asymmetric_search.py
-python experiments/e9_pair_breaking.py
-python experiments/e10_hafnian_bound.py
+```mermaid
+flowchart LR
+    A[Preparation order] --> B[Born numerator degree]
+    B --> C[Normalization resource]
+    C --> D[Conditioning]
+    D --> E[Interaction capacity]
+    E --> F[Low-conditioning hafnian regime]
+    F --> G[Six-variable extremal geometry]
+    G --> H[Projection-gradient theorem]
+    H --> I[Spectral contraction frontier]
 ```
 
-Everything runs on CPU over finite Boolean hypercubes.
-
-## Current hard problem
-
-For `|S|=k`, define
+The core resource-theoretic chain is
 
 \[
-C_{n,r,k}(\kappa,d)=\sup |\widehat p(S)|
+\text{preparation order}
+\to
+\text{Born degree}
+\to
+\text{normalization resource}
+\to
+\text{conditioning}
+\to
+\text{interaction capacity}.
 \]
 
-over physical order-`r` Born models with squared-norm condition number at most `kappa` and Gram rank at most `d`.
+The strongest completed six-variable geometric milestone is
 
-We now have:
+\[
+\boxed{
+q_2(P)\le \frac14 q_1(P)
+}
+\]
 
-- a universal Chebyshev/Helstrom upper bound;
-- an exact optimum for the permutation/global-sign symmetric class;
-- an exact, stronger symmetry-breaking optimum for the matched pair-block class;
-- a separate universal hafnian bound for the low-conditioning quadratic term;
-- an exact global solution of that hafnian extremal problem at four variables;
-- unrestricted first- and strict second-order local-optimality certificates for the six-variable disjoint-pair hafnian point;
-- a global proof of the candidate `54|haf(C)|<=ts(t+s)` inequality for every rank-one PSD six-variable matrix;
-- an exact elimination of the six diagonal variables via the minimum-trace completion `tau(C)` and its elliptope dual;
-- a sharp asymmetric range-only bound `|haf(C)|<=a s(a+s)/48` that removes every configuration outside a thin near-minimal-completion shell;
-- an exact perfect-matching-operator formulation of the hafnian gradient;
-- a complete proof of the gradient contraction on every orthogonal projection rank `0,...,6`.
+for every real `6 x 6` orthogonal projection `P`, all ranks `0,...,6`.
 
-The next narrow question is no longer a projection-rank case. It is the extension from projections to arbitrary PSD contractions:
+The current open extension is
 
 \[
 0\preceq A\preceq I,
@@ -126,32 +82,137 @@ The next narrow question is no longer a projection-rank case. It is the extensio
 q_2(A)\stackrel{?}{\le}\frac14q_1(A).
 \]
 
-If this contraction theorem holds, scaling gives
+No file in this repository presents that contraction inequality as proved.
+
+## Reviewer quick start
+
+The code is intentionally lightweight: NumPy plus pytest, with no GPU dependency.
+
+```bash
+git clone https://github.com/Null-Square/no-free-collapse.git
+cd no-free-collapse
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+python -m pip install -e '.[dev]'
+python -m pytest
+```
+
+To reproduce the curated deterministic research outputs:
+
+```bash
+python experiments/reproduce_core.py
+```
+
+For a description of exact certificates, floating-point diagnostics, random seeds, and what CI verifies, see **[`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)**.
+
+## How to review the repository
+
+A reviewer can follow this path without reconstructing the project history:
+
+1. **[`docs/RESULTS.md`](docs/RESULTS.md)** — theorem ledger: statement, status, proof note, tests.
+2. **[`docs/FIGURES.md`](docs/FIGURES.md)** — visual dependency diagrams and result maps.
+3. **[`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)** — verification commands and numerical/exact boundary.
+4. **[`docs/PAPER_MATERIALS.md`](docs/PAPER_MATERIALS.md)** — paper-ready theorem map, figure plan, table plan, and appendix split.
+5. Individual proof notes in `docs/` for full derivations.
+6. `tests/` for CPU-verifiable regression and exact-certificate checks.
+
+## Projection theorem: rank closure
+
+```mermaid
+flowchart TD
+    P[Projection gradient inequality] --> R06[Ranks 0 and 6: trivial]
+    P --> R15[Ranks 1 and 5]
+    P --> R3[Rank 3]
+    P --> R24[Ranks 2 and 4]
+    R15 --> A1[Rank-one Maclaurin/Cauchy]
+    R15 --> A5[Complementation]
+    R3 --> B1[Exact defect identity]
+    B1 --> B2[Capacity + LP-dual closure]
+    R24 --> C1[Rank-two Pluecker identity]
+    C1 --> C2[Balanced diagonal]
+    C1 --> C3[High-pair quadratic dual]
+    C1 --> C4[Middle-strip threshold graph]
+    C4 --> C5[Global rank-two theorem]
+    C5 --> C6[Rank four by complement]
+```
+
+This is a completed theorem, not a numerical rank scan.
+
+## Repository structure
+
+```text
+src/no_free_collapse/   theorem-supporting implementation and exact utilities
+tests/                  regression tests and exact certificate checks
+docs/                   proof notes, result ledger, figures, reproducibility
+experiments/            deterministic reproductions and exploratory scripts
+.github/workflows/      CI configuration
+```
+
+The distinction between `tests/` and `experiments/` is intentional:
+
+- **tests** protect identities, exact constants, certificates, and theorem-supporting computations;
+- **experiments** reproduce examples or document exploratory numerics and are not substitutes for proofs.
+
+## Main completed results
+
+### Interaction-order and normalization
+
+For Boolean inputs `x_i in {-1,+1}`, an order-`r` unnormalized amplitude has the form
 
 \[
-q_2(A)\le \frac{\lambda_{\max}(A)^2}{4}q_1(A),
+\widetilde\psi(x)=\sum_{|S|\le r}x_Su_S.
 \]
 
-which in turn yields the prospective spectral hafnian-energy inequality by Euler plus Cauchy. That would feed directly back into the sharp six-variable PSD hafnian problem.
+With fixed norm, Born readout has interaction degree at most `2r`, and the factor two is tight. If the norm depends on the input, normalization becomes a nonlinear computational resource and can generate arbitrarily high exact degree.
 
-The projection theorem is therefore a completed intermediate milestone, not the end of the six-variable program. The next work should test whether arbitrary contractions reduce to projections through spectral interpolation, extreme-point geometry, or a new convexity principle; no such extension is currently claimed.
+If the squared norm has condition number `kappa`, define
 
-## Notes
+\[
+\rho=\frac{\sqrt\kappa-1}{\sqrt\kappa+1},
+\qquad
+m=\left\lfloor\frac{k-1}{2r}\right\rfloor.
+\]
 
-- [`docs/math.md`](docs/math.md): exact interaction-order results and normalization witnesses.
-- [`docs/conditioning.md`](docs/conditioning.md): conditioning-controlled leakage.
-- [`docs/chebyshev.md`](docs/chebyshev.md): universal minimax Chebyshev/Helstrom bound.
-- [`docs/gram.md`](docs/gram.md): Gram characterization and exact collapse optimization.
-- [`docs/symmetric_optimality.md`](docs/symmetric_optimality.md): exact theorem inside the full permutation/global-sign symmetric class.
-- [`docs/paired.md`](docs/paired.md): exact symmetry-breaking matched-pair theorem and counterexample.
-- [`docs/hafnian_bound.md`](docs/hafnian_bound.md): perfect-matching coefficient identity, universal hafnian bound, and exact four-variable theorem.
-- [`docs/pair_local_optimality.md`](docs/pair_local_optimality.md): unrestricted first-order local-optimality theorem for the disjoint-pair hafnian construction.
-- [`docs/six_variable_second_order.md`](docs/six_variable_second_order.md): strict second-order six-variable certificate and exact zero-slope segment corollary.
-- [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md): exact proof of the candidate six-variable inequality on the full rank-one PSD stratum.
-- [`docs/diagonal_completion.md`](docs/diagonal_completion.md): exact minimum-trace completion reduction, elliptope dual, and closed-form PSD cost of the `1/200` relaxed witness.
-- [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md): sharp asymmetric range-only theorem and reduction to the thin `tau≈a` shell.
-- [`docs/projection_gradient.md`](docs/projection_gradient.md): perfect-matching operator and projection-gradient framework.
-- [`docs/rank_three_global_gradient.md`](docs/rank_three_global_gradient.md): global rank-three projection theorem.
-- [`docs/rank_two_balanced_diagonal.md`](docs/rank_two_balanced_diagonal.md): balanced-diagonal rank-two theorem.
-- [`docs/rank_two_dual_high_pair.md`](docs/rank_two_dual_high_pair.md): diagonal quadratic-dual high-pair theorem.
-- [`docs/rank_two_global_projection.md`](docs/rank_two_global_projection.md): final middle-strip proof and global rank-two/rank-four theorem.
+Then every order-`k` Walsh coefficient obeys
+
+\[
+|\widehat p(S)|\le\frac{\rho^m}{1+\rho^{2m}}.
+\]
+
+### Exact model classes
+
+The full permutation/global-sign symmetric real order-1 class is solved exactly. That symmetric optimum is not globally optimal: a symmetry-breaking matched-pair construction is stronger, and the entire matched-pair block class is solved exactly.
+
+### Hafnian regime
+
+The first full-order term generated by a bounded PSD quadratic normalizer is a hafnian. A universal bound follows from a Chebyshev/minimax argument, and the four-variable extremal problem is solved globally with optimum `1/16`.
+
+For six variables, the repository contains:
+
+- unrestricted first- and strict second-order local-optimality results at the disjoint-pair point;
+- a global rank-one theorem;
+- an exact minimum-trace diagonal-completion reduction with elliptope dual;
+- a sharp range-only theorem reducing the PSD problem to a thin near-minimal-completion shell;
+- a complete projection-gradient theorem for every projection rank;
+- an exact nested spectral homogenization for general PSD contractions;
+- the first nontrivial mixed nested spectral coefficient theorem.
+
+## What is not claimed
+
+The following remain open unless a later proof is explicitly merged and the ledger is updated:
+
+1. the full PSD-contraction gradient inequality;
+2. the final sharp six-variable PSD hafnian extremal inequality in complete generality;
+3. the general even-variable conjecture that the equal pair construction globally maximizes the relevant hafnian at value `m^{-m/2}`.
+
+The repository also does **not** claim novelty for standard background tools such as Boolean Fourier analysis, Chebyshev approximation, Helstrom discrimination, hafnians, generic SDP duality, zeon algebras, Schur-Horn theory, or symmetric-polynomial half-degree principles. Novelty claims should attach to the specific resource-theoretic reductions and extremal theorems proved here.
+
+## Paper preparation
+
+The current theorem set is sufficient for a complete manuscript framed around interaction-order limits, normalization/conditioning as resources, exact solvable classes, and the completed projection-gradient theorem. The PSD-contraction extension is treated as an open frontier rather than a prerequisite for the paper.
+
+See **[`docs/PAPER_MATERIALS.md`](docs/PAPER_MATERIALS.md)** for the proposed theorem ordering, main-text/appendix split, result tables, and figure inventory.
+
+## License
+
+MIT. See [`LICENSE`](LICENSE).
