@@ -1,4 +1,4 @@
-![No Free Collapse — Measurement exposes. Preparation pays.](./assets/no-free-collapse-cover.svg)
+![No Free Collapse — Measurement exposes. Preparation pays.](./assets/assets/no-free-collapse-cover.png)
 
 # No Free Collapse
 
