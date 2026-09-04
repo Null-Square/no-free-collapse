@@ -1,3 +1,5 @@
+![No Free Collapse — Measurement exposes. Preparation pays.](./assets/no-free-collapse-cover.svg)
+
 # No Free Collapse
 
 [![CI](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml/badge.svg)](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml)
