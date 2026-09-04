@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="640" viewBox="0 0 1600 640" role="img" aria-labelledby="title desc">
+<title id="title">No Free Collapse — Measurement exposes. Preparation pays.</title>
+<desc id="desc">NullSquare repository cover illustrating the fixed-norm Born degree ceiling and the charged role of input-dependent normalization.</desc>
+<rect width="1600" height="640" fill="#000000"/>
+<!-- Approved NullSquare horizontal signature, inserted directly from the canonical SVG asset. -->
+<svg x="88" y="48" width="330" height="48" viewBox="0 0 301.6195 44"><ns0:rect xmlns:ns0="http://www.w3.org/2000/svg" x="0" y="9.000" width="26.0" height="26.0" fill="#F5D13A" /><ns0:rect xmlns:ns0="http://www.w3.org/2000/svg" x="50.000" y="0" width="1" height="44.0" fill="#F5F5F7" opacity="0.2" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M116 0H478V617C478 711 468 873 456 1050C539 872 594 760 682 617L1063 0H1452V1490H1090V856C1090 752 1101 581 1111 432C1048 594 986 707 920 817L504 1490H116Z" transform="translate(75.0000,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M744 -19C1119 -19 1373 196 1373 529V1490H1020V558C1020 401 909 289 744 289C581 289 469 401 469 558V1490H116V529C116 196 367 -19 744 -19Z" transform="translate(100.3688,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M116 0H1092V288H469V1490H116Z" transform="translate(124.5803,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M116 0H1092V288H469V1490H116Z" transform="translate(143.9432,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M691 -20C1060 -20 1280 149 1280 432C1280 670 1113 814 825 877L696 907C563 937 476 981 476 1073C476 1156 549 1217 690 1217C832 1217 911 1154 921 1046H1260C1256 1322 1036 1510 691 1510C353 1510 111 1325 111 1049C111 825 267 696 524 637L682 600C845 563 923 518 923 433C923 338 833 273 687 273C526 273 419 347 411 492H72C78 148 318 -20 691 -20Z" transform="translate(163.3061,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M792 -20C888 -20 979 -4 1062 27L1183 -117H1502L1278 160C1416 290 1500 487 1500 744C1500 1236 1191 1510 792 1510C391 1510 82 1236 82 744C82 255 391 -20 792 -20ZM684 531 863 296C840 292 817 290 792 290C575 290 443 450 443 744C443 1039 575 1200 792 1200C1008 1200 1140 1040 1140 744C1140 606 1111 497 1057 421L970 531Z" transform="translate(185.5107,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M744 -19C1119 -19 1373 196 1373 529V1490H1020V558C1020 401 909 289 744 289C581 289 469 401 469 558V1490H116V529C116 196 367 -19 744 -19Z" transform="translate(211.3629,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M47 0H439L536 317H1032L1133 0H1529L1017 1490H544ZM619 587 639 651C688 820 732 1008 777 1209C825 1009 874 821 926 651L946 587Z" transform="translate(235.5744,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M116 0H469V513H661L934 0H1321L1010 569C1175 643 1269 789 1269 995C1269 1299 1062 1490 726 1490H116ZM469 792V1204H651C817 1204 903 1134 903 995C903 856 817 792 652 792Z" transform="translate(261.0604,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /><ns0:path xmlns:ns0="http://www.w3.org/2000/svg" d="M116 0H1149V288H469V612H1096V894H469V1202H1150V1490H116Z" transform="translate(283.3236,32.9131) scale(0.0146484,-0.0146484)" fill="#F5F5F7" /></svg>
+<g font-family="Inter, Arial, Helvetica, sans-serif">
+  <text x="88" y="193" fill="#F5F5F7" opacity="0.46" font-size="17" font-weight="500">QUANTUM-INSPIRED REASONING</text>
+  <text x="88" y="284" fill="#F5F5F7" font-size="74" font-weight="800" letter-spacing="-2">NO FREE</text>
+  <text x="88" y="364" fill="#F5F5F7" font-size="74" font-weight="800" letter-spacing="-2">COLLAPSE</text>
+  <text x="88" y="430" fill="#F5F5F7" font-size="29" font-weight="500">Measurement exposes.</text>
+  <text x="88" y="465" fill="#F5F5F7" font-size="29" font-weight="500">Preparation pays.</text>
+  <text x="88" y="592" fill="#F5F5F7" opacity="0.46" font-size="13" font-weight="500" letter-spacing="0.2">PREPARATION ORDER r  ·  BORN DEGREE &lt;= 2r  ·  NORMALIZATION COUNTS</text>
+</g>
+<line x1="936" y1="78" x2="936" y2="550" stroke="#F5F5F7" stroke-opacity="0.11" stroke-width="1"/>
+<!-- Fixed-norm branch: one Signal preparation cell, Born readout, bounded degree band. -->
+<g font-family="Inter, Arial, Helvetica, sans-serif">
+  <text x="1016" y="117" fill="#F5F5F7" opacity="0.46" font-size="15" font-weight="500">FIXED NORM</text>
+  <text x="1048" y="153" fill="#F5F5F7" opacity="0.46" font-size="12" font-weight="500">PREP r</text>
+  <text x="1144" y="147" fill="#F5F5F7" opacity="0.46" font-size="12" font-weight="500">BORN READOUT</text>
+  <text x="1262" y="99" fill="#F5F5F7" opacity="0.36" font-size="12" font-weight="500">2r CEILING</text>
+</g>
+<rect x="1048" y="169" width="18" height="18" fill="#F5D13A"/>
+<line x1="1064" y1="178" x2="1144" y2="178" stroke="#F5F5F7" stroke-opacity="0.24" stroke-width="1"/>
+<g fill="#F5F5F7">
+  <rect x="1144" y="169" width="18" height="18" opacity="0.58"/>
+  <rect x="1176" y="169" width="18" height="18" opacity="0.28"/>
+  <rect x="1208" y="169" width="18" height="18" opacity="0.28"/>
+  <rect x="1240" y="169" width="18" height="18" opacity="0.28"/>
+  <rect x="1272" y="169" width="18" height="18" opacity="0.28"/>
+  <rect x="1304" y="169" width="18" height="18" opacity="0.58"/>
+  <rect x="1368" y="169" width="18" height="18" opacity="0.10"/>
+  <rect x="1400" y="169" width="18" height="18" opacity="0.07"/>
+  <rect x="1432" y="169" width="18" height="18" opacity="0.04"/>
+</g>
+<line x1="1336" y1="109" x2="1336" y2="442" stroke="#F5F5F7" stroke-opacity="0.11" stroke-width="1"/>
+<g font-family="Inter, Arial, Helvetica, sans-serif">
+ <text x="1144" y="224" fill="#F5F5F7" font-size="20" font-weight="800">DEG &lt;= 2r</text>
+ <text x="1368" y="217" fill="#F5F5F7" opacity="0.24" font-size="12" font-weight="500">&gt;2r</text>
+</g>
+<!-- Input-dependent normalization branch: nonlinear resource can expose higher exact order. -->
+<g font-family="Inter, Arial, Helvetica, sans-serif">
+  <text x="1016" y="277" fill="#F5F5F7" opacity="0.46" font-size="15" font-weight="500">INPUT-DEPENDENT NORM</text>
+  <text x="1175" y="287" fill="#F5F5F7" opacity="0.46" font-size="12" font-weight="500">NORM(x)</text>
+</g>
+<g fill="#F5F5F7">
+  <rect x="1048" y="341" width="18" height="18" opacity="0.28"/>
+  <rect x="1176" y="309" width="18" height="18" opacity="0.58"/>
+  <rect x="1272" y="341" width="18" height="18" opacity="0.28"/>
+  <rect x="1304" y="341" width="18" height="18" opacity="0.28"/>
+  <rect x="1336" y="341" width="18" height="18" opacity="0.28"/>
+  <rect x="1400" y="277" width="18" height="18" opacity="0.28"/>
+  <rect x="1432" y="277" width="18" height="18" opacity="0.58"/>
+</g>
+<polyline points="1057,350 1185,318 1281,350 1313,350 1345,350 1409,286 1441,286" fill="none" stroke="#F5F5F7" stroke-opacity="0.24" stroke-width="1"/>
+<g font-family="Inter, Arial, Helvetica, sans-serif">
+  <text x="1368" y="432" fill="#F5F5F7" opacity="0.46" font-size="12" font-weight="500">HIGHER ORDER</text>
+  <text x="1016" y="457" fill="#F5F5F7" opacity="0.46" font-size="14" font-weight="500">COLLAPSE EXPOSES WHAT PREPARATION BUILT</text>
+</g>
+</svg>
