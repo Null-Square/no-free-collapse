@@ -1,0 +1,347 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}\fancyhf{}
+\fancyhead[L]{\small Complementary-subset dilations and hafnian bounds}
+\fancyhead[R]{\small Research draft}\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}\setlength{\emergencystretch}{2em}
+\hypersetup{pdftitle={A complementary-subset dilation for sharp hafnian gradient inequalities},pdfauthor={No Free Collapse project - research draft}}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\DeclareMathOperator{\haf}{haf}\DeclareMathOperator{\tr}{tr}
+\newcommand{\R}{\mathbb R}\newcommand{\op}{\mathrm{op}}
+\title{A complementary-subset dilation for sharp\\hafnian gradient inequalities}
+\author{No Free Collapse project\thanks{Proof draft. Human author names, affiliations, and the final assistance disclosure are to be confirmed before submission. Independent proof and priority review remain pending.}}
+\date{12 September 2026}
+\begin{document}\maketitle
+\begin{abstract}
+For a real symmetric matrix $A$ of order $2m$, we study the weighted Kneser
+operator $\mathcal T_m(A)$ on $(m-1)$-subsets, whose disjoint-subset entries
+are indexed by the two remaining vertices. An explicit complementary-subset
+dilation gives the sharp bound
+$\|\mathcal T_m(A)\|_{\op}\le(m+1)(\lambda_{\max}(A)-\lambda_{\min}(A))/4$
+for every $m\ge2$. In order six, this proves the hafnian-gradient inequality
+$q_2(A)\le d(A)^2q_1(A)/4$ and the energy inequality
+$|\haf(A)|\le d(A)q_1(A)/6$, where $d(A)$ is the spectral diameter,
+$q_1$ is off-diagonal squared energy, and $q_2$ is the sum of squared
+complementary four-variable hafnians. We classify all equality cases for
+the positive-semidefinite versions: apart from diagonal degeneracies, they
+are scaled signed balanced rank-one projections, their rank-five complements,
+and signed pair-block rank-three projections. The proof supplies explicit
+positive-semidefinite certificates and avoids rank-by-rank projection arguments.
+An exact-arithmetic implementation checks the dilation on matrix bases and
+verifies rational instances. The distinct Boolean-cube-normalized hafnian
+extremal problem is not resolved by these spectral bounds.
+\end{abstract}
+\noindent\textbf{Keywords:} hafnian; positive semidefinite matrix; Kneser operator;
+spectral diameter; dilation; equality cases.
+
+\section{Introduction and the six-variable question}
+The hafnian of a symmetric matrix of even order is the sum of the products
+of entries along its perfect matchings. For a four-set $S=\{i,j,k,l\}$,
+\[
+\haf(A[S])=a_{ij}a_{kl}+a_{ik}a_{jl}+a_{il}a_{jk}.
+\]
+For a real symmetric matrix of order six define
+\begin{equation}\label{eq:q}
+q_1(A)=\sum_{i<j}a_{ij}^2,\qquad
+q_2(A)=\sum_{i<j}\haf(A_{\widehat i,\widehat j})^2.
+\end{equation}
+The second expression is the squared Euclidean norm of the gradient of the
+hafnian when the off-diagonal entries are the independent variables.
+The spectral inequality
+\begin{equation}\label{eq:psdgoal}
+q_2(A)\le\frac{\lambda_{\max}(A)^2}{4}q_1(A),\qquad A\succeq0,
+\end{equation}
+arose as an auxiliary problem in the No Free Collapse project. Earlier
+arguments in that project established it on the real projection locus, using
+separate rank-one, rank-two, and rank-three arguments and complementation.
+Here we prove the stronger spectral-diameter bound for every real symmetric
+matrix and identify the entire PSD equality locus.
+
+Our main tool is an explicit signed incidence dilation. It applies in every
+even order to a weighted Kneser operator, not just to the gradient problem in
+order six. Neither the dilation nor its semidefinite consequence requires
+numerical optimization. The equality proof uses orthogonality of the two
+complementary-subset ranges and an elementary classification of the resulting
+edge support.
+
+Kneser adjacency, square-free polynomial spaces, and positive-semidefinite
+compressions are established tools. Roos~\cite{roos} develops inequalities
+for averaged squared subhafnians. Lindell and Staples~\cite{lindell} study
+norm inequalities in zeon algebras. Kummer~\cite{kummer}, Lemma~3.5, uses an
+unweighted Kneser adjacency operator in a square-free derivative isomorphism;
+his main theorem concerns spectrahedral representations. Our statement
+concerns a specified matrix-weighted operator, its sharp spectral-diameter
+constant, and its six-variable equality cases. Section~\ref{sec:scope}
+separates this statement from the original cube-constrained extremal problem.
+
+\section{Complementary-subset dilation}
+Let $n=2m$, $m\ge2$, and write $\mathcal E=\binom{[n]}{m-1}$.
+For real symmetric $A\in\R^{n\times n}$, define the symmetric matrix
+$\mathcal T_m(A)$ on $\R^{\mathcal E}$ by
+\begin{equation}\label{eq:operator}
+\mathcal T_m(A)_{E,F}=
+\begin{cases}
+a_{ij},& E\cap F=\varnothing,\quad [n]\setminus(E\cup F)=\{i,j\},\\
+0,& E\cap F\ne\varnothing.
+\end{cases}
+\end{equation}
+In particular, $\mathcal T_m(A+tI)=\mathcal T_m(A)$.
+For every $m$-subset $R$, define the linear map $c_R:\R^{\mathcal E}\to\R^n$ by
+\[
+(c_R(v))_i=\begin{cases}v_{R\setminus\{i\}},&i\in R,\\0,&i\notin R.\end{cases}
+\]
+Choose one representative from each of the $N=\binom{2m}{m}/2$
+complementary pairs $\{R,R^c\}$, and define $L_\pm$ by stacking
+$c_R\pm c_{R^c}$ over these representatives.
+
+\begin{lemma}[Exact dilation]\label{lem:dilation}
+The incidence maps satisfy $L_\pm^TL_\pm=(m+1)I$, and
+\begin{equation}\label{eq:dilation}
+\mathcal T_m(A)=\frac14\bigl[
+L_+^T(I_N\otimes A)L_+-L_-^T(I_N\otimes A)L_-\bigr].
+\end{equation}
+\end{lemma}
+\begin{proof}
+Each row of $L_\pm$ has exactly one nonzero entry, equal to $1$ or $-1$.
+For a fixed $(m-1)$-subset $E$, its coordinate occurs once for each
+$m$-subset containing $E$, hence $m+1$ times. This proves the Gram identities.
+For one complementary pair, expansion gives
+\[
+(c_R+c_{R^c})^TA(c_R+c_{R^c})-
+(c_R-c_{R^c})^TA(c_R-c_{R^c})=4c_R^TAc_{R^c}.
+\]
+For fixed disjoint $E,F$ with complement $\{i,j\}$, the monomial
+$a_{ij}v_Ev_F$ occurs in two complementary partitions: the remaining vertices
+can be assigned to $E,F$ in either order. Thus the sum of the cross terms is
+$v^T\mathcal T_m(A)v$. Equality of these quadratic forms proves
+\eqref{eq:dilation}.
+\end{proof}
+
+\begin{theorem}[Sharp spectral-diameter bound]\label{thm:main}
+For every real symmetric $A$ of order $2m$, $m\ge2$,
+\begin{equation}\label{eq:main}
+\boxed{\|\mathcal T_m(A)\|_{\op}\le\frac{m+1}{4}
+\bigl(\lambda_{\max}(A)-\lambda_{\min}(A)\bigr).}
+\end{equation}
+The coefficient is optimal for every $m\ge2$.
+\end{theorem}
+\begin{proof}
+First suppose $0\preceq A\preceq\ell I$ and put $c=(m+1)/4$.
+Lemma~\ref{lem:dilation} gives
+\begin{align}
+c\ell I-\mathcal T_m(A)
+&=\tfrac14\bigl[L_+^T(I_N\otimes(\ell I-A))L_+
+ +L_-^T(I_N\otimes A)L_-\bigr],\label{eq:minus}\\
+c\ell I+\mathcal T_m(A)
+&=\tfrac14\bigl[L_-^T(I_N\otimes(\ell I-A))L_-
+ +L_+^T(I_N\otimes A)L_+\bigr].\label{eq:plus}
+\end{align}
+Both right sides are PSD, proving the norm bound $c\ell$.
+Subtracting $\lambda_{\min}(A)I$ proves \eqref{eq:main} for general $A$.
+For sharpness take $A=J_n/n$. Its spectral diameter is one. Each row of
+$\mathcal T_m(A)$ has $\binom{m+1}{2}$ entries equal to $1/n$, so the
+all-ones vector has eigenvalue $(m+1)/4$.
+\end{proof}
+
+\section{Hafnian inequalities in order six}
+When $m=3$, the coordinates of $\mathcal T_3(A)$ are the fifteen edges of
+$K_6$. Let $a=(a_{ij})_{i<j}$ and
+$h=(\haf(A_{\widehat i,\widehat j}))_{i<j}$. Direct matching enumeration gives
+\begin{equation}\label{eq:gradient}
+\mathcal T_3(A)a=2h,\qquad a^Th=3\haf(A).
+\end{equation}
+The first factor counts the two orders of each complementary pair of edges;
+the second counts each full matching once for each of its three edges.
+
+\begin{corollary}\label{cor:gradient}
+For a real symmetric matrix $A$ of order six, put
+$d(A)=\lambda_{\max}(A)-\lambda_{\min}(A)$. Then
+\begin{equation}\label{eq:corollaries}
+\boxed{q_2(A)\le\frac{d(A)^2}{4}q_1(A),\qquad
+|\haf(A)|\le\frac{d(A)}6q_1(A).}
+\end{equation}
+In particular \eqref{eq:psdgoal} holds for every PSD $A$.
+\end{corollary}
+\begin{proof}
+Use $4q_2=\|\mathcal T_3(A)a\|^2\le d(A)^2\|a\|^2$ and
+$6|\haf(A)|=|a^T\mathcal T_3(A)a|\le d(A)\|a\|^2$.
+For PSD $A$, $d(A)\le\lambda_{\max}(A)$.
+\end{proof}
+
+\section{All PSD equality cases in order six}
+A signed perfect-matching matrix is a real symmetric zero-diagonal matrix
+with exactly one nonzero entry, equal to $1$ or $-1$, in every row.
+It has three disjoint signed edges and satisfies $M^2=I$.
+
+\begin{theorem}[Equality classification]\label{thm:equality}
+Let $A\ne0$ be PSD of order six and let $\ell=\lambda_{\max}(A)$.
+Equality in $\|\mathcal T_3(A)\|_{\op}\le\ell$ holds exactly when $A/\ell$
+belongs to one of the following three families:
+\begin{equation}\label{eq:families}
+\boxed{ss^T/6,\qquad I-ss^T/6,\qquad (I+M)/2,}
+\end{equation}
+where $s\in\{\pm1\}^6$ and $M$ is any signed perfect-matching matrix.
+For either $q_2(A)\le\ell^2q_1(A)/4$ or
+$|\haf(A)|\le\ell q_1(A)/6$, these are all nondegenerate equality cases;
+all diagonal PSD matrices additionally give equality with $q_1=q_2=0$.
+\end{theorem}
+\begin{proof}
+Normalize $\ell=1$ and choose a unit real vector $v$ with
+$v^T\mathcal T_3(A)v=\pm1$. Treat $v$ as a zero-diagonal symmetric edge array.
+Let $C$ be the $6\times20$ matrix with columns $c_R(v)$ over all triples,
+let $J$ exchange complementary triples, and put $P_\pm=(I\pm J)/2$.
+Set
+\[
+H=\tfrac12CJC^T=H_+-H_-,\qquad H_\pm=\tfrac12CP_\pm C^T.
+\]
+The diagonal of $H$ vanishes and its off-diagonal entries are the complementary
+four-variable hafnians of $v$. Since $\|C\|_F^2=4\|v\|^2=4$,
+\[
+\tr H_+=\tr H_-=1,\qquad v^T\mathcal T_3(A)v=\tr(AH).
+\]
+Equality requires $A$ to be the identity on the range of $CP_+$ and zero on
+the range of $CP_-$, or conversely. These ranges are orthogonal, so
+$P_+C^TCP_-=0$ and $C^TC$ commutes with $J$.
+
+Diagonal entries of this commutation relation give the triple-balance condition
+\begin{equation}\label{eq:balance}
+\sum_{\{i,j\}\subset R}v_{ij}^2=
+\sum_{\{i,j\}\subset R^c}v_{ij}^2\qquad (|R|=3).
+\end{equation}
+Its entry for the triples $\{i,j,k\}$ and $\{i,j,l\}$ gives
+\[
+v_{ik}v_{il}+v_{jk}v_{jl}=v_{pk}v_{pl}+v_{qk}v_{ql},
+\]
+where $p,q$ are the two remaining indices. Varying the two-pair split outside
+$\{k,l\}$ shows that
+\begin{equation}\label{eq:products}
+v_{ak}v_{al}\text{ is independent of }a\notin\{k,l\}.
+\end{equation}
+
+Consider the support graph of $v$. If one vertex has neighbors $k,l$, then
+\eqref{eq:products} forces both $k,l$ adjacent to all four other vertices.
+Any pair among these four shares neighbor $k$, so the same condition forces
+all edges among the four. A further application, using a neighbor in that
+four-set, forces the edge $k,l$. Thus the graph is complete. Otherwise every
+vertex has degree at most one. For any nonzero edge $ab$, applying
+\eqref{eq:balance} to $\{a,b,c\}$ for each $c\notin\{a,b\}$ forces two
+further disjoint edges with the same squared weight. This is a perfect
+matching with constant edge modulus.
+
+In the complete case fix $a,b$ and set $r_k=v_{ak}/v_{bk}$ for the other
+four indices. Equation~\eqref{eq:products} gives $r_kr_l=1$ for every
+distinct $k,l$, so all these ratios are the same sign. All incident edge
+moduli, and hence all edge moduli, coincide. The row-sign ratios and symmetry
+imply $v_{ij}=\alpha s_i s_j$ for $i\ne j$, with a common nonzero real
+$\alpha$ and signs $s_i$.
+
+For this dense array,
+\[
+H=3\alpha^2\Bigl(\prod_i s_i\Bigr)D_s(J_6-I)D_s,
+\]
+so $H$ is invertible and has positive and negative subspace dimensions one
+and five, in either order. For a constant-modulus matching array,
+\[
+H=c^2\Bigl(\prod_{e\text{ in matching}}\operatorname{sign}v_e\Bigr)M,
+\]
+which is invertible with signature $(3,3)$. In both cases the orthogonal
+ranges of $H_+$ and $H_-$ fill $\R^6$. Therefore $A$ is the positive or
+negative spectral projection of $H$, giving precisely \eqref{eq:families}.
+
+Direct substitution verifies equality in all three families, in the operator
+bound and both scalar bounds. When $q_1>0$, equality in the gradient bound
+forces equality in the operator bound by \eqref{eq:gradient}; equality in
+the hafnian-energy bound does so through its Rayleigh inequality. Finally,
+$q_1=0$ is exactly the diagonal case.
+\end{proof}
+
+\section{Scope, comparison, and a scaling correction}\label{sec:scope}
+Theorem~\ref{thm:main} proves the full PSD-contraction gradient statement,
+including non-idempotent inputs. It bypasses the previous nested-spectral
+coefficientwise positivity approach. In particular it does not prove that
+every mixed coefficient in that stronger auxiliary problem is nonnegative.
+The separate problem
+\[
+\sup_{B\succeq0,\ \max_{x\in\{\pm1\}^6}x^TBx\le1}
+|\haf(2\operatorname{offdiag}B)|=\frac1{216}
+\]
+remains unresolved in this work. A spectral constraint is not a Boolean-cube
+constraint, and the present energy bounds alone do not close that extremum.
+
+There is an important correction to the project's earlier operator warning.
+For the conference involution $K=S/\sqrt5$, where $S^2=5I$, one has
+$\|\mathcal T_3(K)\|=3/\sqrt5>1$. This refutes a unit bound for such
+involutions, not the PSD bound: with $P=(I+K)/2$,
+\[
+\|\mathcal T_3(P)\|=\tfrac12\|\mathcal T_3(K)\|
+=\frac{3}{2\sqrt5}<1.
+\]
+The stronger PSD operator statement previously labeled false is instead
+proved by \eqref{eq:minus}--\eqref{eq:plus}.
+
+Roos's Theorem~2.3 specializes in order six to
+$q_2(A)\le3q_1(A)^2/5$. Our spectral statement uses different information:
+for the three-pair projection $q_1=3/4$, it gives the exact $q_2\le3/16$,
+whereas that displayed specialization gives $27/80$. This is a comparison
+with a specific published bound, not a claim to supersede all hafnian
+inequalities. Kummer's cited Kneser construction proves a derivative
+isomorphism, not the weighted inequality here. Full-text review of the
+Lindell--Staples paper was not available for this research pass; a complete
+specialist priority check remains a pre-submission requirement.
+
+A companion proof draft in the same artifact studies zero-diagonal complex
+symmetric matrices. Its four-term defect identity gives all-even-dimensional
+four-subhafnian bounds and quantitative phase-matching recovery, including
+optimal-order stability in order six. Those complex stability statements
+are complementary to the real PSD equality classification above; they
+should not be described as a quantitative classification of all three PSD
+families.
+
+\section{Exact verification and reproducibility}
+The analytic proofs above establish the universal statements. The software
+provides independent checks with no optimization dependencies beyond NumPy.
+The module \texttt{matching\_dilation} implements direct and dilation-based
+operators, both PSD slack expressions, and rational six-variable certificates.
+Its explicitly enumerated numerical interface is capped at order ten to
+prevent accidental exponential allocations; the theorem has no dimension cap.
+
+For orders $4,6,8,10$, tests verify the dilation on every symmetric matrix
+basis element using integers. This checks all coefficients of the linear
+map in those dimensions rather than only sampled matrices. Rational-instance
+certificates verify $A\succeq0$, $\ell I-A\succeq0$, both operator slacks,
+and the scalar corollaries by exact arithmetic, including singular pivots.
+Floating-point inputs are rejected by the exact interface. Other tests cover
+all projection ranks, non-idempotent matrices, sharp families, and the
+conference scaling correction. The companion suite expands its quartic
+identities as exact sparse polynomials and tests constructive stability.
+
+Run the full repository suite with \texttt{python -m pytest}. For the research
+overlay alone, set \texttt{PYTHONPATH=src} first. The reproducibility report
+records the actual local and remote-CI environments and counts; those checks
+are evidence of implementation consistency, not substitutes for the proofs.
+The baseline is commit \texttt{b0143ef5052ff7caa30ce11a51e4586865b53bc3},
+and the implementation is proposed in pull request 19 of
+\texttt{Null-Square/no-free-collapse}.
+
+\begin{thebibliography}{9}
+\bibitem{kummer} M. Kummer, \emph{Spectral linear matrix inequalities},
+Advances in Mathematics \textbf{384} (2021), 107749.
+DOI: \href{https://doi.org/10.1016/j.aim.2021.107749}{10.1016/j.aim.2021.107749}.
+Preprint: arXiv:2008.13452v2, especially Theorem 2.2 and Lemma 3.5.
+\bibitem{roos} B. Roos, \emph{New inequalities for permanents and hafnians and
+some generalizations}, Linear and Multilinear Algebra \textbf{73} (2025),
+1634--1667. DOI: \href{https://doi.org/10.1080/03081087.2024.2436061}{10.1080/03081087.2024.2436061}.
+Preprint: arXiv:1906.06176v2, especially Theorem 2.3.
+\bibitem{lindell} T. Lindell and G. S. Staples, \emph{Norm inequalities in zeon
+algebras}, Advances in Applied Clifford Algebras \textbf{29} (2019), article 13.
+DOI: \href{https://doi.org/10.1007/s00006-018-0934-z}{10.1007/s00006-018-0934-z}.
+\end{thebibliography}
+\end{document}
