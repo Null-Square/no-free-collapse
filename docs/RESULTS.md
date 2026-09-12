@@ -1,126 +1,176 @@
 # Results ledger
 
-This file is the reviewer-facing index of mathematical claims in the repository. It is designed to answer four questions quickly:
+**Updated September 12, 2026.** This is the current authority for theorem status.
+Older progress notes retain their historical derivations; statements there that
+rank two, rank three, or the full PSD-gradient bound are still open are superseded
+by this ledger and [`matching_dilation.md`](matching_dilation.md).
 
-1. What exactly is proved?
-2. Where is the proof written?
-3. Which tests protect the supporting identities/certificates?
-4. Which nearby statements are still conjectural?
+## Main result of the publication branch
+
+For real symmetric `A` of order `2m`, `m>=2`, the complementary-edge weighted
+Kneser operator satisfies the sharp bound
+
+\[
+\|T_m(A)\|_{op}\le\frac{m+1}{4}
+(\lambda_{max}(A)-\lambda_{min}(A)).
+\]
+
+The proof is an explicit difference of two complementary-subset compressions,
+with two PSD slack certificates. In order six it proves
+
+\[
+q_2(A)\le\frac{d(A)^2}{4}q_1(A),\qquad
+|haf(A)|\le\frac{d(A)}6q_1(A),
+\]
+
+where `d(A)` is the spectral diameter. Thus the full PSD-contraction theorem
+and its scaled PSD version, formerly E4 and E5, are **PROVED**.
+All nondegenerate PSD equality cases are also classified: scaled signed balanced
+rank-one projections, their rank-five complements, and signed pair-block
+rank-three projections. Diagonal PSD matrices are the degenerate scalar-bound
+equality cases. See [`matching_dilation.md`](matching_dilation.md).
+
+The separate Boolean-cube-normalized `1/216` optimum remains **OPEN**.
 
 ## Status legend
 
-- **PROVED** — a complete analytic proof is recorded in `docs/`.
-- **SOLVED EXACTLY** — an extremal class is optimized with a matching construction and upper bound.
-- **PROVED REDUCTION** — an exact equivalence/reduction is proved, but the reduced target may remain open.
-- **NUMERICAL EVIDENCE** — diagnostic only; never used as a theorem.
-- **OPEN** — explicitly not claimed.
-
-Tests verify algebraic identities, constructions, exact constants, rational certificates, and representative random instances. Tests are not presented as substitutes for analytic proofs.
+**PROVED** means a complete analytic argument is recorded. **SOLVED EXACTLY**
+means a constrained extremal class has a matching upper bound and construction.
+**PROVED REDUCTION** does not mean its reduced target is solved.
+**NUMERICAL EVIDENCE** is diagnostic only. **OPEN** means no theorem is claimed.
+Tests check identities and certificates; they do not replace analytic proofs.
 
 ## A. Interaction order, normalization, and conditioning
 
-| ID | Claim | Status | Proof note | Main tests |
-| --- | --- | --- | --- | --- |
-| A1 | Fixed-norm order-`r` polynomial preparation has Born interaction degree at most `2r`. | **PROVED** | [`math.md`](math.md) | [`test_degree_bound.py`](../tests/test_degree_bound.py), [`test_interactions.py`](../tests/test_interactions.py) |
-| A2 | The factor-of-two degree ceiling is tight via a fixed-norm parity construction. | **PROVED** | [`math.md`](math.md) | [`test_degree_bound.py`](../tests/test_degree_bound.py) |
-| A3 | Input-dependent normalization can create arbitrarily high exact interaction degree from low-order amplitudes. | **PROVED** | [`math.md`](math.md) | [`test_normalization_loophole.py`](../tests/test_normalization_loophole.py) |
-| A4 | Conditioning controls high-order Walsh leakage exponentially, with `rho=(sqrt(kappa)-1)/(sqrt(kappa)+1)`. | **PROVED** | [`conditioning.md`](conditioning.md), [`chebyshev.md`](chebyshev.md) | [`test_conditioning.py`](../tests/test_conditioning.py), [`test_chebyshev.py`](../tests/test_chebyshev.py) |
-| A5 | Every order-`r` model has an exact Gram form; the minimum latent dimension for fixed `Q` is `rank(Q)` and the optimal linear collapse is spectral. | **PROVED** | [`gram.md`](gram.md) | [`test_gram.py`](../tests/test_gram.py) |
+| ID | Claim | Status | Proof |
+| --- | --- | --- | --- |
+| A1 | Fixed-norm order-r preparation has degree at most 2r. | PROVED; standard degree mechanism | [math](math.md) |
+| A2 | The degree factor two is attained by a parity construction. | PROVED | [math](math.md) |
+| A3 | Input-dependent normalization can create arbitrarily high exact degree. | PROVED | [math](math.md) |
+| A4 | Conditioning controls high-order Walsh leakage exponentially. | PROVED | [conditioning](conditioning.md), [Chebyshev](chebyshev.md) |
+| A5 | Exact Gram form, minimal dimension rank(Q) for a fixed Gram representation, and spectral optimal readout. | PROVED | [Gram](gram.md) |
+
+The corresponding `test_degree_bound`, `test_interactions`, `test_normalization_loophole`,
+`test_conditioning`, `test_chebyshev`, and `test_gram` modules protect the implementations.
+A fixed representation's rank is not asserted to minimize dimension across all
+representations of the same function. High-degree probabilities do not by themselves
+establish high-degree threshold decisions or a computational advantage.
 
 ## B. Exact solvable classes
 
-| ID | Claim | Status | Proof note | Main tests |
-| --- | --- | --- | --- | --- |
-| B1 | The full real order-1 class invariant under coordinate permutations and global sign reversal is optimized exactly by the mean-field normalizer. | **SOLVED EXACTLY** | [`symmetric_optimality.md`](symmetric_optimality.md) | [`test_symmetric.py`](../tests/test_symmetric.py) |
-| B2 | The symmetric optimum is not globally optimal; a matched-pair symmetry-breaking construction beats it. | **PROVED** | [`paired.md`](paired.md) | [`test_paired.py`](../tests/test_paired.py) |
-| B3 | The full matched pair-block class is optimized exactly, including its rank and Gamma-function capacity formula. | **SOLVED EXACTLY** | [`paired.md`](paired.md) | [`test_paired.py`](../tests/test_paired.py) |
+| ID | Claim | Status | Proof |
+| --- | --- | --- | --- |
+| B1 | Exact permutation- and global-sign-invariant real order-one optimum. | SOLVED EXACTLY in that class | [symmetric optimality](symmetric_optimality.md) |
+| B2 | A matched-pair construction beats the symmetric optimum. | PROVED | [paired](paired.md) |
+| B3 | Exact matched pair-block capacity, rank, and Gamma-function formula. | SOLVED EXACTLY in that class | [paired](paired.md) |
 
-## C. Hafnian / low-conditioning regime
+Tests: `test_symmetric.py`, `test_paired.py`. Neither classwise optimum is
+asserted to solve the unrestricted normalized-model capacity problem.
 
-| ID | Claim | Status | Proof note | Main tests |
-| --- | --- | --- | --- | --- |
-| C1 | The first full-order quadratic-normalizer term is a hafnian and obeys the universal minimax/Chebyshev bound. | **PROVED** | [`hafnian_bound.md`](hafnian_bound.md) | [`test_hafnian_bounds.py`](../tests/test_hafnian_bounds.py) |
-| C2 | The four-variable extremal hafnian problem is solved globally with optimum `1/16`. | **SOLVED EXACTLY** | [`hafnian_bound.md`](hafnian_bound.md) | [`test_hafnian_bounds.py`](../tests/test_hafnian_bounds.py) |
-| C3 | The equal disjoint-pair six-variable point is an unrestricted first-order PSD local optimum. | **PROVED** | [`pair_local_optimality.md`](pair_local_optimality.md) | [`test_pair_local_optimality.py`](../tests/test_pair_local_optimality.py) |
-| C4 | Every nonzero zero-slope tangent at that six-variable point has strictly negative second variation; zero-slope feasible line segments are globally non-improving. | **PROVED** | [`six_variable_second_order.md`](six_variable_second_order.md) | [`test_six_variable_second_order.py`](../tests/test_six_variable_second_order.py) |
-| C5 | The candidate six-variable inequality `54|haf(C)| <= t s (t+s)` holds on the entire rank-one PSD stratum. | **PROVED** | [`six_variable_rank_one.md`](six_variable_rank_one.md) | [`test_six_variable_rank_one.py`](../tests/test_six_variable_rank_one.py) |
-| C6 | The six diagonal variables can be eliminated exactly by the minimum-trace PSD completion `tau(C)`, with elliptope dual. | **PROVED REDUCTION** | [`diagonal_completion.md`](diagonal_completion.md) | [`test_diagonal_completion.py`](../tests/test_diagonal_completion.py) |
-| C7 | The range-only bound `|haf(C)| <= a s(a+s)/48` holds without a PSD assumption and reduces any PSD counterexample to a thin `tau≈a` shell. | **PROVED** | [`six_variable_range_bound.md`](six_variable_range_bound.md) | see theorem-specific tests in `tests/` and exact moment identities in the proof note |
+## C. Hafnian and low-conditioning regime
 
-## D. Six-variable projection-gradient theorem
+| ID | Claim | Status | Proof |
+| --- | --- | --- | --- |
+| C1 | Leading full-order term is a hafnian with a minimax/Chebyshev upper bound. | PROVED | [hafnian bound](hafnian_bound.md) |
+| C2 | Global four-variable PSD cube-normalized optimum is 1/16. | SOLVED EXACTLY | [hafnian bound](hafnian_bound.md) |
+| C3 | Six-variable equal-pair point is an unrestricted first-order PSD local optimum. | PROVED | [local optimality](pair_local_optimality.md) |
+| C4 | Strict second variation on nonzero zero-slope tangents; non-improving zero-slope feasible lines. | PROVED | [second order](six_variable_second_order.md) |
+| C5 | Candidate 54-hafnian inequality holds on the rank-one PSD stratum. | PROVED | [rank one](six_variable_rank_one.md) |
+| C6 | Exact minimum-trace diagonal completion with elliptope dual. | PROVED REDUCTION | [completion](diagonal_completion.md) |
+| C7 | Range-only hafnian bound and thin-shell reduction. | PROVED | [range bound](six_variable_range_bound.md) |
 
-Define
+The corresponding theorem-named modules in `tests/` check identities, constants,
+and certificates. These results do not prove the six-variable global cube optimum.
 
-\[
-q_1(A)=\sum_{i<j}A_{ij}^2,
-\qquad
-q_2(A)=\sum_{i<j}\operatorname{haf}(A_{\widehat i,\widehat j})^2.
-\]
+## D. Historical projection-gradient proof components
 
-The completed projection theorem is
+Every real six-dimensional orthogonal projection satisfies `q2<=q1/4`.
+This now follows at once from the global dilation theorem, but the independent
+rank-specific arguments remain available.
 
-\[
-\boxed{q_2(P)\le\frac14q_1(P)}
-\]
+| ID | Component | Status | Proof |
+| --- | --- | --- | --- |
+| D1 | Matching operator, square-free interpretation, rank-one theorem. | PROVED | [projection gradient](projection_gradient.md) |
+| D2 | Rank five by complementation. | PROVED | [projection gradient](projection_gradient.md) |
+| D3 | Rank-three equal-diagonal identity and equality geometry. | PROVED | [equal diagonal](rank_three_equal_diagonal.md) |
+| D4 | Exact rank-three defect identity. | PROVED | [defect](rank_three_defect_identity.md) |
+| D5 | Global rank-three theorem. | PROVED | [rank three](rank_three_global_gradient.md) |
+| D6 | Rank-two Pluecker identity and sharp two-direction class. | PROVED | [Pluecker](rank_two_plucker.md), [two directions](rank_two_two_direction.md) |
+| D7 | Rank-two balanced-diagonal region. | PROVED | [balanced diagonal](rank_two_balanced_diagonal.md) |
+| D8 | Rank-two high-pair region. | PROVED | [high pair](rank_two_dual_high_pair.md) |
+| D9 | Remaining rank-two strip and global rank-two theorem. | PROVED | [rank two](rank_two_global_projection.md) |
+| D10 | Rank four by complementation; ranks zero/six trivial. | PROVED | [rank two](rank_two_global_projection.md) |
+| D11 | All projection ranks. | PROVED | D1-D10; now also [global dilation](matching_dilation.md) |
 
-for every real `6 x 6` orthogonal projection `P`.
+Rank-one equality includes coordinate projections (`q1=q2=0`) as well as
+balanced signed rank-one projections. Nonzero rank alone does not exclude
+degenerate equality. The two-direction rank-two constant 33/160 is not asserted
+here to be the sharp global rank-two constant.
 
-| ID | Rank / component | Status | Proof note | Main tests |
-| --- | --- | --- | --- | --- |
-| D1 | Perfect-matching operator and zeon reformulation; rank-one theorem. | **PROVED** | [`projection_gradient.md`](projection_gradient.md) | [`test_projection_gradient.py`](../tests/test_projection_gradient.py) |
-| D2 | Rank five by projection complementation. | **PROVED** | [`projection_gradient.md`](projection_gradient.md) | [`test_projection_gradient.py`](../tests/test_projection_gradient.py) |
-| D3 | Rank-three equal-diagonal fourth-power identity and equality geometry. | **PROVED** | [`rank_three_equal_diagonal.md`](rank_three_equal_diagonal.md) | [`test_rank_three_equal_diagonal.py`](../tests/test_rank_three_equal_diagonal.py) |
-| D4 | Exact rank-three defect identity. | **PROVED** | [`rank_three_defect_identity.md`](rank_three_defect_identity.md) | [`test_rank_three_defect_identity.py`](../tests/test_rank_three_defect_identity.py) |
-| D5 | Global rank-three projection theorem. | **PROVED** | [`rank_three_global_gradient.md`](rank_three_global_gradient.md) | [`test_rank_three_global_gradient.py`](../tests/test_rank_three_global_gradient.py) |
-| D6 | Rank-two Pluecker identity and two-direction sharp theorem. | **PROVED** | [`rank_two_plucker.md`](rank_two_plucker.md), [`rank_two_two_direction.md`](rank_two_two_direction.md) | [`test_rank_two_plucker.py`](../tests/test_rank_two_plucker.py), [`test_rank_two_two_direction.py`](../tests/test_rank_two_two_direction.py) |
-| D7 | Arbitrary rank-two balanced-diagonal region `max_i d_i<=1/2`. | **PROVED** | [`rank_two_balanced_diagonal.md`](rank_two_balanced_diagonal.md) | [`test_rank_two_balanced_diagonal.py`](../tests/test_rank_two_balanced_diagonal.py) |
-| D8 | Rank-two high-pair region via diagonal quadratic dual. | **PROVED** | [`rank_two_dual_high_pair.md`](rank_two_dual_high_pair.md) | [`test_rank_two_dual_high_pair.py`](../tests/test_rank_two_dual_high_pair.py) |
-| D9 | Remaining rank-two middle strip; hence all rank-two projections. | **PROVED** | [`rank_two_global_projection.md`](rank_two_global_projection.md) | [`test_rank_two_global_projection.py`](../tests/test_rank_two_global_projection.py) |
-| D10 | Rank four by complementation; ranks zero/six trivial. | **PROVED** | [`rank_two_global_projection.md`](rank_two_global_projection.md), [`projection_gradient.md`](projection_gradient.md) | [`test_rank_two_global_projection.py`](../tests/test_rank_two_global_projection.py), [`test_projection_gradient.py`](../tests/test_projection_gradient.py) |
-| D11 | All projection ranks `0,...,6`. | **PROVED** | dependency of D1–D10 | full `pytest` suite |
+## E. PSD-gradient theorem: now completed
 
-### Equality / sharpness notes
+| ID | Claim | Status | Proof / tests |
+| --- | --- | --- | --- |
+| E1 | Nested-projection spectral-chain representation. | PROVED | [spectral polarization](spectral_polarization.md), `test_spectral_polarization.py` |
+| E2 | Homogenized mixed kernel reconstructs the defect. | PROVED REDUCTION | [spectral polarization](spectral_polarization.md) |
+| E3 | Specific nested mixed rank patterns have nonnegative kernel. | PROVED | [mixed ranks](mixed_rank_1555.md), `test_mixed_rank_1555.py` |
+| E4 | `q2(A)<=q1(A)/4` for every `0<=A<=I`. | **PROVED** | [dilation](matching_dilation.md), `test_matching_dilation.py` |
+| E5 | `q2(A)<=lambda_max(A)^2 q1(A)/4` for every real PSD A. | **PROVED** | [dilation](matching_dilation.md), `test_matching_dilation.py` |
+| E6 | Sharp all-even-dimensional weighted Kneser spectral-diameter bound and explicit PSD certificates. | **PROVED** | [dilation](matching_dilation.md), exact integer matrix-basis checks |
+| E7 | Complete six-variable PSD equality classification and sharp hafnian-energy inequality. | **PROVED** | [dilation](matching_dilation.md), exact rational equality tests |
 
-The projection theorem is a `1/4` contraction theorem. Some rank strata have sharper internal constants. In particular, the two-direction rank-two class has sharp ratio `33/160`, attained by the equal-weight `2+4` block geometry. The repository does **not** currently claim `33/160` as the sharp global rank-two constant.
+E4-E7 bypass, rather than prove, coefficientwise positivity of every mixed
+spectral kernel. The kernel is not literally matrix-four-linear; the earlier
+warning against invalid rank-one termwise arguments remains valid.
 
-## E. PSD-contraction frontier
-
-| ID | Claim | Status | Proof note | Main tests |
-| --- | --- | --- | --- | --- |
-| E1 | A normalized PSD contraction has an exact spectral-chain representation by nested projections with nonnegative barycentric increments. | **PROVED** | [`spectral_polarization.md`](spectral_polarization.md) | [`test_spectral_polarization.py`](../tests/test_spectral_polarization.py) |
-| E2 | The mixed four-slot homogenized kernel reconstructs `q1/4-q2` exactly from the nested spectral chain. | **PROVED REDUCTION** | [`spectral_polarization.md`](spectral_polarization.md) | [`test_spectral_polarization.py`](../tests/test_spectral_polarization.py) |
-| E3 | Mixed nested rank patterns `(1,5,5,5)` and `(1,1,1,5)` have nonnegative kernel. | **PROVED** | [`mixed_rank_1555.md`](mixed_rank_1555.md) | [`test_mixed_rank_1555.py`](../tests/test_mixed_rank_1555.py) |
-| E4 | `q2(A)<=q1(A)/4` for every `0<=A<=I`. | **OPEN** | reduced to nested mixed kernel positivity by E1–E2 | diagnostics only; no theorem claim |
-| E5 | `q2(A)<=lambda_max(A)^2 q1(A)/4` for every PSD `A`. | **OPEN** | would follow from E4 by scaling | — |
-
-Important terminology: the spectral kernel is symmetric in four slots after homogenizing the quadratic term with `sum delta_k=1`; it is **not** literally matrix-four-linear. This prevents invalid rank-one termwise expansion arguments.
-
-## F. Open extremal problems
+## F. Open problems retained
 
 | ID | Statement | Status |
 | --- | --- | --- |
-| F1 | Full six-variable sharp PSD hafnian inequality `54|haf(C)| <= tau(C)s(C)(tau(C)+s(C))`. | **OPEN globally**; proved on substantial strata and outside the thin completion shell. |
-| F2 | General even-`m` sharp hafnian optimum `m^{-m/2}` for the equal pair construction. | **OPEN**. |
-| F3 | Sharp global rank-two projection constant equals `33/160`. | **OPEN strengthening**; `1/4` theorem is proved globally. |
+| F1 | Full six-variable cube-normalized optimum 1/216 and the stronger 54-hafnian completion inequality. | OPEN globally |
+| F2 | General even-dimensional cube-normalized optimum m^(-m/2). | OPEN |
+| F3 | Sharp global rank-two projection ratio 33/160. | OPEN strengthening |
 
-## Numerical diagnostics and failed stronger statements
+## G. Complex zero-diagonal spectral bounds and stability
 
-The project keeps failed proof routes visible in the relevant notes when they materially constrain future work. In particular:
+For complex symmetric zero-diagonal B of order n>=4, with T its off-diagonal
+squared energy and H4 its summed four-subhafnian energy,
+`H4 <= (n-2)||B||_op^2 T/4`. An exact four-term nonnegative defect proves this,
+classifies equality, and gives constructive matching recovery. The coefficient
+is sharp in every even order. In order six, `|haf(B)|<=||B||_op^3`, and a
+unit contraction with `|haf(B)|>=1-epsilon`, `epsilon<=1/48`, lies within
+squared Frobenius distance `34 epsilon` of a phase-weighted perfect matching.
+A rational rotation family shows that the linear squared-distance order cannot
+be improved uniformly to little-o(epsilon). The numerical constant 34 is not
+claimed optimal.
 
-- the stronger operator norm claim `||T(A)||_op <= lambda_max(A)` is false;
-- separate eigenvalue convexity does not reduce PSD contractions to projections;
-- Bernoulli rounding of eigenvectors does not preserve the defect in the required direction;
-- atom-by-atom positivity of the mixed spectral kernel is false;
-- coefficientwise Bernstein positivity along an arbitrary interpolation is not assumed unless proved.
+Proof: [zero-diagonal spectral note](zero_diagonal_spectral.md). Tests:
+`test_zero_diagonal.py`, `test_spectral_stability_sharpness.py`. These complex
+stability results are not a quantitative classification of all three PSD
+families in E7.
 
-These failures are part of the robustness story: the main theorem statements above do not rely on them.
+## Corrected failed-route record
 
-## Paper baseline
+The earlier sentence claiming `||T(A)||<=lambda_max(A)` false for PSD A was
+incorrect and is withdrawn. The conference example refutes `||T(K)||<=1` for
+certain symmetric involutions K; its PSD projection is `(I+K)/2` and its
+matching operator is smaller by a factor two. E6 explicitly proves the PSD
+bound. The regression test records both scalings.
 
-For the first manuscript, the natural cutoff is:
+Other historical failed routes remain distinct: separate eigenvalue convexity,
+Bernoulli eigenvector rounding in the needed direction, atomwise mixed-kernel
+positivity, and unproved coefficientwise Bernstein assertions are not used by
+the new theorem.
 
-- all results A1–E3 as completed material;
-- E4–E5 and F1–F3 as open problems / future work;
-- exploratory numerical observations included only when clearly labeled and useful for motivation.
+## Publication and verification
 
-This makes the paper complete without requiring the unresolved full PSD-contraction theorem.
+The focused primary contribution is E4-E7, with G as companion stability work.
+The main and companion proof drafts, reproducibility data, and submission status
+are supplied with the research artifact. The branch's full suite passed 200 tests
+in GitHub CI on Python 3.10 at run 34689783115; the Python 3.12 job also succeeded.
+The 79 newly added tests pass locally. Exact algebraic checks, floating-point
+diagnostics, and analytic proofs are reported separately.
+
+Independent mathematical review, complete priority comparison, author metadata,
+and venue-specific submission preparation remain external publication gates.
+No journal submission or merge is performed by this research branch.
