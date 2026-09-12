@@ -1,220 +1,85 @@
-![No Free Collapse — Measurement exposes. Preparation pays.](./assets/assets/no-free-collapse-cover.png)
-
 # No Free Collapse
 
+**Complementary-subset dilations and a spectral hierarchy for hafnian energies.**
+
 [![CI](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml/badge.svg)](https://github.com/Null-Square/no-free-collapse/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**Interaction-order limits of quantum-inspired reasoning.**
+This repository contains analytic proofs, theorem-supporting code, exact rational certificates, and reproducible diagnostics. The current paper is a focused matrix-inequalities contribution. The earlier normalized-model research is retained as background, not as a claim of quantum computational advantage.
 
-This repository contains the theorem statements, proof notes, CPU-verifiable tests, and reproducibility scripts for the **No Free Collapse** research program.
+**Publication status: author-review candidate. Not submitted.** Technical checks and human submission approval are separate. See the [submission checklist](submission/README.md) and run `python tools/submission_check.py`.
 
-The central question is:
+## Main results
 
-> If many reasoning fragments are encoded into a quantum-like latent state and an answer is produced by Born-style collapse, which higher-order interactions must already have been created before measurement?
-
-The working principle is **no free collapse**: measurement can expose interference already present in the prepared state, while nonlinear preparation and input-dependent normalization must be counted as computational resources.
-
-## Status at a glance
-
-The repository deliberately separates proved results from open conjectures.
-
-| Result | Status | Main proof / index |
-| --- | --- | --- |
-| Fixed-norm order-`r` preparation has Born interaction degree at most `2r` | **Proved** | [`docs/math.md`](docs/math.md) |
-| The factor-of-two degree ceiling is tight | **Proved** | [`docs/math.md`](docs/math.md) |
-| Input-dependent normalization can generate arbitrarily high exact interaction order | **Proved** | [`docs/math.md`](docs/math.md) |
-| Conditioning controls high-order Walsh leakage exponentially | **Proved** | [`docs/conditioning.md`](docs/conditioning.md), [`docs/chebyshev.md`](docs/chebyshev.md) |
-| Exact Gram representation and minimal latent dimension | **Proved** | [`docs/gram.md`](docs/gram.md) |
-| Permutation/global-sign symmetric order-1 class | **Solved exactly** | [`docs/symmetric_optimality.md`](docs/symmetric_optimality.md) |
-| Matched-pair symmetry-breaking class | **Solved exactly** | [`docs/paired.md`](docs/paired.md) |
-| Universal low-conditioning hafnian bound; `m=4` sharp optimum | **Proved** | [`docs/hafnian_bound.md`](docs/hafnian_bound.md) |
-| Six-variable rank-one, completion, and range reductions | **Proved** | [`docs/six_variable_rank_one.md`](docs/six_variable_rank_one.md), [`docs/diagonal_completion.md`](docs/diagonal_completion.md), [`docs/six_variable_range_bound.md`](docs/six_variable_range_bound.md) |
-| Six-variable gradient contraction on every orthogonal projection rank `0,...,6` | **Proved** | [`docs/projection_gradient.md`](docs/projection_gradient.md), [`docs/rank_three_global_gradient.md`](docs/rank_three_global_gradient.md), [`docs/rank_two_global_projection.md`](docs/rank_two_global_projection.md) |
-| Exact spectral-chain reduction from PSD contractions to nested projection kernels | **Proved reduction** | [`docs/spectral_polarization.md`](docs/spectral_polarization.md) |
-| Mixed nested rank patterns `(1,5,5,5)` and `(1,1,1,5)` | **Proved** | [`docs/mixed_rank_1555.md`](docs/mixed_rank_1555.md) |
-| Full PSD-contraction gradient inequality | **Open** | [`docs/RESULTS.md`](docs/RESULTS.md) |
-| General even-`m` sharp hafnian optimum | **Open** | [`docs/RESULTS.md`](docs/RESULTS.md) |
-
-For the complete theorem ledger, including proof and test locations, see **[`docs/RESULTS.md`](docs/RESULTS.md)**.
-
-## Research map
-
-```mermaid
-flowchart LR
-    A[Preparation order] --> B[Born numerator degree]
-    B --> C[Normalization resource]
-    C --> D[Conditioning]
-    D --> E[Interaction capacity]
-    E --> F[Low-conditioning hafnian regime]
-    F --> G[Six-variable extremal geometry]
-    G --> H[Projection-gradient theorem]
-    H --> I[Spectral contraction frontier]
-```
-
-The core resource-theoretic chain is
+For real symmetric A of order 2m, m >= 2, the specified weighted Kneser operator obeys the sharp bound
 
 \[
-\text{preparation order}
-\to
-\text{Born degree}
-\to
-\text{normalization resource}
-\to
-\text{conditioning}
-\to
-\text{interaction capacity}.
+\|T_m(A)\|_{op}\le\frac{m+1}{4}\bigl(\lambda_{max}(A)-\lambda_{min}(A)\bigr).
 \]
 
-The strongest completed six-variable geometric milestone is
+Writing `d(A)=lambda_max(A)-lambda_min(A)` and
 
 \[
-\boxed{
-q_2(P)\le \frac14 q_1(P)
-}
+\overline H_{2r}(A)=\binom N{2r}^{-1}\sum_{|S|=2r}|\operatorname{haf}(A[S])|^2,
 \]
 
-for every real `6 x 6` orthogonal projection `P`, all ranks `0,...,6`.
-
-The current open extension is
+we prove
 
 \[
-0\preceq A\preceq I,
-\qquad
-q_2(A)\stackrel{?}{\le}\frac14q_1(A).
+\boxed{\overline H_{2r}(A)\le\tfrac14 d(A)^2\overline H_{2r-2}(A)}
 \]
 
-No file in this repository presents that contraction inequality as proved.
+for **integer r >= 2 and N >= 4r-2**. The one-step constant is sharp at every order across the admissible dimensions. This is not a claim of the best constant at every fixed larger N, nor a sharp iterated product.
+
+| Result | Status | Where to read |
+|---|---|---|
+| Sharp all-even-dimensional weighted-operator bound | Analytic proof | [Dilation](docs/matching_dilation.md) |
+| Principal subhafnian hierarchy and Roos hybrid | Analytic proof, including odd ambient order | [Hierarchy](docs/subhafnian_hierarchy.md), [audit](docs/SUBMISSION_AUDIT.md) |
+| Six-variable PSD gradient bound, formerly E4/E5 | **Proved globally**, with PSD equality classification | [Manuscript](paper/matching_dilation.tex) |
+| Sharp fixed-N spectral edge-density bound | Analytic proof, including the odd-N improvement | [Audit](docs/SUBMISSION_AUDIT.md) |
+| Real, pure, zero-displacement collision-free GBS consequence | Corollary with explicit restrictions | [Manuscript](paper/matching_dilation.tex) |
+| Complex zero-diagonal matching stability | Companion theorem, separate hypotheses | [Companion](docs/zero_diagonal_spectral.md) |
+| Cube-normalized six-variable 1/216 optimum | **Open**; not a prerequisite for this paper | [Ledger](docs/RESULTS.md) |
 
 ## Reviewer quick start
 
-The code is intentionally lightweight: NumPy plus pytest, with no GPU dependency.
-
-```bash
+```sh
 git clone https://github.com/Null-Square/no-free-collapse.git
 cd no-free-collapse
 python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+# Activate the virtual environment for your shell.
 python -m pip install -e '.[dev]'
+python -m compileall -q src experiments tests tools
 python -m pytest
+python tools/submission_check.py
+python experiments/e20_spectral_stability.py --samples 250
+python experiments/e21_matching_dilation.py --samples 100
+python experiments/e22_subhafnian_hierarchy.py
 ```
 
-To reproduce the curated deterministic research outputs:
+The first commands run the full repository suite. Exact instance certificates verify their spectral hypotheses; random tests are diagnostics, never universal proofs. NumPy is the only numerical runtime dependency. Explicit enumerators are capped to prevent accidental exponential work.
 
-```bash
-python experiments/reproduce_core.py
+Build the paper with a LaTeX installation:
+
+```sh
+cd paper
+pdflatex -no-shell-escape -interaction=nonstopmode -halt-on-error matching_dilation.tex
+pdflatex -no-shell-escape -interaction=nonstopmode -halt-on-error matching_dilation.tex
 ```
 
-For a description of exact certificates, floating-point diagnostics, random seeds, and what CI verifies, see **[`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)**.
+## Reading order and repository map
 
-## How to review the repository
+Start with the [paper overview](paper/README.md), then the [current theorem ledger](docs/RESULTS.md), [proof audit](docs/SUBMISSION_AUDIT.md), and [reproducibility guide](docs/REPRODUCIBILITY.md). [Paper materials](docs/PAPER_MATERIALS.md) describes the frozen submission scope. [Literature review](submission/literature_review.md) distinguishes direct comparisons from unresolved priority checks.
 
-A reviewer can follow this path without reconstructing the project history:
+`src/no_free_collapse/` contains numerical diagnostics and exact certificates; `tests/` contains regression and algebraic checks; `experiments/` contains seeded reproductions; `paper/` contains manuscript sources; `submission/` contains the cover-letter draft, highlights, declarations, and approval record.
 
-1. **[`docs/RESULTS.md`](docs/RESULTS.md)** — theorem ledger: statement, status, proof note, tests.
-2. **[`docs/FIGURES.md`](docs/FIGURES.md)** — visual dependency diagrams and result maps.
-3. **[`docs/REPRODUCIBILITY.md`](docs/REPRODUCIBILITY.md)** — verification commands and numerical/exact boundary.
-4. **[`docs/PAPER_MATERIALS.md`](docs/PAPER_MATERIALS.md)** — paper-ready theorem map, figure plan, table plan, and appendix split.
-5. Individual proof notes in `docs/` for full derivations.
-6. `tests/` for CPU-verifiable regression and exact-certificate checks.
+## Historical notes and claim boundaries
 
-## Projection theorem: rank closure
+Earlier rank-by-rank and spectral-polarization notes are preserved as research history. Any older statement that the PSD-gradient extension is open, or that the PSD matching-operator bound is false, is superseded by the current ledger and dilation proof. The former conference counterexample concerned an involution; its PSD projection has half the matching-operator norm.
 
-```mermaid
-flowchart TD
-    P[Projection gradient inequality] --> R06[Ranks 0 and 6: trivial]
-    P --> R15[Ranks 1 and 5]
-    P --> R3[Rank 3]
-    P --> R24[Ranks 2 and 4]
-    R15 --> A1[Rank-one Maclaurin/Cauchy]
-    R15 --> A5[Complementation]
-    R3 --> B1[Exact defect identity]
-    B1 --> B2[Capacity + LP-dual closure]
-    R24 --> C1[Rank-two Pluecker identity]
-    C1 --> C2[Balanced diagonal]
-    C1 --> C3[High-pair quadratic dual]
-    C1 --> C4[Middle-strip threshold graph]
-    C4 --> C5[Global rank-two theorem]
-    C5 --> C6[Rank four by complement]
-```
+The normalization/conditioning proofs remain in [math](docs/math.md), [conditioning](docs/conditioning.md), [Gram](docs/gram.md), and [paired models](docs/paired.md). Standard degree doubling, Fourier analysis, SDP duality, and zeon algebras are not claimed as inventions of this project. High-degree probabilities alone do not demonstrate decision expressivity or computational advantage.
 
-This is a completed theorem, not a numerical rank scan.
+No exhaustive priority certification, independent human proof review, journal acceptance, or submission is claimed. The release preflight deliberately fails until author identity, declarations, proof/priority approval, and venue checks are recorded.
 
-## Repository structure
+## License and citation
 
-```text
-src/no_free_collapse/   theorem-supporting implementation and exact utilities
-tests/                  regression tests and exact certificate checks
-docs/                   proof notes, result ledger, figures, reproducibility
-experiments/            deterministic reproductions and exploratory scripts
-.github/workflows/      CI configuration
-```
-
-The distinction between `tests/` and `experiments/` is intentional:
-
-- **tests** protect identities, exact constants, certificates, and theorem-supporting computations;
-- **experiments** reproduce examples or document exploratory numerics and are not substitutes for proofs.
-
-## Main completed results
-
-### Interaction-order and normalization
-
-For Boolean inputs `x_i in {-1,+1}`, an order-`r` unnormalized amplitude has the form
-
-\[
-\widetilde\psi(x)=\sum_{|S|\le r}x_Su_S.
-\]
-
-With fixed norm, Born readout has interaction degree at most `2r`, and the factor two is tight. If the norm depends on the input, normalization becomes a nonlinear computational resource and can generate arbitrarily high exact degree.
-
-If the squared norm has condition number `kappa`, define
-
-\[
-\rho=\frac{\sqrt\kappa-1}{\sqrt\kappa+1},
-\qquad
-m=\left\lfloor\frac{k-1}{2r}\right\rfloor.
-\]
-
-Then every order-`k` Walsh coefficient obeys
-
-\[
-|\widehat p(S)|\le\frac{\rho^m}{1+\rho^{2m}}.
-\]
-
-### Exact model classes
-
-The full permutation/global-sign symmetric real order-1 class is solved exactly. That symmetric optimum is not globally optimal: a symmetry-breaking matched-pair construction is stronger, and the entire matched-pair block class is solved exactly.
-
-### Hafnian regime
-
-The first full-order term generated by a bounded PSD quadratic normalizer is a hafnian. A universal bound follows from a Chebyshev/minimax argument, and the four-variable extremal problem is solved globally with optimum `1/16`.
-
-For six variables, the repository contains:
-
-- unrestricted first- and strict second-order local-optimality results at the disjoint-pair point;
-- a global rank-one theorem;
-- an exact minimum-trace diagonal-completion reduction with elliptope dual;
-- a sharp range-only theorem reducing the PSD problem to a thin near-minimal-completion shell;
-- a complete projection-gradient theorem for every projection rank;
-- an exact nested spectral homogenization for general PSD contractions;
-- the first nontrivial mixed nested spectral coefficient theorem.
-
-## What is not claimed
-
-The following remain open unless a later proof is explicitly merged and the ledger is updated:
-
-1. the full PSD-contraction gradient inequality;
-2. the final sharp six-variable PSD hafnian extremal inequality in complete generality;
-3. the general even-variable conjecture that the equal pair construction globally maximizes the relevant hafnian at value `m^{-m/2}`.
-
-The repository also does **not** claim novelty for standard background tools such as Boolean Fourier analysis, Chebyshev approximation, Helstrom discrimination, hafnians, generic SDP duality, zeon algebras, Schur-Horn theory, or symmetric-polynomial half-degree principles. Novelty claims should attach to the specific resource-theoretic reductions and extremal theorems proved here.
-
-## Paper preparation
-
-The current theorem set is sufficient for a complete manuscript framed around interaction-order limits, normalization/conditioning as resources, exact solvable classes, and the completed projection-gradient theorem. The PSD-contraction extension is treated as an open frontier rather than a prerequisite for the paper.
-
-See **[`docs/PAPER_MATERIALS.md`](docs/PAPER_MATERIALS.md)** for the proposed theorem ordering, main-text/appendix split, result tables, and figure inventory.
-
-## License
-
-MIT. See [`LICENSE`](LICENSE).
+Repository code retains the [MIT license](LICENSE). See [CITATION.md](CITATION.md) for citing a version without inventing a paper DOI or confirmed author list.
