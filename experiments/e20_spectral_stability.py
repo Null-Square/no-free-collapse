@@ -101,7 +101,8 @@ def run(seed: int, samples: int) -> dict:
         "exact_matching_certificates": exact,
         "six_hafnian_stability": stability, "timing_diagnostics": timings,
         "proof_scope": "zero-diagonal complex symmetric spectral constraint",
-        "unrestricted_psd_conjecture_solved": False,
+        "full_real_psd_gradient_proof_is_separate": "docs/matching_dilation.md",
+        "cube_normalized_1_over_216_conjecture_solved": False,
     }
 
 
