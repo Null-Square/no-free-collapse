@@ -29,5 +29,26 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
       - run: python -m pip install -e '.[dev]'
-      - run: python -m compileall -q src experiments tests
-      - run: python -m pytest
+      - run: python -m compileall -q src experiments tests tools
+      - name: Technical submission inventory (not human approval)
+        run: |
+          mkdir -p verification
+          python tools/submission_check.py > verification/submission-preflight.json
+      - name: Full repository tests
+        run: |
+          set -o pipefail
+          python -m pytest --junitxml=verification/pytest.xml | tee verification/pytest.txt
+      - name: Archive exact tested source
+        if: matrix.python-version == '3.12'
+        run: |
+          git archive --format=zip --output=verification/tested-source.zip HEAD
+          git rev-parse HEAD > verification/tested-commit.txt
+          sha256sum verification/tested-source.zip > verification/source-sha256.txt
+      - name: Preserve verification and tested source
+        if: success() && matrix.python-version == '3.12'
+        uses: actions/upload-artifact@v4
+        with:
+          name: verified-research-source
+          path: verification/
+          retention-days: 14
+          if-no-files-found: error

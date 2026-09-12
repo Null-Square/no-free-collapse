@@ -1,0 +1,4 @@
+A complementary-subset dilation gives a sharp weighted Kneser norm bound.
+Spectral diameter controls averaged squared principal subhafnian energies.
+The spectral recurrence combines with Roos's bound in a one-switch product.
+All six-variable PSD equality cases are classified analytically.

@@ -7,9 +7,9 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}\fancyhf{}
 \fancyhead[L]{\small Spectral hierarchy for hafnian energies}
-\fancyhead[R]{\small Research draft}\fancyfoot[C]{\thepage}
+\fancyhead[R]{\small Author-review candidate}\fancyfoot[C]{\thepage}
 \setlength{\headheight}{14pt}\setlength{\emergencystretch}{2em}
-\hypersetup{pdftitle={Complementary-subset dilations and a spectral hierarchy for hafnian energies},pdfauthor={No Free Collapse project - research draft}}
+\hypersetup{pdftitle={Complementary-subset dilations and a spectral hierarchy for hafnian energies},pdfauthor={Author information pending confirmation}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
@@ -19,46 +19,38 @@
 \newcommand{\R}{\mathbb R}\newcommand{\op}{\mathrm{op}}
 \newcommand{\Hbar}{\overline H}
 \title{Complementary-subset dilations and a spectral hierarchy\\for hafnian energies}
-\author{No Free Collapse project\thanks{Research draft. Human author names, affiliations, author order, assistance disclosure, and venue-specific declarations must be confirmed before submission. Independent mathematical and priority review remain pending.}}
+\input{author_metadata.tex}
+\author{\ManuscriptAuthors\thanks{\ManuscriptAuthorNote}}
 \date{12 September 2026}
 \begin{document}\maketitle
 
 \begin{abstract}
-For a real symmetric matrix $A$ of order $2m$, we introduce a matrix-weighted
-Kneser operator $\mathcal T_m(A)$ on $(m-1)$-subsets and give an explicit
-complementary-subset dilation.  It yields the sharp spectral-diameter bound
-\[
-\|\mathcal T_m(A)\|_{\op}\le \frac{m+1}{4}
-\bigl(\lambda_{\max}(A)-\lambda_{\min}(A)\bigr),
-\]
-with the optimal constant in every even dimension.  From this operator theorem
-we derive an all-orders hierarchy for averaged squared principal subhafnians.
-Writing
-$H_{2r}(A)=\sum_{|S|=2r}|\haf(A[S])|^2$ and
-$\Hbar_{2r}=H_{2r}/\binom N{2r}$, we prove, whenever $N\ge4r-2$,
-\[
-\Hbar_{2r}(A)\le \frac{d(A)^2}{4}\Hbar_{2r-2}(A),
-\qquad d(A)=\lambda_{\max}(A)-\lambda_{\min}(A).
-\]
-The factor $1/4$ is sharp at every order.  In Roos's normalized subhafnian
-energy $G_r$, our recurrence is
-$G_r\le d(A)^2G_{r-1}/[4(2r-1)^2]$.  Combining it with Roos's
-log-subadditivity gives a one-switch hybrid bound and a sharp scale-free
-edge-density criterion describing exactly when the spectral step is stronger.
-Balanced rank-one matrices lie at the crossover, whereas half-rank
-constant-diagonal projections maximize the spectral-density parameter; on
-matching projections the one-step improvement over the Roos factor grows
-asymptotically linearly with $r$.  In order six we recover the full
-positive-semidefinite hafnian-gradient inequality and classify all equality
-cases.  Finally, the hierarchy gives a photon-sector bound for collision-free
-real Gaussian boson sampling: average unconditional per-pattern probability
-contracts by at most $d(B)^2/4$ at each admissible two-photon step.  Exact and
-floating-point implementations independently check the dilation, the hierarchy,
-sharp families, and rational semidefinite certificates.
+A matrix-weighted Kneser operator on $(m-1)$-subsets of $[2m]$ is shown to
+satisfy a sharp spectral-diameter bound, proved by an explicit
+complementary-subset dilation. For a real symmetric matrix $A$ of order $N$,
+write $d(A)=\lambda_{\max}(A)-\lambda_{\min}(A)$ and let $\overline H_{2r}(A)$
+be the average of $|\haf(A[S])|^2$ over its $2r$-element principal subsets.
+The dilation yields
+$\overline H_{2r}(A)\le d(A)^2\overline H_{2r-2}(A)/4$
+for every integer $r\ge2$ with $N\ge4r-2$. The one-step constant is sharp
+at each order, with equality attained at the critical dimension by balanced
+rank-one projections, their complements, and matching projections.
+Combining the spectral recurrence with Roos's subhafnian inequality gives a
+one-switch product bound. A sharp fixed-dimension edge-density estimate,
+including odd dimensions, identifies when its spectral factor is smaller.
+On critical matching projections the improvement in the one-step coefficient
+grows linearly with the hafnian order. In dimension six, all PSD equality
+cases of the associated gradient and energy bounds are classified.
+A corollary controls averaged unconditional collision-free probabilities for
+real Gaussian boson sampling. Exact rational certificates and separate
+floating-point diagnostics support reproducibility; they are not used in
+place of the analytic proofs.
 \end{abstract}
 
 \noindent\textbf{Keywords:} hafnian; subhafnian; Kneser operator; spectral diameter;
-positive semidefinite matrix; Gaussian boson sampling; dilation; equality cases.
+positive semidefinite matrix; dilation.
+
+\noindent\textbf{2020 Mathematics Subject Classification:} Primary 15A15; Secondary 15A45.
 
 \section{Introduction}
 For a symmetric matrix of even order, the hafnian is the sum of products of
@@ -80,7 +72,7 @@ subhafnian energies.  The two hierarchies are complementary and can be combined.
 For $A=A^T\in\R^{N\times N}$ define
 \[
 d(A)=\lambda_{\max}(A)-\lambda_{\min}(A),\qquad
-H_{2r}(A)=\sum_{\substack{S\subseteq[N]\\|S|=2r}|\haf(A[S])|^2,
+H_{2r}(A)=\sum_{\substack{S\subseteq[N]\\|S|=2r}}|\haf(A[S])|^2,
 \qquad
 \Hbar_{2r}(A)=\frac{H_{2r}(A)}{\binom N{2r}}.
 \]
@@ -187,7 +179,7 @@ The operator theorem becomes a hafnian recursion at a distinguished layer of
 the Boolean lattice.
 
 \begin{theorem}[Critical subhafnian step]\label{thm:critical}
-Let $r\ge2$ and let $B=B^T$ have order $4r-2$.  Then
+Let $r\ge2$ and let $B=B^T$ be real of order $4r-2$.  Then
 \begin{equation}\label{eq:critical}
 \boxed{H_{2r}(B)\le\frac{d(B)^2}{4}H_{2r-2}(B).}
 \end{equation}
@@ -265,11 +257,12 @@ for each fixed $N>4r-2$.
 \end{proof}
 
 One may equivalently view \eqref{eq:hierarchy} as a monotonicity law: for
-fixed $A$, the quantities
+fixed $A$ with $d(A)>0$, the quantities
 \[
 \frac{4^r\Hbar_{2r}(A)}{d(A)^{2r}}
 \]
-are nonincreasing throughout the range in which the hierarchy applies.
+are nonincreasing for $1\le r\le\lfloor(N+2)/4\rfloor$.
+When $d(A)=0$, the matrix is scalar and every positive-order principal hafnian vanishes.
 
 \section{Hybridization with Roos's subhafnian inequality}\label{sec:hybrid}
 Following Roos~\cite{roos}, define
@@ -286,10 +279,35 @@ Roos's Theorem~2.3 is logarithmically subadditive and in particular gives
 \begin{equation}\label{eq:roos}
 G_r(A)\le G_{r-1}(A)G_1(A).
 \end{equation}
-The two statements use genuinely different information.
+The two statements use different information. Roos states Theorem~2.3
+for even ambient order. The following explicit use of his Corollary~3.1
+justifies the same recurrence for odd ambient order as well.
+
+\begin{lemma}[Parity-free use of Roos's convolution inequality]\label{lem:roosparity}
+For any complex symmetric matrix of order $N$ and positive integers $a,b$
+with $2(a+b)\le N$, one has $G_{a+b}\le G_aG_b$.
+\end{lemma}
+\begin{proof}
+Let $F_j(S)=\haf(A[S])/(2j-1)!!$ on sets of size $2j$ and put $r=a+b$.
+Partitioning a perfect matching into $a$ edges and $b$ edges gives
+\[
+\sum_{\substack{T\subset S\\|T|=2a}}
+\haf(A[T])\haf(A[S\setminus T])=\binom ra\haf(A[S]).
+\]
+Since
+$\binom ra(2r-1)!!=\binom{2r}{2a}(2a-1)!!(2b-1)!!$, this is equivalent to
+\[
+F_r(S)=\binom{2r}{2a}^{-1}
+\sum_{\substack{T\subset S\\|T|=2a}}F_a(T)F_b(S\setminus T).
+\]
+Roos's Corollary~3.1 applies with ambient set $[N]$, subset size $2r$,
+and block sizes $(2a,2b)$. It bounds the average squared normalized
+convolution by the product of the two average squared factors. No parity
+condition on $N$ is needed in that corollary.
+\end{proof}
 
 \begin{corollary}[One-switch hybrid]\label{cor:hybrid}
-If $N\ge4r-2$, then
+If $r\ge2$ and $N\ge4r-2$, then
 \begin{equation}\label{eq:hybrid}
 \boxed{
 G_r(A)\le G_1(A)\prod_{s=2}^r
@@ -317,7 +335,8 @@ $d(A)^2/[4(2s-1)^2]$ decrease with $s$, whereas $G_1(A)$ is fixed, so there is
 at most one switch, and the product of the spectral tail gives
 \eqref{eq:closedhybrid}.
 
-For the last claim, write $U_s$ for the right side of \eqref{eq:hybrid} and
+If $G_1=0$, every off-diagonal entry is zero and the conclusion is trivial.
+Otherwise, for the last claim, write $U_s$ for the right side of \eqref{eq:hybrid} and
 $m_j=\min\{G_1,d(A)^2/[4(2j-1)^2]\}$.  Suppose $a\ge b$.  Then
 \[
 \frac{U_{a+b}}{U_aU_b}
@@ -339,28 +358,40 @@ The spectral step \eqref{eq:spectralG} beats the Roos step
 \end{equation}
 The parameter $\theta$ has a sharp universal ceiling.
 
-\begin{proposition}[Sharp spectral edge density]\label{prop:theta}
-For every non-scalar real symmetric $A$ of order $N$,
+\begin{proposition}[Sharp fixed-order spectral edge density]\label{prop:theta}
+For every non-scalar real symmetric matrix $A$ of order $N\ge2$,
 \begin{equation}\label{eq:theta}
-\boxed{\theta(A)\le\frac1{N-1}.}
+\boxed{\theta(A)\le\frac{4\lfloor N^2/4\rfloor}{N^2(N-1)}
+=\begin{cases}1/(N-1),&N\text{ even},\\(N+1)/N^2,&N\text{ odd}.\end{cases}}
 \end{equation}
-Equality holds exactly when, after shifting by a scalar matrix and scaling by
-$d(A)$, one obtains a rank-$N/2$ orthogonal projection with constant diagonal
-$1/2$.  In particular, equality is possible only for even $N$.
+Equality holds exactly when
+$B=(A-\lambda_{\min}(A)I)/d(A)$ is a constant-diagonal orthogonal
+projection of rank $\lfloor N/2\rfloor$ or $\lceil N/2\rceil$.
 \end{proposition}
 \begin{proof}
-Set $B=(A-\lambda_{\min}(A)I)/d(A)$, so $0\preceq B\preceq I$ and
-$G_1(B)=G_1(A)/d(A)^2$.  With $t=\tr B$,
+Write the eigenvalues of $B$ as $\lambda_i\in[0,1]$ and let $t=\tr B$.
+Cauchy--Schwarz on the diagonal gives
 \[
 2H_2(B)=\tr(B^2)-\sum_iB_{ii}^2
-\le t-\frac{t^2}{N}\le\frac N4.
+\le\sum_i\lambda_i^2-\frac{(\sum_i\lambda_i)^2}{N}.
 \]
-Hence $G_1(B)\le1/[4(N-1)]$.  Equality forces, successively,
-$B^2=B$, all $B_{ii}$ equal, and $t=N/2$, and these conditions suffice.
+The last expression is strictly convex in each eigenvalue separately, so
+its maximum on $[0,1]^N$ is attained only at vertices. At a vertex with $k$
+ones it is $k(N-k)/N$, maximized at $k=\lfloor N/2\rfloor$ or
+$\lceil N/2\rceil$. Divide by $\binom N2$ and use
+$\theta(A)=4G_1(B)$ to obtain \eqref{eq:theta}.
+Equality requires every eigenvalue to be an endpoint and every diagonal
+entry to be $k/N$, and these conditions suffice. Such real projections
+exist: for even $N$ use the matching projection; for odd $N$ use $k$ columns
+of the real Fourier basis, choosing sine/cosine pairs and including the
+constant column exactly when $k$ is odd. Each selected pair contributes
+$2/N$ to every diagonal entry and the constant column contributes $1/N$.
 \end{proof}
 
 Equations~\eqref{eq:crossover}--\eqref{eq:theta} show that the new spectral
-step can improve Roos only in the window
+step can improve Roos only if
+$4\lfloor N^2/4\rfloor/[N^2(N-1)]>1/(2r-1)^2$.
+A simpler necessary window, exact for this ceiling when $N$ is even, is
 \[
 4r-2\le N<(2r-1)^2+1.
 \]
@@ -441,13 +472,26 @@ varying the remaining pair gives
 \begin{equation}\label{eq:products}
 v_{ak}v_{al}\quad\text{independent of }a\notin\{k,l\}.
 \end{equation}
-If a support vertex has two neighbors, \eqref{eq:products} propagates to show
-that the support graph is complete.  Otherwise every support degree is at most
-one, and \eqref{eq:balance} forces a perfect matching with equal squared edge
-weights.  In the complete case, ratios $v_{ak}/v_{bk}$ and
-\eqref{eq:products} imply $v_{ij}=\alpha s_is_j$ for signs $s_i$ and common
-$\alpha\ne0$.
+Here are the details of the support and sign argument. If a vertex has
+neighbors $k,l$, the nonzero product in \eqref{eq:products} forces both
+$k,l$ adjacent to every other vertex. Applying the same condition to two
+of the other four vertices makes those four a clique; an application to
+$k$ and one of those four then forces the edge $k,l$. The support is complete.
+Otherwise the support is a matching. Fix a nonzero edge $ab$. For each of
+the four remaining vertices $c$, the balance identity for $\{a,b,c\}$
+requires a nonzero edge of equal squared weight among the other three
+vertices. One remaining edge cannot meet all four requirements, so there
+are exactly two remaining disjoint edges, each of the same modulus as $ab$.
 
+In the complete case, fix $a,b$ and let $r_k=v_{ak}/v_{bk}$ for the four
+indices outside $\{a,b\}$. Equation~\eqref{eq:products} gives $r_kr_l=1$
+for all distinct $k,l$, so all these ratios coincide and belong to $\{1,-1\}$.
+All incident moduli, and therefore all edge moduli, coincide. To verify
+sign consistency explicitly, fix vertex $1$ and write
+$v_{ak}=t_a v_{1k}$ for $a,k\ne1$, $a\ne k$, with $t_a\in\{\pm1\}$.
+Symmetry implies that $t_a/v_{1a}$ is independent of $a\ne1$.
+It follows that $v_{ij}=\alpha s_is_j$ for a nonzero common real $\alpha$
+and a sign vector $s$.
 For the dense array,
 \[
 H=3\alpha^2\Bigl(\prod_i s_i\Bigr)D_s(J_6-I)D_s,
@@ -476,7 +520,8 @@ $C(B)$ is independent of the collision-free pattern $S$.  We restrict here to
 real symmetric $B$, the scope of Theorem~\ref{thm:hierarchy}.
 
 \begin{corollary}[Collision-free photon-sector hierarchy]\label{cor:gbs}
-Let $B$ be a real symmetric physical GBS sampling matrix on $N$ modes.  If
+Let $B$ be a real symmetric sampling matrix of a pure, zero-displacement
+GBS state on $N$ modes, and let $r\ge2$. If
 $N\ge4r-2$, then
 \begin{equation}\label{eq:gbsavg}
 \boxed{
@@ -493,7 +538,7 @@ P^{\rm cf}_{2r}\le\frac{d(B)^2}{4}
 \end{equation}
 In particular, $\|B\|<1$ implies that the average per-pattern probability in
 \eqref{eq:gbsavg} contracts by at most $\|B\|^2<1$.  If
-$B=O\operatorname{diag}(\tanh s_j)O^T$ with a real orthogonal interferometer,
+$B=O\operatorname{diag}(\tanh s_j)O^T$ with $s_j\ge0$ and a real orthogonal interferometer,
 then $B\succeq0$ and the contraction factor is at most $\|B\|^2/4<1/4$.
 \end{corollary}
 \begin{proof}
@@ -526,18 +571,13 @@ Kummer~\cite{kummer}, Lemma~3.5, uses the ordinary unweighted Kneser adjacency
 matrix to establish a square-free derivative isomorphism in his work on
 spectral linear matrix inequalities.  Feinsilver~\cite{feinsilver} gives
 Boolean-lattice $\mathfrak{sl}(2)$ background.  Lindell and Staples~\cite{lindell}
-develop general multiplicative norm inequalities in zeon algebras.  None of
-the statements located in those sources gives the matrix-weighted
-spectral-diameter estimate \eqref{eq:operatorbound} or the averaged recurrence
-\eqref{eq:hierarchy}.
-
-A July 2026 preprint of Ouimet and Greaves~\cite{ouimet} proves the strong
-Gaussian product inequality and, through Wick's formula, lower bounds hafnians
-of repeated-index PSD covariance matrices, with equality characterized by a
-zero row or diagonality.  Their Corollary~4.7 is a lower bound for one
-repeated-index hafnian.  Our inequalities are upper bounds for averages of
-squared \emph{principal} subhafnians and therefore concern a different object
-and direction.
+develop multiplicative norm inequalities in zeon algebras; only their
+abstract and publisher preview were available for this comparison. Davidson
+and Donsig~\cite{davidson} compute Schur multiplier norms of Kneser adjacency
+patterns, notably $K(2n+1,n)$ in Theorem~5.5. This is a different norm and
+a different operator from $A\mapsto\mathcal T_m(A)$. To our knowledge, the
+specific weighted spectral-diameter estimate and the resulting averaged
+recurrence have not appeared in the sources examined.
 
 The result does not resolve the project's separate Boolean-cube-normalized
 extremal conjecture
@@ -561,18 +601,20 @@ A specialist priority check remains necessary before replacing phrases such as
 ``to our knowledge'' with categorical first-discovery language.
 
 \section{Verification and reproducibility}
-The universal statements above are analytic.  The software is an independent
-implementation check, not the proof.  The research branch contains:
+The universal statements above are analytic.  The software cross-checks different formulas and supplied exact instances;
+it is not an independent human proof review or the universal proof.  The research branch contains:
 \begin{itemize}
 \item integer coefficient checks of the dilation map on every symmetric matrix
 basis element in orders $4,6,8,10$;
 \item exact rational certificates verifying $0\preceq A\preceq\ell I$, both
 operator PSD slacks, and the six-variable scalar corollaries;
-\item a memoized $2^N$ principal-hafnian dynamic program used only at small $N$;
+\item a memoized floating-point principal-hafnian dynamic program capped at $N=20$,
+with read-only caches tied to the input matrix;
 \item direct tests of the recursion
 $\mathcal T_{2r-1}(A)v=r(\haf(A[E^c]))_E$;
 \item exact combinatorial checks of the global double-counting multiplicities;
-\item sharp critical families through $r=4$, random real symmetric hierarchy
+\item rational spectral-interval and hierarchy certificates through $r=4$,
+including odd ambient dimensions; sharp critical families and random real symmetric hierarchy
 checks through $r=4$, the one-switch hybrid, the sharp edge-density equality,
 and real-interferometer GBS-like PSD diagnostics;
 \item separate complex zero-diagonal defect and matching-stability tests from
@@ -584,11 +626,24 @@ analytic theorem.  Run the repository suite with \texttt{python -m pytest} and
 the hierarchy experiment with
 \texttt{python experiments/e22\_subhafnian\_hierarchy.py}.
 
-The baseline for this research branch is commit
+The reproducibility package includes the source, proof notes, test commands,
+and a submission preflight that distinguishes technical completeness from
+human approval. The baseline for this research branch is commit
 \texttt{b0143ef5052ff7caa30ce11a51e4586865b53bc3}; the work is collected in
-draft pull request 19 of \texttt{Null-Square/no-free-collapse}.  Independent
+pull request 19 of \texttt{Null-Square/no-free-collapse}.  Independent
 proof review, full priority review, and human authorship metadata remain
 pre-submission gates.
+
+\section*{Research and manuscript assistance}
+OpenAI ChatGPT was used in theorem exploration, proposed proof development,
+code generation, literature triage, and manuscript preparation. The recorded
+proofs and computational artifacts are available for human verification.
+This author-review copy has not yet received documented human approval of
+all arguments, citations, or authorship. It must not be submitted until the
+final authors have completed those checks and approved an accurate assistance
+and responsibility statement. Funding, competing interests, and author
+contributions are likewise pending author confirmation; no negative
+or affirmative declaration about them is assumed here.
 
 \begin{thebibliography}{99}
 \bibitem{arrazola}
@@ -597,10 +652,18 @@ J. M. Arrazola and T. R. Bromley,
 Phys. Rev. Lett. \textbf{121} (2018), 030503.
 DOI: \href{https://doi.org/10.1103/PhysRevLett.121.030503}{10.1103/PhysRevLett.121.030503}.
 
+\bibitem{davidson}
+K. R. Davidson and A. P. Donsig,
+\emph{Norms of Schur multipliers},
+Illinois J. Math. \textbf{51}(3) (2007), 743--766.
+DOI: 10.1215/ijm/1258131101. Preprint: arXiv:math/0506073.
+
 \bibitem{feinsilver}
 P. J. Feinsilver,
 \emph{Representations of $\mathfrak{sl}(2)$ in the Boolean lattice, and the Hamming and Johnson schemes},
-arXiv:1102.0368 (2011).
+Infinite Dimensional Analysis, Quantum Probability and Related Topics
+\textbf{15}(3) (2012), 1250019. DOI: 10.1142/S0219025712500191.
+Preprint: arXiv:1102.0368v2.
 
 \bibitem{hamilton}
 C. S. Hamilton, R. Kruse, L. Sansoni, S. Barkhofen, C. Silberhorn, and I. Jex,
@@ -624,11 +687,6 @@ T. Lindell and G. S. Staples,
 \emph{Norm inequalities in zeon algebras},
 Adv. Appl. Clifford Algebras \textbf{29} (2019), article 13.
 DOI: \href{https://doi.org/10.1007/s00006-018-0934-z}{10.1007/s00006-018-0934-z}.
-
-\bibitem{ouimet}
-F. Ouimet and D. Greaves,
-\emph{A proof of the strong Gaussian product inequality conjecture},
-preprint submitted to the Annals of Probability (July 2026), especially Corollary 4.7.
 
 \bibitem{roos}
 B. Roos, \emph{New inequalities for permanents and hafnians and some generalizations},

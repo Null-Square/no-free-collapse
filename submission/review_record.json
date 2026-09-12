@@ -1,0 +1,24 @@
+{
+  "stage": "author_review_candidate",
+  "target_journal": "Linear Algebra and its Applications",
+  "authors": [],
+  "corresponding_author_email": null,
+  "funding_statement": null,
+  "competing_interests_statement": null,
+  "contributions_statement": null,
+  "approved_ai_disclosure": null,
+  "proof_review": {
+    "reviewer": null,
+    "approved": false,
+    "record": null
+  },
+  "priority_review": {
+    "reviewer": null,
+    "approved": false,
+    "record": null
+  },
+  "all_authors_approved": false,
+  "exclusive_submission_confirmed": false,
+  "venue_requirements_verified": false,
+  "notes": "Git authorship does not establish manuscript authorship. No journal submission has occurred."
+}
